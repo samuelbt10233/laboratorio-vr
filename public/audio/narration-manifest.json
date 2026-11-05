@@ -107,6 +107,27 @@
       "audio": "/audio/salome-intro-paralelo-3.mp3",
       "durationSeconds": 32.28,
       "textSha256": "3daa337fa158f528ba3e8d410f04117d21684e53254fce0f764ae1349170abf5"
+    },
+    {
+      "classId": "encuentra-el-fallo",
+      "stepId": "interruptor",
+      "audio": "/audio/salome-fallo-interruptor.mp3",
+      "durationSeconds": 38.16,
+      "textSha256": "1255eb4ab73a98bf09f397f62f9261c115a358554bf9d4d0ae210ea321c9c861"
+    },
+    {
+      "classId": "encuentra-el-fallo",
+      "stepId": "cable",
+      "audio": "/audio/salome-fallo-cable.mp3",
+      "durationSeconds": 30.96,
+      "textSha256": "cd14ec7b32966bd33832c1d3bc40a686c09c368d20ce92af26f826167d2df0f3"
+    },
+    {
+      "classId": "encuentra-el-fallo",
+      "stepId": "conexion",
+      "audio": "/audio/salome-fallo-conexion.mp3",
+      "durationSeconds": 32.208,
+      "textSha256": "0f92a326c5c41fbb098cda2e0983c2f98b1a17657362442d19a5cde356d5beb2"
     }
   ],
   "confirmations": [
@@ -214,6 +235,27 @@
       "audio": "/audio/salome-logro-paralelo-3.mp3",
       "durationSeconds": 9.792,
       "textSha256": "93ac918fd0f873e005bdc59de20cf3d6a8601e697177be5e84dd260aa7856ed8"
+    },
+    {
+      "classId": "encuentra-el-fallo",
+      "stepId": "interruptor",
+      "audio": "/audio/salome-fallo-logro-interruptor.mp3",
+      "durationSeconds": 8.616,
+      "textSha256": "f6547b8f57abf1dcf75f95d4883540e95e810cc22511eda9722971c803726e80"
+    },
+    {
+      "classId": "encuentra-el-fallo",
+      "stepId": "cable",
+      "audio": "/audio/salome-fallo-logro-cable.mp3",
+      "durationSeconds": 9.84,
+      "textSha256": "c6a20940bae1e4d920a027dc8f6af715fcc74d4f11058de33f99d49546cd76fa"
+    },
+    {
+      "classId": "encuentra-el-fallo",
+      "stepId": "conexion",
+      "audio": "/audio/salome-fallo-logro-conexion.mp3",
+      "durationSeconds": 12.168,
+      "textSha256": "d3ee509cf5e2e82895771087f03bfb0c578bac9f7c8987c1c88c7cf242151a3d"
     }
   ]
 }

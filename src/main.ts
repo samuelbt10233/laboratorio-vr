@@ -4,7 +4,7 @@ import './style.css';
 import './cloud-theme.css';
 import { Narrator, type NarrationState } from './narration';
 import { classes, getClass } from './lessons';
-import { recordAppAction, pendingGoal, SessionStore, classSessionKey } from './class-engine';
+import { createStepCircuit, recordAppAction, pendingGoal, SessionStore, classSessionKey } from './class-engine';
 import { layout } from './template';
 import { CircuitCharts } from './circuit-charts';
 import { SpatialControls } from './spatial-controls';
@@ -46,13 +46,13 @@ const boardMat=material('board','#243c46'), bodyMat=material('instrument','#dce4
 const circuitCharts=new CircuitCharts(scene,labRoot);
 const currentAnimation=new CurrentAnimation(scene,labRoot);
 const spatialGuide=new SpatialGuide(scene,camera,id=>{
-  const selectors:Record<string,string>={speak:'#speak-lesson',stop:'#stop-lesson',mute:'#mute-lesson',next:'#next'};
+  const selectors:Record<string,string>={speak:'#speak-lesson',stop:'#stop-lesson',mute:'#mute-lesson',next:'#next',reset:'#reset-challenge'};
   if(id==='classes'){if(xrRuntime?.isImmersive())xrRuntime.openCatalogue();else navigateCatalogue('class');return;}
   if(selectors[id])$(selectors[id]).click();
 });
 function syncSpatialGuide(){
   if(!$('#lesson-title').textContent)return;
-  spatialGuide.update({confirmation:mode==='class'&&guideReady&&activeClass.steps[step].goals.length?activeClass.steps[step].success.text:mode==='free'?freeCompletion?.text:undefined,title:$('#lesson-title').textContent??'',text:$('#lesson-text').textContent??'',task:$('#lesson-task').textContent??'',hint:mode==='class'?$('#guide-cue').textContent??'':'',tag:$('#guide-tag').textContent??'',progress:mode==='class'?(step+1)/activeClass.steps.length:1,classMode:mode==='class',lastStep:step===activeClass.steps.length-1,ready:guideReady,voice:narrationState,status:$('#voice-status').textContent??''});
+  spatialGuide.update({canReset:mode==='class'&&!!activeClass.steps[step].setup,confirmation:mode==='class'&&guideReady&&activeClass.steps[step].goals.length?activeClass.steps[step].success.text:mode==='free'?freeCompletion?.text:undefined,title:$('#lesson-title').textContent??'',text:$('#lesson-text').textContent??'',task:$('#lesson-task').textContent??'',hint:mode==='class'?$('#guide-cue').textContent??'':'',tag:$('#guide-tag').textContent??'',progress:mode==='class'?(step+1)/activeClass.steps.length:1,classMode:mode==='class',lastStep:step===activeClass.steps.length-1,ready:guideReady,voice:narrationState,status:$('#voice-status').textContent??''});
 }
 const overview=()=>{if(xrRuntime?.isImmersive())return;navigationKeys.clear();camera.inertialPanningX=0;camera.inertialPanningY=0;camera.target=new Vector3(0,0,-1.2);camera.alpha=-Math.PI/2;camera.beta=1.05;camera.radius=22;};
 function focusCharts(section?:'iv'|'voltage'){recordTutorialAction('charts');if(xrRuntime?.isImmersive()){xrRuntime.message('Las gráficas están detrás de la mesa. Apunta con el mando para seleccionar.');return;}circuitCharts.setVisible(true);$('#toggle-charts').setAttribute('aria-pressed','true');$('#toggle-charts').textContent='Ocultar gráficas';const target=circuitCharts.position.clone();if(section)target.x+=section==='iv'?-2.2:2.2;camera.target=target;camera.alpha=-Math.PI/2;camera.beta=1.35;camera.radius=section?7:12;}
@@ -267,7 +267,9 @@ function refreshGuidance(){
   if(goal&&narrationPurpose==='confirmation'){narrationPurpose='lesson';narrator.stop();}
   let hint='';
   if(!goal){hint=lesson.goals.length===0?(lesson.hint??lesson.task):step===activeClass.steps.length-1?'Has terminado. Pulsa «Finalizar y explorar» para hacer tus propias pruebas.':'Lo has conseguido. Pulsa «Comprobar y continuar» para seguir.';cueElement('#next','Continuar');}
-  else if(goal.kind==='action'){
+  else if(goal.kind==='diagnose'){
+    hint=goal.hint;
+  }else if(goal.kind==='action'){
     hint=goal.hint;if(goal.target)spatialControls.highlight(goal.target);
     if(goal.action==='move')cuePart(selected);
     if(goal.action==='charts')cueElement('#focus-charts','Consultar monitor');
@@ -315,13 +317,14 @@ $('#mute-lesson').onclick=()=>{const enabled=!narrator.isEnabled();narrator.setE
 window.addEventListener('pagehide',()=>narrator.stop());
 if(import.meta.hot)import.meta.hot.dispose(()=>narrator.dispose());
 
-function renderLesson(){const lesson=activeClass.steps[step];$('#class-mode').classList.toggle('active',mode==='class');$('#free-mode').classList.toggle('active',mode==='free');$('#class-mode').setAttribute('aria-pressed',String(mode==='class'));$('#free-mode').setAttribute('aria-pressed',String(mode==='free'));$('#guide-tag').textContent=mode==='class'?`CLASE GUIADA · ${step+1} / ${activeClass.steps.length}`:'EXPLORACIÓN LIBRE';$('#lesson-title').textContent=mode==='class'?lesson.title:'Prueba una idea tuya.';$('#lesson-text').textContent=mode==='class'?lesson.text:'Empieza con «Simple» si es tu primera vez. Cierra el interruptor para que circule corriente. Después cambia el valor de una resistencia y observa qué ocurre.';$('#lesson-task').textContent=mode==='class'?lesson.task:'Para crear un cable, pulsa un punto de conexión y después otro. Puedes añadir elementos desde el panel izquierdo y quitar cables en la pestaña «Cables».';$('#progress').style.width=mode==='class'?`${(step+1)/activeClass.steps.length*100}%`:'100%';const next=$<HTMLButtonElement>('#next');next.hidden=mode==='free';next.textContent=step===activeClass.steps.length-1?'Finalizar y explorar →':'Comprobar y continuar →';$('#narration-controls').hidden=mode==='free';$('.guide').classList.toggle('free-guide',mode==='free');if(mode==='free'){narrator.stop();lastNarratedStep=-1;}else if(lastNarratedStep!==step){const shouldSpeak=lastNarratedStep!==-1;lastNarratedStep=step;if(shouldSpeak)narrateLesson();}refreshGuidance();}
+function renderLesson(){const lesson=activeClass.steps[step];$('#class-mode').classList.toggle('active',mode==='class');$('#free-mode').classList.toggle('active',mode==='free');$('#class-mode').setAttribute('aria-pressed',String(mode==='class'));$('#free-mode').setAttribute('aria-pressed',String(mode==='free'));$('#guide-tag').textContent=mode==='class'?`CLASE GUIADA · ${step+1} / ${activeClass.steps.length}`:'EXPLORACIÓN LIBRE';$('#lesson-title').textContent=mode==='class'?lesson.title:'Prueba una idea tuya.';$('#lesson-text').textContent=mode==='class'?lesson.text:'Empieza con «Simple» si es tu primera vez. Cierra el interruptor para que circule corriente. Después cambia el valor de una resistencia y observa qué ocurre.';$('#lesson-task').textContent=mode==='class'?lesson.task:'Para crear un cable, pulsa un punto de conexión y después otro. Puedes añadir elementos desde el panel izquierdo y quitar cables en la pestaña «Cables».';$('#progress').style.width=mode==='class'?`${(step+1)/activeClass.steps.length*100}%`:'100%';const next=$<HTMLButtonElement>('#next');next.hidden=mode==='free';next.textContent=step===activeClass.steps.length-1?'Finalizar y explorar →':'Comprobar y continuar →';$('#narration-controls').hidden=mode==='free';$('#reset-challenge').hidden=mode!=='class'||!lesson.setup;$('.guide').classList.toggle('free-guide',mode==='free');if(mode==='free'){narrator.stop();lastNarratedStep=-1;}else if(lastNarratedStep!==step){const shouldSpeak=lastNarratedStep!==-1;lastNarratedStep=step;if(shouldSpeak)narrateLesson();}refreshGuidance();}
 $('#next').onclick=()=>{
   const goal=pendingGoal(activeClass.steps[step],{circuit,selected,seen:inspectedParts});
   if(goal){toast('Completa la indicación resaltada antes de continuar.');refreshGuidance();return;}
   if(step===activeClass.steps.length-1){const success=activeClass.steps[step].success,announce=activeClass.steps[step].goals.length===0;completed=true;saveSession();openLab('free');freeCompletion=success;$('#step-confirmation').textContent=success.text;syncSpatialGuide();if(announce)narrateConfirmation(success);}
-  else{step++;inspectedParts.clear();renderLesson();}
+  else{step++;inspectedParts.clear();if(activeClass.steps[step].setup){circuit=createStepCircuit(activeClass,step);selected=activeClass.initialSelection;rebuild();}else renderLesson();}
 };
+$('#reset-challenge').onclick=()=>{if(mode!=='class'||!activeClass.steps[step].setup)return;narrator.stop();narrationPurpose='lesson';stepConfirmation.enter();inspectedParts.clear();circuit=createStepCircuit(activeClass,step);selected=activeClass.initialSelection;rebuild();narrateLesson();};
 $('#class-mode').onclick=()=>{saveSession();openLab('class',activeClass.id);};
 $('#free-mode').onclick=()=>{saveSession();openLab('free');};
 document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(b=>b.onclick=()=>{circuit=preset(b.dataset.preset as 'simple'|'series'|'parallel');selected='R1';rebuild();});
@@ -384,7 +387,7 @@ function openLab(targetMode:'class'|'free',classId=activeClass.id){
   narrator.stop();lastNarratedStep=-1;cueStep=-1;mode=targetMode;
   if(targetMode==='class')activeClass=getClass(classId);
   const session=sessions.get(sessionKey());
-  circuit=session?.circuit??preset(targetMode==='class'?activeClass.initialPreset:'empty');
+  circuit=session?.circuit??(targetMode==='class'?createStepCircuit(activeClass,0):preset('empty'));
   selected=session?.selected??(targetMode==='class'?activeClass.initialSelection:'V1');step=session?.step??0;completed=session?.completed??false;
   inspectedParts.clear();session?.seen.forEach(id=>inspectedParts.add(id));cueStep=step;
   currentView='lab';document.body.classList.add('in-lab');$('#main-menu').hidden=true;$('#lab-view').hidden=false;$('#back-menu').hidden=false;

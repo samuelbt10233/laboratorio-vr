@@ -46,3 +46,11 @@ La guía confirma automáticamente cuando las reglas pasan de pendientes a cumpl
 `src/classes/tutorial.ts` registra «Primeros pasos en Umbral Labs», la primera entrada del catálogo. Sus ocho pasos enseñan orientación, selección, movimiento, edición, interruptor, cableado, gráficas y guardado. Comparte la guía, las voces y las sesiones de las clases.
 
 Las reglas `action` permiten verificar operaciones de interfaz: `move`, `disconnect`, `connect`, `charts` y `save`. Incluyen una indicación `hint` y un identificador de botón 3D `target` opcional. Solo se registra la acción que está pendiente en ese paso; acciones de pasos anteriores o posteriores no adelantan el tutorial. Los marcadores se conservan con la sesión de la clase y se limpian al pasar al siguiente paso. El guardado se confirma solo si el almacenamiento local termina correctamente.
+
+## Montajes propios y retos de diagnóstico
+
+Un paso puede incluir `setup: Circuit`. Al entrar a ese paso se carga una copia independiente del montaje; al retomar una sesión se conserva el circuito que el estudiante estaba editando. Las clases sin `setup` mantienen su comportamiento anterior: el montaje continúa entre pasos. `createStepCircuit` prepara copias para la entrada y el reinicio.
+
+«Encuentra el fallo» (`src/classes/find-fault.ts`) usa tres montajes: interruptor abierto, cable faltante y conexión que puentea la resistencia y cortocircuita la fuente. La regla `diagnose` contiene `expected: Circuit` y `hint`. Compara componentes, valores, interruptores y conexiones; ignora posiciones, identificadores de cables y dirección de sus extremos. Así exige reparar el montaje y no acepta obtener la misma corriente con otros valores.
+
+La guía muestra «Ver pistas» en estos retos. La vista ampliada permite «Reiniciar este reto», que restaura solo el montaje del paso actual. Las indicaciones de diagnóstico orientan sin señalar directamente el elemento culpable. Cada reparación válida utiliza las confirmaciones y narraciones comunes.

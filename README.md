@@ -119,3 +119,7 @@ Cuando el estudiante completa las reglas de un paso, el guía muestra «Paso com
 ### Tutorial de bienvenida
 
 «Primeros pasos en Umbral Labs» aparece primero en el catálogo de PC y en el catálogo 3D. Incluye ocho pasos para aprender los controles sin conocimientos de electrónica, con narraciones de Salomé y confirmaciones de actividad. Las flechas de movimiento del inspector están disponibles tanto en PC como en la distribución Quest. La navegación inicial se explica sin obligar a usar un dispositivo concreto; las actividades siguientes validan las acciones reales. Guardar conserva el montaje en ese navegador y reemplaza el anterior; no guarda el avance de clase.
+
+### Encuentra el fallo
+
+Clase de diagnóstico de tres retos independientes: interruptor abierto, cable faltante y conexión incorrecta que provoca un cortocircuito. El estudiante debe recuperar el montaje de 6 V, 100 Ω y 60 mA. Las reglas comprueban las conexiones y los valores, permitiendo mover elementos. Incluye voz de Salomé, pistas y reinicio del reto desde la guía 3D. La sesión conserva la reparación al volver al catálogo; avanzar carga el siguiente fallo. El modelo ideal bloquea las lecturas de cortocircuito y no simula daños.

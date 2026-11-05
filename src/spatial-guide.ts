@@ -1,6 +1,6 @@
 import { ArcRotateCamera, Color3, DynamicTexture, Mesh, MeshBuilder, Scene, StandardMaterial, TransformNode } from '@babylonjs/core';
 import type { NarrationState } from './narration';
-export interface GuideContent {confirmation?:string;title:string;text:string;task:string;hint:string;tag:string;progress:number;classMode:boolean;lastStep:boolean;ready:boolean;voice:NarrationState;status:string}
+export interface GuideContent {canReset?:boolean;confirmation?:string;title:string;text:string;task:string;hint:string;tag:string;progress:number;classMode:boolean;lastStep:boolean;ready:boolean;voice:NarrationState;status:string}
 interface Hit {id:string;x:number;y:number;w:number;h:number}
 /** The guide, dialogue and lesson actions are all pickable scene objects. */
 export class SpatialGuide {
@@ -106,15 +106,19 @@ export class SpatialGuide {
     button('minimize','−',796,22,72,54);
     const contentBottom=this.expanded?574:244;
     if(this.expanded){
-      let y=wrap(c.text,32,160,836,28,34,'#496151');
-      y=wrap(c.task,32,y+14,836,27,33,'#2d5841');
-      if(c.confirmation||c.hint)wrap(c.confirmation||c.hint,32,y+16,836,25,30,c.confirmation?'#286240':'#8a651a');
+      if(c.canReset&&c.confirmation)wrap(c.confirmation,32,160,836,29,36,'#286240');
+      else{
+        let y=wrap(c.text,32,160,836,28,34,'#496151');
+        y=wrap(c.task,32,y+14,836,27,33,'#2d5841');
+        if(!c.canReset&&(c.confirmation||c.hint))wrap(c.confirmation||c.hint,32,y+16,836,25,30,c.confirmation?'#286240':'#8a651a');
+      }
+      if(c.canReset)button('reset','Reiniciar este reto',32,510,836,54);
     }else{
       // The next concrete action takes priority; explanations remain one click away.
       wrap(c.confirmation||c.hint||c.task,32,160,836,c.confirmation?27:29,c.confirmation?32:35,c.confirmation?'#286240':'#496151');
     }
     const rowY=contentBottom+18,nextY=contentBottom+94;
-    button('details',this.expanded?'Menos detalle':'Ver explicación',32,rowY,314,55);
+    button('details',this.expanded?'Menos detalle':c.canReset?'Ver pistas':'Ver explicación',32,rowY,314,55);
     if(c.classMode||c.confirmation){
       const playing=c.voice==='speaking'||c.voice==='loading';
       button(playing?'stop':'speak',playing?'Detener':c.voice==='finished'?'Repetir':'Escuchar',360,rowY,232,55,false,c.voice==='muted');

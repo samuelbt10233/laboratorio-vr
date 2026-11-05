@@ -1,3 +1,4 @@
+import { ledState } from './led-solver';
 import { ArcRotateCamera, Color3, DynamicTexture, Mesh, MeshBuilder, Scene, StandardMaterial } from '@babylonjs/core';
 import type { Circuit, Result } from './circuit';
 interface Hit {id:string;x:number;y:number;w:number;h:number}
@@ -66,7 +67,7 @@ export class SpatialControls {
     else return false;
     if(this.editing)this.edit(this.draft);this.draw();return true;
   }
-  private terminalLabel(id:string){const [part,side]=id.split(':');const source=this.model?.circuit.parts.find(p=>p.id===part)?.kind==='source';return `${part} ${source?(side==='0'?'+':'−'):(side==='0'?'A':'B')}`;}
+  private terminalLabel(id:string){const [part,side]=id.split(':');const kind=this.model?.circuit.parts.find(p=>p.id===part)?.kind,source=kind==='source';return `${part} ${source?(side==='0'?'+':'−'):kind==='led'?(side==='0'?'A +':'K −'):(side==='0'?'A':'B')}`;}
   private draw(){
     if(!this.model)return;const {circuit,result,selected,pending}=this.model;
     const p=circuit.parts.find(part=>part.id===selected);
@@ -80,11 +81,11 @@ export class SpatialControls {
       text(index===0?'BANCO DE TRABAJO':'COMPONENTE ACTIVO',32,58,26,'#688175',true);line(85);
       if(index===0){
         text('Añadir a la mesa',32,135,32,'#203e34',true);
-        button('add-r','+ Resistencia',32,164);button('add-s','+ Interruptor',32,260);
+        button('add-r','+ Resistencia',32,164,496,64);button('add-s','+ Interruptor',32,236,496,64);button('add-l','+ LED rojo',32,308,496,64);
         text('Montajes de ejemplo',32,404,29,'#203e34',true);
         button('preset:simple','Simple',32,433,155);button('preset:series','Serie',202,433,155);button('preset:parallel','Paralelo',372,433,156);
         line(550);text('Elementos del circuito',32,602,29,'#203e34',true);
-        circuit.parts.forEach((part,i)=>button(`part:${part.id}`,`${part.id}   ${part.kind==='source'?'Fuente':part.kind==='resistor'?`${part.value} Ω`:part.closed?'Cerrado':'Abierto'}`,32,634+i*65,496,54,part.id===selected));
+        circuit.parts.forEach((part,i)=>button(`part:${part.id}`,`${part.id}   ${part.kind==='source'?'Fuente':part.kind==='resistor'?`${part.value} Ω`:part.kind==='led'?ledState(result.readings[part.id]?.current??0):part.closed?'Cerrado':'Abierto'}`,32,634+i*65,496,54,part.id===selected));
         line(1182);button('save','Guardar',32,1208,240,70);button('load','Recuperar',288,1208,240,70);button('empty','Vaciar mesa',32,1297,496,70);
       }else{
         button('tab:properties','Propiedades',32,108,240,70,this.tab==='properties');button('tab:wires',`Cables (${circuit.wires.length})`,288,108,240,70,this.tab==='wires');
@@ -95,14 +96,15 @@ export class SpatialControls {
           if(this.wirePage<maxPage)button('wires:next','→',428,1140,100,65);
           text(`Página ${this.wirePage+1} / ${maxPage+1}`,170,1184,27);
         }else if(p){
-          text(`${p.id} · ${p.kind==='source'?'Fuente DC':p.kind==='resistor'?'Resistencia':'Interruptor'}`,32,246,38,'#203e34',true);
+          text(`${p.id} · ${p.kind==='source'?'Fuente DC':p.kind==='resistor'?'Resistencia':p.kind==='led'?'LED rojo':'Interruptor'}`,32,246,38,'#203e34',true);
           if(p.kind==='switch')button('switch',p.closed?'● Cerrado · abrir':'○ Abierto · cerrar',32,290,496,96);
-          else{
+          else if(p.kind!=='led'){
             text(p.kind==='source'?'Tensión · 1 a 12 V':'Resistencia · 10 a 1000 Ω',32,299,27);
             button('value',`${this.editing?(this.draft||'Escribe…'):p.value} ${p.kind==='source'?'V':'Ω'}`,32,327,496,100);
             button('decrease','−',32,446,112,72);button('apply','Aplicar',160,446,240,72);button('increase','+',416,446,112,72);
             text(this.editing?(this.immersive?'Pulsa los números y después Aplicar.':'Teclado: escribe y pulsa Enter.'):'Pulsa el valor para escribir.',32,561,26);
           }
+          if(p.kind==='led'){text(ledState(result.readings[p.id]?.current??0),32,351,38,'#a3442c',true);text('A + → K − · LED rojo simplificado',32,420,25);text('Límite didáctico: 20 mA',32,475,27);}
           if(this.immersive&&this.editing){
             const keys=['1','2','3','4','5','6','7','8','9','Backspace','0','.'];
             keys.forEach((key,i)=>button(`key:${key}`,key==='Backspace'?'⌫':key,32+i%3*170,620+Math.floor(i/3)*125,156,106));
@@ -113,7 +115,7 @@ export class SpatialControls {
           text(reading?`${Math.abs(reading.voltage).toFixed(2)} V   ·   ${(Math.abs(reading.current)*1000).toFixed(1)} mA`:p.kind==='switch'?(p.closed?'Contacto cerrado':'Contacto abierto'):'Sin lectura válida',32,710,34,'#203e34',true);
           text(reading?`${reading.power.toFixed(3)} W`:p.kind==='switch'?'Interruptor ideal · sin pérdidas':'Revisa las conexiones.',32,759,28);
           text('CONECTAR TERMINALES',32,842,25,'#688175',true);
-          const pinLabel=(side:number)=>`${p.id} · ${p.kind==='source'?(side===0?'+':'−'):(side===0?'A':'B')}`;
+          const pinLabel=(side:number)=>`${p.id} · ${p.kind==='source'?(side===0?'+':'−'):(p.kind==='led'?(side===0?'A +':'K −'):(side===0?'A':'B'))}`;
           button(`pin:${p.id}:0`,pinLabel(0),32,872,240,76,pending===`${p.id}:0`);button(`pin:${p.id}:1`,pinLabel(1),288,872,240,76,pending===`${p.id}:1`);
           text(pending?`Origen: ${pending}`:'Elige un terminal y luego otro.',32,998,27);
           if(pending)button('cancel-wire','Cancelar conexión',32,1031,496,70);

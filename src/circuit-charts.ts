@@ -1,9 +1,9 @@
 import { Color3, DynamicTexture, MeshBuilder, Scene, StandardMaterial, TransformNode, Vector3 } from '@babylonjs/core';
-import type { Circuit, Result } from './circuit';
+import { solve, type Circuit, type Result } from './circuit';
 
 /** A real scene object: graph data is redrawn only when the circuit changes. */
 export class CircuitCharts {
-  readonly position=new Vector3(0,2.8,3.9);
+  readonly position=new Vector3(0,4.6,3.9);
   private root:TransformNode;
   private texture:DynamicTexture;
   private ctx:CanvasRenderingContext2D;
@@ -31,7 +31,7 @@ export class CircuitCharts {
     line(64,137,1536,137,'#2c4751');
     text('01   Corriente vs. tensión',64,191,31,'#e5f0e8','600');
     text('Barrido teórico de la fuente · misma red',64,230,22);
-    text('02   Tensión en resistencias',866,191,31,'#e5f0e8','600');
+    text('02   Tensión en componentes',866,191,31,'#e5f0e8','600');
     text('Lecturas actuales · magnitudes en voltios',866,230,22);
     line(811,170,811,738,'#2c4751');
     const source=circuit.parts.find(p=>p.kind==='source')!;
@@ -43,7 +43,8 @@ export class CircuitCharts {
       text('Sin lecturas válidas',915,442,34,'#efac87','600');
     }else{
       const x=143,y=300,w=586,h=327;
-      const maxCurrent=result.status==='open'?0:12/result.resistance*1000;
+      const samples=Array.from({length:25},(_,i)=>{const voltage=i/2;return {voltage,current:circuit.parts.some(p=>p.kind==='led')?(voltage<1?0:solve({...circuit,parts:circuit.parts.map(p=>p.id===source.id?{...p,value:voltage}:p)}).current*1000):(result.status==='open'?0:voltage/result.resistance*1000)};});
+      const maxCurrent=Math.max(...samples.map(s=>s.current));
       const scale=maxCurrent>0?10**Math.floor(Math.log10(maxCurrent)):1;
       const maxY=maxCurrent>0?Math.ceil(maxCurrent/scale)*scale:1;
       const format=(n:number)=>Number(n.toPrecision(4)).toLocaleString('es-CO',{maximumFractionDigits:3});
@@ -53,13 +54,12 @@ export class CircuitCharts {
       }
       text('I (mA)',x-65,y-26,23,'#d8e7dd');text('V (V)',x+w-20,y+h+77,23,'#d8e7dd');
       line(x,y+h,x+w,y+h,'#73988c',3);line(x,y,x,y+h,'#73988c',3);
-      const endY=y+h-(maxCurrent/maxY)*h;
-      line(x,y+h,x+w,endY,'#78d5bd',5);
+      for(let i=1;i<samples.length;i++)line(x+w*samples[i-1].voltage/12,y+h-samples[i-1].current/maxY*h,x+w*samples[i].voltage/12,y+h-samples[i].current/maxY*h,'#78d5bd',5);
       const px=x+w*source.value/12,py=y+h-result.current*1000/maxY*h;
       ctx.setLineDash([9,8]);line(px,y+h,px,py,'#d9bd7b',2);line(x,py,px,py,'#d9bd7b',2);ctx.setLineDash([]);
       ctx.fillStyle='#f0ca7e';ctx.beginPath();ctx.arc(px,py,9,0,Math.PI*2);ctx.fill();
       text(`●  Ahora: ${format(source.value)} V / ${format(result.current*1000)} mA`,75,746,25,'#f0ca7e');
-      const resistors=circuit.parts.filter(p=>p.kind==='resistor');
+      const resistors=circuit.parts.filter(p=>p.kind==='resistor'||p.kind==='led');
       const bx=946,by=300,bw=558,bh=327;
       for(let i=0;i<=4;i++){const py=by+bh-bh*i/4;line(bx,py,bx+bw,py);text(String(i*3),bx-47,py+8,22);}
       text('V',bx-39,by-26,23,'#d8e7dd');
@@ -78,7 +78,7 @@ export class CircuitCharts {
       text(result.status==='open'?'Sin corriente · I = 0':'Cada barra muestra una caída de tensión.',875,746,24);
     }
     line(64,782,1536,782,'#2c4751');
-    text('Modelo DC ideal · los gráficos se actualizan al modificar el montaje.',64,825,22,'#93b0a6');
+    text('Modelo DC didáctico · los gráficos se actualizan al modificar el montaje.',64,825,22,'#93b0a6');
     this.texture.update();
   }
 }

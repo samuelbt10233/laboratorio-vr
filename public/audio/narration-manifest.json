@@ -128,6 +128,34 @@
       "audio": "/audio/salome-fallo-conexion.mp3",
       "durationSeconds": 32.208,
       "textSha256": "0f92a326c5c41fbb098cda2e0983c2f98b1a17657362442d19a5cde356d5beb2"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "polaridad",
+      "audio": "/audio/salome-led-polaridad.mp3",
+      "durationSeconds": 34.944,
+      "textSha256": "662ef9b6ea380e61abe39b84b874dfbdb2109fc3cea4e457e935418d2c2b4189"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "encender",
+      "audio": "/audio/salome-led-encender.mp3",
+      "durationSeconds": 30.936,
+      "textSha256": "11a7e0e1b4c1ee6165fbb16105f9ba98fb090ed6931c049910dd922ed257496c"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "invertido",
+      "audio": "/audio/salome-led-invertido.mp3",
+      "durationSeconds": 31.824,
+      "textSha256": "6e9cf86522bc0741ccd00cc44b6b35feb475254c1edb93fbdd410681a05cb266"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "brillo",
+      "audio": "/audio/salome-led-brillo.mp3",
+      "durationSeconds": 38.112,
+      "textSha256": "a9dc5756fa1952070b316acb4896b5e421e312cab703ddf8f0ccc926ef1281e4"
     }
   ],
   "confirmations": [
@@ -256,6 +284,34 @@
       "audio": "/audio/salome-fallo-logro-conexion.mp3",
       "durationSeconds": 12.168,
       "textSha256": "d3ee509cf5e2e82895771087f03bfb0c578bac9f7c8987c1c88c7cf242151a3d"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "polaridad",
+      "audio": "/audio/salome-led-logro-polaridad.mp3",
+      "durationSeconds": 8.4,
+      "textSha256": "1330b6b87e699d458c5eea31c34a6353d2e6331a0847edff3ac6f537270f50d2"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "encender",
+      "audio": "/audio/salome-led-logro-encender.mp3",
+      "durationSeconds": 9.408,
+      "textSha256": "ad3774856c522ee738549a25c6a18d8c8bfc0ac44143166707ccda3929472bba"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "invertido",
+      "audio": "/audio/salome-led-logro-invertido.mp3",
+      "durationSeconds": 8.376,
+      "textSha256": "42bfd7784b60a2d171d69b2297f9bc7ecff5173ca71e92ff0befa93cebc25165"
+    },
+    {
+      "classId": "enciende-un-led",
+      "stepId": "brillo",
+      "audio": "/audio/salome-led-logro-brillo.mp3",
+      "durationSeconds": 9.216,
+      "textSha256": "f934ab3e856554459d0d6444869fcd682347b50481de6a4fbadb6c09d42aad8c"
     }
   ]
 }

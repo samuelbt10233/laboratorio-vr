@@ -17,7 +17,7 @@ export class QuestInterface {
       const mesh=MeshBuilder.CreatePlane(name,{width,height},scene);mesh.parent=this.root;mesh.material=material;mesh.metadata={questInterface:name};
       return {mesh,texture,ctx:texture.getContext() as CanvasRenderingContext2D,hits:[],height:textureHeight};
     };
-    this.bar=surface('quest actions',1.7,.34,240);this.bar.mesh.position.set(0,1.97,.35);
+    this.bar=surface('quest actions',1.7,.34,240);this.bar.mesh.position.set(0,2.25,.35);
     const catalogueHeight=790+Math.max(0,classes.length-2)*126;
     this.catalogue=surface('quest catalogue',1.4,1.4*catalogueHeight/1200,catalogueHeight);this.catalogue.mesh.position.set(0,1.45,-.8);this.catalogue.mesh.setEnabled(false);
     this.draw();this.root.setEnabled(false);

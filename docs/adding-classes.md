@@ -54,3 +54,7 @@ Un paso puede incluir `setup: Circuit`. Al entrar a ese paso se carga una copia 
 «Encuentra el fallo» (`src/classes/find-fault.ts`) usa tres montajes: interruptor abierto, cable faltante y conexión que puentea la resistencia y cortocircuita la fuente. La regla `diagnose` contiene `expected: Circuit` y `hint`. Compara componentes, valores, interruptores y conexiones; ignora posiciones, identificadores de cables y dirección de sus extremos. Así exige reparar el montaje y no acepta obtener la misma corriente con otros valores.
 
 La guía muestra «Ver pistas» en estos retos. La vista ampliada permite «Reiniciar este reto», que restaura solo el montaje del paso actual. Las indicaciones de diagnóstico orientan sin señalar directamente el elemento culpable. Cada reparación válida utiliza las confirmaciones y narraciones comunes.
+
+## Clase de LED
+
+`src/classes/led.ts` registra «Enciende un LED» y exporta el montaje `ledCircuit()`. El tipo `led` usa terminal 0 = ánodo A + y terminal 1 = cátodo K −; su `value` fijo de 2 representa el umbral del modelo. No es un campo editable de resistencia. Las reglas de la clase combinan inspección, interruptor, corriente calculada y conexiones esperadas. La corriente de LED entra al reparto por cables, al brillo y al monitor. La interpretación y los límites físicos del modelo están en README.

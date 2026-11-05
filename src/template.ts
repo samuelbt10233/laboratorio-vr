@@ -50,7 +50,7 @@ export const layout = `
         <div class="wire-tools"><span class="wire-symbol">⌁</span><span id="connection-hint" role="status" aria-live="polite">Conectar: pulsa dos terminales</span><button id="cancel-wire">Cancelar</button></div>
       </section>
       <div class="meter" aria-label="Mediciones del circuito"><div class="meter-top"><span class="section-label">LECTURAS DEL CIRCUITO</span><span class="live-label"><span class="live-dot">●</span> En vivo</span></div><div class="meter-values"><div class="measurement primary-measurement"><div class="meter-main"><span id="current">0.0</span><small>mA</small></div><div class="meter-caption">Corriente total</div></div><div class="measurement"><strong id="voltage">6.0 V</strong><span>Tensión de la fuente</span></div><div class="measurement"><strong id="resistance">—</strong><span>Resistencia equivalente</span></div></div><div id="status" class="status"></div></div>
-      <div class="stage-footnote"><span id="selection-status" class="selection-status" role="status" aria-live="polite">Seleccionado: S1</span><span class="footnote-divider">·</span><span class="footer-dot"></span> Modelo ideal de corriente continua <span class="footnote-divider">·</span> <span class="current-legend" title="Animación ilustrativa; la velocidad no representa la velocidad física de las cargas.">● Esferas amarillas: corriente convencional (+ → −)</span></div>
+      <div class="stage-footnote"><span id="selection-status" class="selection-status" role="status" aria-live="polite">Seleccionado: S1</span><span class="footnote-divider">·</span><span class="footer-dot"></span> Modelo didáctico de corriente continua <span class="footnote-divider">·</span> <span class="current-legend" title="Animación ilustrativa; la velocidad no representa la velocidad física de las cargas.">● Esferas amarillas: corriente convencional (+ → −)</span></div>
     </div>
 
   </div>
@@ -67,6 +67,7 @@ export const layout = `
       <div class="component"><span class="icon source-icon">±</span><div><strong>Fuente DC</strong><small>1–12 V · fuente ideal</small></div><span class="count">×1</span></div>
       <button class="component" id="add-r" aria-label="Añadir resistencia"><span class="icon">${resistorIcon}</span><span><strong>Resistencia</strong><small>10–1000 Ω</small></span><span class="add">+</span></button>
       <button class="component" id="add-s" aria-label="Añadir interruptor"><span class="icon">${switchIcon}</span><span><strong>Interruptor</strong><small>Abrir / cerrar circuito</small></span><span class="add">+</span></button>
+      <button class="component" id="add-l" aria-label="Añadir LED"><span class="icon">◉</span><span><strong>LED rojo</strong><small>A + / K −</small></span><span class="add">+</span></button>
       <div class="section-label spaced">MONTAJES DE EJEMPLO</div><div class="presets"><button data-preset="simple">Simple</button><button data-preset="series">Serie</button><button data-preset="parallel">Paralelo</button></div>
       <div class="inspector"><div class="section-label"><span>PROPIEDADES</span><span class="inspector-symbol">↗</span></div><div id="inspector"></div></div>
       <div class="storage"><button id="save">Guardar</button><button id="load">Recuperar</button><button id="empty">Vaciar mesa</button></div>

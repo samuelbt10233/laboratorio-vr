@@ -17,7 +17,7 @@ export class QuestRuntime {
     const material=(name:string,color:string)=>{const m=new StandardMaterial(name,scene);m.diffuseColor=Color3.FromHexString(color);m.specularColor=Color3.Black();return m;};
     const floorMat=material('quest floor material','#263b41'),tableMat=material('quest table legs','#39545c');
     this.floor=MeshBuilder.CreateGround('quest bounded teleport floor',{width:questLayout.floorSize,height:questLayout.floorSize},scene);this.floor.parent=this.room;this.floor.material=floorMat;
-    for(const x of [-.72,.72])for(const z of [-.35,.35]){const leg=MeshBuilder.CreateCylinder('quest table leg',{height:.82,diameter:.06,tessellation:8},scene);leg.parent=this.room;leg.position.set(x,.42,z);leg.material=tableMat;leg.isPickable=false;}
+    for(const x of [-.72,.72])for(const z of [-.35,.35]){const angle=questLayout.tableTilt,underside=.325*questLayout.scale,height=questLayout.tableHeight+z*Math.sin(angle)-underside*Math.cos(angle);const leg=MeshBuilder.CreateCylinder('quest table leg',{height,diameter:.06,tessellation:8},scene);leg.parent=this.room;leg.position.set(x,height/2,z*Math.cos(angle)+underside*Math.sin(angle));leg.material=tableMat;leg.isPickable=false;}
     for(const x of [-1.1,0,1.1]){const spot=MeshBuilder.CreateTorus('quest teleport zone',{diameter:.38,thickness:.015,tessellation:24},scene);spot.parent=this.room;spot.position.set(x,.012,-1.8);spot.material=material(`quest teleport ${x}`,'#78c3a5');spot.isPickable=false;}
     this.ui=new QuestInterface(scene,classesForUI,action=>this.handleAction(action));
     this.room.setEnabled(false);

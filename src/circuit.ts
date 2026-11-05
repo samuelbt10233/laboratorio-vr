@@ -1,4 +1,5 @@
-export type Kind = 'source' | 'resistor' | 'switch';
+import { solveWithLeds } from './led-solver';
+export type Kind = 'source' | 'resistor' | 'switch' | 'led';
 export interface Part { id: string; kind: Kind; value: number; closed?: boolean; x: number; z: number }
 export interface Wire { id: string; a: string; b: string }
 export interface Circuit { parts: Part[]; wires: Wire[] }
@@ -9,10 +10,11 @@ export function validate(c: Circuit): boolean {
   if (!c || !Array.isArray(c.parts) || !Array.isArray(c.wires) || c.parts.length > 8 || c.wires.length > 32) return false;
   const ids = new Set<string>();
   for (const p of c.parts) {
-    if (!p || typeof p.id !== 'string' || !/^[A-Za-z0-9_-]{1,24}$/.test(p.id) || ids.has(p.id) || !['source','resistor','switch'].includes(p.kind) || !Number.isFinite(p.x) || !Number.isFinite(p.z) || Math.abs(p.x)>5 || Math.abs(p.z)>3 || !Number.isFinite(p.value)) return false;
-    if (p.kind==='source' && (p.value<1 || p.value>12) || p.kind==='resistor' && (p.value<10 || p.value>1000) || p.kind==='switch' && typeof p.closed!=='boolean') return false;
+    if (!p || typeof p.id !== 'string' || !/^[A-Za-z0-9_-]{1,24}$/.test(p.id) || ids.has(p.id) || !['source','resistor','switch','led'].includes(p.kind) || !Number.isFinite(p.x) || !Number.isFinite(p.z) || Math.abs(p.x)>5 || Math.abs(p.z)>3 || !Number.isFinite(p.value)) return false;
+    if (p.kind==='source' && (p.value<1 || p.value>12) || p.kind==='resistor' && (p.value<10 || p.value>1000) || p.kind==='switch' && typeof p.closed!=='boolean' || p.kind==='led' && p.value!==2) return false;
     ids.add(p.id);
   }
+  if(c.parts.filter(p=>p.kind==='led').length>4)return false;
   if(c.parts.filter(p=>p.kind==='source').length!==1) return false;
   const terminals = new Set(c.parts.flatMap(p=>[terminal(p.id,0),terminal(p.id,1)]));
   const wireIds = new Set<string>();
@@ -21,6 +23,7 @@ export function validate(c: Circuit): boolean {
 }
 export function solve(c: Circuit): Result {
   if(!validate(c)) throw new Error('Circuito inválido');
+  if(c.parts.some(p=>p.kind==='led'))return solveWithLeds(c);
   const parent = new Map<string,string>();
   const find = (a:string):string => { const p=parent.get(a); if(!p) {parent.set(a,a);return a;} if(p===a)return a; const r=find(p);parent.set(a,r);return r; };
   const join = (a:string,b:string) => parent.set(find(a),find(b));

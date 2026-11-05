@@ -369,10 +369,12 @@ function renderCatalogue(){
   $('#empty-catalogue-text').textContent=catalogueFilter==='recent'&&!query?'Las experiencias que visites aparecerán aquí.':'Prueba con otro término o vuelve a todas las experiencias.';
   const titles:Record<CatalogueFilter,string>={all:'¿Qué quieres explorar hoy?',class:'Clases guiadas',free:'Experimenta a tu ritmo',recent:'Retoma tu aprendizaje'};
   $('#menu-title').textContent=titles[catalogueFilter];
+  $('#getting-started').hidden=catalogueFilter!=='all'||!!query;
   document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }
 function navigateCatalogue(filter:CatalogueFilter){if(xrRuntime?.isImmersive()){xrRuntime.openCatalogue();return;}catalogueFilter=filter;$<HTMLInputElement>('#experience-search').value='';showMenu();}
 function focusSearch(){catalogueFilter='all';showMenu();$<HTMLInputElement>('#experience-search').focus();}
+$('#start-tutorial').onclick=()=>openLab('class','primeros-pasos');
 $('#experience-search').oninput=renderCatalogue;
 $('#quick-search').onclick=focusSearch;
 $('#reset-catalogue').onclick=()=>navigateCatalogue('all');

@@ -18,9 +18,26 @@ export const layout = `
 <header class="app-topbar"><div class="topbar-context">Umbral <span>/</span> <span id="header-context">Catálogo de experiencias</span></div><div class="header-right"><button id="back-menu" class="back-menu" hidden>← Menú general</button><span class="demo">DEMO · PC</span></div></header>
 <main id="main-menu" class="menu-page">
   <section class="menu-hero">
-    <div class="menu-hero-copy"><div class="menu-kicker"><span>u</span> Tu espacio de aprendizaje</div><h1 id="menu-title">¿Qué quieres explorar hoy?</h1><p id="menu-subtitle">Elige una clase guiada o construye tu propio experimento.</p></div>
+    <div class="menu-hero-copy"><div class="menu-kicker"><span>u</span> Tu espacio de aprendizaje</div><h1 id="menu-title">¿Qué quieres explorar hoy?</h1><p id="menu-subtitle">Aprende electrónica en un laboratorio 3D: conecta componentes, prueba ideas y observa lo que ocurre.</p></div>
 
   </section>
+  <section id="getting-started" class="getting-started" aria-labelledby="getting-started-title">
+    <div class="getting-started-heading"><div><span class="welcome-eyebrow">BIENVENIDO AL LABORATORIO</span><h2 id="getting-started-title">¿Es tu primera visita?</h2><p>No necesitas saber de circuitos. Empieza por conocer tu mesa de trabajo.</p></div><button id="start-tutorial" class="start-tutorial">Empezar el tutorial <span aria-hidden="true">↗</span></button></div>
+    <ol class="getting-started-steps">
+      <li><span class="welcome-number" aria-hidden="true">1</span><div><h3>Aprende los controles</h3><p>En «Primeros pasos» practicarás cómo seleccionar, mover y conectar elementos, con ayuda del guía.</p></div></li>
+      <li><span class="welcome-number" aria-hidden="true">2</span><div><h3>Sigue una clase</h3><p>El guía te explica cada actividad. Realízala y espera la confirmación antes de continuar.</p></div></li>
+      <li><span class="welcome-number" aria-hidden="true">3</span><div><h3>Explora a tu ritmo</h3><p>En el modo libre puedes crear tus propios circuitos y ver cómo cambian las lecturas y las gráficas.</p></div></li>
+    </ol>
+  </section>
+  <details class="home-help">
+    <summary><span>Controles y consejos rápidos</span><span class="home-help-toggle" aria-hidden="true">+</span></summary>
+    <div class="home-help-grid">
+      <article><h3>En tu PC</h3><p>Pulsa la escena y usa <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> para desplazarte. Arrastra con el botón derecho para girar la vista y usa la rueda para acercarte.</p><p>Pulsa un elemento o su nombre en la lista para seleccionarlo. Arrastra su cuerpo o usa las flechas de «Propiedades» para moverlo.</p></article>
+      <article><h3>Dentro del laboratorio</h3><p>El panel izquierdo permite añadir elementos; el derecho muestra sus propiedades. Para crear un cable, pulsa un terminal y después otro. Para quitarlo, abre «Cables» y pulsa su cruz.</p><p>Para cambiar un valor, pulsa el número y confirma con «Aplicar». En PC también puedes escribir y pulsar <kbd>Enter</kbd>.</p></article>
+      <article><h3>Tu guía y tus montajes</h3><p>Pulsa «Escuchar» para oír al guía y abre la explicación o las pistas para leer más. Al completar una actividad verás una confirmación y podrás continuar.</p><p>«Guardar» conserva el montaje en este navegador y dispositivo; «Recuperar» lo carga después. Guardar reemplaza el montaje anterior. Cargar un ejemplo también reemplaza la mesa actual.</p></article>
+      <article><h3>Con Meta Quest</h3><p>Abre esta página en el navegador de las gafas, elige una experiencia y pulsa «Entrar en VR». Apunta con el mando y usa el gatillo para seleccionar. La palanca izquierda permite ir a las zonas marcadas.</p><p>Los paneles y el guía permanecen dentro del entorno. «Vista Quest en PC» permite revisar esa distribución con ratón; no activa la realidad virtual.</p></article>
+    </div>
+  </details>
   <div class="catalogue-search-frame"><label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input id="experience-search" type="search" aria-label="Buscar clases y laboratorios" placeholder="Buscar una clase o laboratorio…" autocomplete="off"/><span class="search-shortcut"><kbd>Ctrl</kbd><kbd>K</kbd></span></label></div>
   <section class="experience-catalogue" aria-labelledby="catalogue-title">
     <div class="catalogue-heading"><div><div class="eyebrow">EXPERIENCIAS DISPONIBLES</div><h2 id="catalogue-title">Electrónica básica</h2></div><span id="catalogue-result-count" class="catalogue-count" role="status" aria-live="polite">2 experiencias</span></div>

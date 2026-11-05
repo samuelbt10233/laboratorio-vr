@@ -1,0 +1,107 @@
+{
+  "voice": "es-CO-SalomeNeural",
+  "rate": "-5%",
+  "generator": "edge-tts 7.3.1",
+  "recordings": [
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "cerrar",
+      "audio": "/audio/salome-intro-clase-1.mp3",
+      "durationSeconds": 28.848,
+      "textSha256": "a9bf607aaef26ace6570d299738b2cfae7715319cd7f067e227626c04e1b0aba"
+    },
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "resistencia",
+      "audio": "/audio/salome-intro-clase-2.mp3",
+      "durationSeconds": 32.712,
+      "textSha256": "5f6695e72bafe8fb94e310187840a546cc36295ae85f3f75311f350bf94504d2"
+    },
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "serie",
+      "audio": "/audio/salome-intro-clase-3.mp3",
+      "durationSeconds": 26.064,
+      "textSha256": "60895ea98a36754ded290cebdc5a071f123814eaf5d82107b027daf7447e1df9"
+    },
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "explorar",
+      "audio": "/audio/salome-intro-clase-4.mp3",
+      "durationSeconds": 28.152,
+      "textSha256": "5e5d676879cd9b11bd2dce932b50c790cc630b1557b86c745598e96daf4c4b52"
+    },
+    {
+      "classId": "circuitos-en-paralelo",
+      "stepId": "ramas",
+      "audio": "/audio/salome-intro-paralelo-1.mp3",
+      "durationSeconds": 29.28,
+      "textSha256": "6984e06461ded60baf3acc95730174e8fdbed8b99c949658a738104ca2f277c8"
+    },
+    {
+      "classId": "circuitos-en-paralelo",
+      "stepId": "cambiar-rama",
+      "audio": "/audio/salome-intro-paralelo-2.mp3",
+      "durationSeconds": 32.592,
+      "textSha256": "8cfcb483469c5b10bb5bdfac158153e026d443ef6af4d9960bf41e4b998a1691"
+    },
+    {
+      "classId": "circuitos-en-paralelo",
+      "stepId": "comparar",
+      "audio": "/audio/salome-intro-paralelo-3.mp3",
+      "durationSeconds": 32.28,
+      "textSha256": "3daa337fa158f528ba3e8d410f04117d21684e53254fce0f764ae1349170abf5"
+    }
+  ],
+  "confirmations": [
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "cerrar",
+      "audio": "/audio/salome-logro-clase-1.mp3",
+      "durationSeconds": 9.528,
+      "textSha256": "c09cb80a02112e315b5db696fd8a733ae006649298ee208d226d62af1cbac4b4"
+    },
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "resistencia",
+      "audio": "/audio/salome-logro-clase-2.mp3",
+      "durationSeconds": 9.24,
+      "textSha256": "22f14186d846e136da18af3ca342e8cc03d6a46e5381076fab70b756d04d7591"
+    },
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "serie",
+      "audio": "/audio/salome-logro-clase-3.mp3",
+      "durationSeconds": 11.544,
+      "textSha256": "0184ce5eb5a1e5fc36194e94b239fe4c44ddda36d981068042856dcef9cb271a"
+    },
+    {
+      "classId": "ley-de-ohm",
+      "stepId": "explorar",
+      "audio": "/audio/salome-logro-clase-4.mp3",
+      "durationSeconds": 8.208,
+      "textSha256": "e0ae014e41a49561e31a147e9f55a78a3f6e64eaafa135ea297dedfbf8e4fc75"
+    },
+    {
+      "classId": "circuitos-en-paralelo",
+      "stepId": "ramas",
+      "audio": "/audio/salome-logro-paralelo-1.mp3",
+      "durationSeconds": 9.36,
+      "textSha256": "e295236465e2274aedca2ba4af19a622c8da3e6521fd49ede7add0011467afe1"
+    },
+    {
+      "classId": "circuitos-en-paralelo",
+      "stepId": "cambiar-rama",
+      "audio": "/audio/salome-logro-paralelo-2.mp3",
+      "durationSeconds": 11.184,
+      "textSha256": "b0afd4e40ed5fa3890f8526fec696d40779f17fa2dbcd31e369b51448854c58e"
+    },
+    {
+      "classId": "circuitos-en-paralelo",
+      "stepId": "comparar",
+      "audio": "/audio/salome-logro-paralelo-3.mp3",
+      "durationSeconds": 9.792,
+      "textSha256": "93ac918fd0f873e005bdc59de20cf3d6a8601e697177be5e84dd260aa7856ed8"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# Añadir una clase
+
+Cada clase se define en un archivo de `src/classes/` que exporta un objeto de tipo `LabClass`. Usa `ohm.ts` o `parallel.ts` como ejemplo y registra el objeto en el arreglo `classes` de `src/lessons.ts`. El catálogo, la búsqueda, el número de pasos y el reproductor se actualizan automáticamente.
+
+La definición incluye un `id` único y estable, título, descripción, duración, nivel, `initialPreset`, `initialSelection` y una lista de `steps`. Los montajes disponibles son `simple`, `series`, `parallel` y `empty`. Los identificadores de componentes deben existir en el montaje usado: `V1`, `R1`, `R2` y `S1`.
+
+Cada paso tiene `id`, `title`, `text`, `task`, `audio`, `success`, `repairPreset` y `goals`. Las reglas se evalúan en orden; la primera pendiente determina la indicación visual y bloquea el avance:
+
+```ts
+goals: [
+  {kind:'value', part:'R2', value:200, unit:'Ω'},
+  {kind:'closed', part:'S1'},
+  {kind:'measurement', quantity:'current', value:0.09},
+  {kind:'inspect', parts:['R1','R2']}
+]
+```
+
+`value` exige el valor del componente; `closed` exige un interruptor cerrado; `measurement` comprueba corriente total en amperios o resistencia equivalente en ohmios y exige circuito cerrado; `inspect` requiere seleccionar todos los componentes indicados durante ese paso. Pon las condiciones eléctricas antes de `inspect`. Si dejan de cumplirse, se reinicia la comprobación de inspección. `goals: []` permite continuar tras leer el contenido. `repairPreset` señala el ejemplo que permite recuperar el montaje cuando falta un componente o no coincide una medición. La recuperación debe permitir completar las reglas del paso.
+
+El avatar lee título, explicación y tarea. `audio` apunta a un MP3 en `public/audio/` que se reproduce como narración principal. Puedes grabarlo o generar los audios de todas las clases con:
+
+```sh
+node --import tsx scripts/generate-narration.mjs
+```
+
+El generador requiere `edge-tts==7.3.1`, acceso a Internet y `ffprobe` en el entorno de generación. Usa por defecto la voz neural colombiana Salomé (`es-CO-SalomeNeural`) con ritmo −5 %; no se carga el sintetizador en la aplicación. `TTS_PYTHON`, `TTS_VOICE` y `TTS_RATE` permiten configurar la generación. Usa una ruta `/audio/nombre-unico.mp3` por paso, directamente dentro de la carpeta audio. Después ejecuta `npm test` y `npm run build`.
+
+El progreso se conserva por ID de clase al navegar dentro de la sesión de la página, incluidos circuito, selección, paso, componentes revisados y finalización. El modo libre tiene su propia sesión. Recargar la página reinicia ese progreso; Guardar/Recuperar sigue guardando únicamente un montaje en el navegador. El último paso completado ofrece acceso al modo libre; volver a una clase terminada permite revisarla.
+
+Esta estructura comparte el laboratorio de electrónica de corriente continua. Una práctica de otra disciplina requiere su propio modelo físico, componentes y reglas.
+
+## Estilo de los diálogos
+
+Escribe para alguien que empieza desde cero: explica primero para qué sirve un elemento y presenta después su nombre técnico. Introduce unidades y símbolos con su significado. Da instrucciones con los nombres visibles de los botones y termina indicando qué cambio debe observar el estudiante. Usa frases breves y un lenguaje cercano, sin presuponer que conoce términos como rama, serie o tensión. Mantén la explicación breve para que quepa en la tarjeta 3D.
+
+Después de cambiar título, explicación o actividad, regenera el audio. Las pruebas comparan el hash del texto pronunciado con el manifiesto de las grabaciones para detectar desajustes.
+
+## Confirmación al completar un paso
+
+Cada paso incluye `success: { text, audio }`. Escribe una confirmación breve que reconozca la acción y explique el resultado observado, por ejemplo: «¡Muy bien! Cerraste el camino y la corriente ya circula». Usa una ruta MP3 propia en `public/audio/`. El generador crea estas grabaciones además de la narración principal y registra sus hashes en `narration-manifest.json`. Reutiliza los audios cuyo texto, voz y ritmo no han cambiado.
+
+La guía confirma automáticamente cuando las reglas pasan de pendientes a cumplidas. La tarjeta muestra un estado verde persistente, cambia el botón a «Continuar» y reproduce la confirmación una vez por paso durante la sesión, respetando el silencio. Si el circuito deja de cumplir las reglas, la tarjeta vuelve a indicar qué falta. No se felicita por cargar una sesión ya resuelta ni por un paso meramente informativo. La guía minimizada se abre al completar una actividad. Al finalizar la clase, el modo libre muestra también la confirmación final.

@@ -1,0 +1,17 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { preset, solve, validate, connect } from './circuit';
+const near=(a:number,b:number)=>assert.ok(Math.abs(a-b)<1e-8,`${a} ≠ ${b}`);
+test('interruptor abierto impide corriente; al cerrar cumple Ohm',()=>{const c=preset('simple');assert.equal(solve(c).status,'open');near(solve(c).current,0);c.parts.find(p=>p.kind==='switch')!.closed=true;near(solve(c).current,.06);c.parts.find(p=>p.id==='R1')!.value=200;near(solve(c).current,.03);});
+test('serie: suma de resistencias, igual corriente y conservación de tensión',()=>{const r=solve(preset('series'));near(r.resistance,200);near(r.current,.03);near(r.readings.R1.current,r.readings.R2.current);near(r.readings.R1.voltage+r.readings.R2.voltage,6);});
+test('paralelo: misma tensión y suma de corrientes',()=>{const r=solve(preset('parallel'));near(r.resistance,50);near(r.current,.12);near(r.readings.R1.voltage,6);near(r.readings.R2.voltage,6);near(r.readings.R1.current+r.readings.R2.current,r.current);});
+test('red mixta arbitraria',()=>{const c=preset('parallel');c.parts.push({id:'R3',kind:'resistor',value:50,x:1,z:1});c.wires=c.wires.filter(w=>w.a!=='V1:0');c.wires.push({id:'a',a:'V1:0',b:'R3:0'},{id:'b',a:'R3:1',b:'R1:0'},{id:'c',a:'R3:1',b:'R2:0'});near(solve(c).resistance,100);near(solve(c).current,.06);});
+test('cortocircuito de fuente bloquea medición',()=>{const c=preset('series');c.wires.push({id:'short',a:'V1:0',b:'V1:1'});assert.equal(solve(c).status,'short');assert.deepEqual(solve(c).readings,{});});
+test('componentes flotantes no producen corriente ni red singular',()=>{const c=preset('empty');c.parts.push({id:'R1',kind:'resistor',value:100,x:0,z:0});const r=solve(c);assert.equal(r.status,'open');near(r.readings.R1.current,0);});
+test('rama sin retorno tiene corriente cero',()=>{const c=preset('simple');c.wires=c.wires.filter(w=>w.b!=='V1:1');const r=solve(c);near(r.current,0);near(r.readings.R1.current,0);});
+test('resistor puenteado tiene tensión cero',()=>{const c=preset('series');c.wires.push({id:'bypass',a:'R1:0',b:'R1:1'});const r=solve(c);near(r.resistance,100);near(r.readings.R1.voltage,0);});
+test('rechaza datos inválidos al recuperar un montaje',()=>{const c=preset('simple');c.parts[0].value=-3;assert.equal(validate(c),false);assert.throws(()=>solve(c));assert.equal(validate({parts:[],wires:[]}),false);});
+
+test('conectar construye un circuito nuevo sin alterar el anterior',()=>{const c=preset('empty');c.parts.push({id:'R1',kind:'resistor',value:100,x:0,z:0});const first=connect(c,'V1:0','R1:0');assert.notEqual(typeof first,'string');if(typeof first==='string')return;assert.equal(c.wires.length,0);const second=connect(first,'R1:1','V1:1');assert.notEqual(typeof second,'string');if(typeof second!=='string')near(solve(second).current,.06);});
+test('rechaza conexiones duplicadas, invertidas, inexistentes y al mismo terminal',()=>{const c=preset('simple');for(const [a,b] of [['V1:0','R1:0'],['R1:0','V1:0'],['R1:0','R1:0'],['R99:0','V1:0']])assert.equal(typeof connect(c,a,b),'string');assert.equal(c.wires.length,3);});
+test('conectar ambos polos permite estudiar un cortocircuito',()=>{const result=connect(preset('empty'),'V1:0','V1:1');assert.notEqual(typeof result,'string');if(typeof result!=='string')assert.equal(solve(result).status,'short');});

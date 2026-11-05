@@ -1,0 +1,55 @@
+/* Let the simulation occupy the full workspace. */
+#lab-view .workspace{display:flex;flex-direction:column;gap:18px}
+#lab-view .lab-stage{width:100%;min-width:0}
+#lab-view .viewport{height:clamp(640px,74vh,850px);min-height:640px}
+#lab-view .right{width:100%;padding:18px 22px}
+#lab-view .right>.panel-heading{display:none}
+#lab-view .guide{display:grid;grid-template-columns:210px minmax(0,1fr) 190px;column-gap:24px;align-items:start}
+#lab-view .guide-top{grid-column:1;grid-row:1 / 4;margin:12px 0 0;align-items:center}
+#lab-view .guide>.progress{grid-column:2;grid-row:1;margin:0 0 16px}
+#lab-view .speech-bubble{grid-column:2;grid-row:2 / 5;margin:0;padding:18px 22px}
+#lab-view .speech-bubble:before{display:none}
+#lab-view .guide .speech-bubble h2{font-size:23px;margin:6px 0 10px}
+#lab-view .narration-controls{grid-column:3;grid-row:1 / 3;margin-top:0}
+#lab-view #next{grid-column:3;grid-row:3;margin-top:12px;white-space:normal}
+#lab-view .voice-actions{flex-wrap:wrap}
+#lab-view .view-top{align-items:center}
+#lab-view .camera-tools{flex-direction:row;flex-wrap:wrap;justify-content:flex-end;gap:5px}
+#lab-view .guide-cue{left:26%;right:26%;top:auto;bottom:94px;width:auto;max-width:none;font-size:11px;line-height:1.5;text-align:center;padding:10px 14px}
+#lab-view .view-help{bottom:60px;left:26%;right:26%;justify-content:center;font-size:9px}
+#lab-view .accessible-controls{margin-top:18px;border:1px solid #e2e2e2;border-radius:8px;background:white;padding:12px 18px;color:#777;font-size:11px}
+#lab-view .accessible-controls>summary{cursor:pointer;list-style:revert;font-weight:500}
+#lab-view .accessible-controls-content{display:grid;grid-template-columns:minmax(240px,400px) minmax(240px,1fr);gap:24px;margin-top:18px}
+#lab-view .accessible-controls .left{display:block;height:auto;min-height:0;width:100%}
+#lab-view .accessible-controls .connections{margin:0}
+#lab-view .heading{margin-bottom:18px}
+#lab-view .breadcrumb{margin-bottom:16px}
+#lab-view .free-guide{grid-template-columns:210px minmax(0,1fr)}
+@media(max-width:1000px){#lab-view .guide{grid-template-columns:180px minmax(0,1fr);gap:16px}#lab-view .narration-controls{grid-column:1;grid-row:4}#lab-view #next{grid-column:2;grid-row:5;margin:0}#lab-view .heading{flex-wrap:wrap}#lab-view .heading-actions{align-self:auto}.in-lab{--sidebar-width:66px}}
+@media(max-width:680px){#lab-view .viewport{height:640px;min-height:640px}#lab-view .guide,#lab-view .free-guide{display:block}#lab-view .guide-top{margin:0 0 18px}#lab-view .narration-controls{margin-top:16px}#lab-view #next{margin-top:12px}#lab-view .accessible-controls-content{display:block}#lab-view .accessible-controls .connections{margin-top:18px}#lab-view .view-top>span{display:none}#lab-view .camera-tools button{font-size:9px;padding:6px}#lab-view .guide-cue{left:22%;right:22%;font-size:10px}#lab-view .view-help{display:none}}
+
+/* Compact navigation leaves room for the two scene panels and the circuit. */
+.in-lab{--sidebar-width:66px}
+.in-lab .sidebar-brand-name,.in-lab .nav-label,.in-lab .nav-chevron,.in-lab .nav-section-label,.in-lab .sidebar-search kbd,.in-lab .sidebar-version{display:none}
+.in-lab .app-sidebar{padding-left:9px;padding-right:9px}
+.in-lab .app-sidebar .brand{padding:0 8px 23px}
+.in-lab .sidebar-search,.in-lab .nav-item{justify-content:center;padding-left:9px;padding-right:9px}
+.in-lab .sidebar-footer{justify-content:center;margin-left:-9px;margin-right:-9px}
+.in-lab #collapse-sidebar{display:none}
+
+.current-legend{color:#998018}.current-legend::first-letter{color:#e9bc00}
+
+/* Dialogue and avatar occupy the lower part of the actual 3D scene. */
+#lab-view .viewport{height:clamp(860px,95vh,1100px);min-height:860px}
+#lab-view #guide-cue{display:none}
+#lab-view .view-help{bottom:248px}
+#lab-view .wire-tools{bottom:270px;left:50%;transform:translateX(-50%)}
+#lab-view .accessible-controls .right{grid-column:1 / -1}
+#lab-view .viewport:fullscreen{width:100vw;height:100dvh;min-height:0;border-radius:0}
+@media(max-width:680px){#lab-view .viewport{height:860px;min-height:860px}#lab-view .wire-tools{bottom:190px}#lab-view .viewport:fullscreen{min-height:0}}
+
+/* A corner guide leaves the centre and the lower edge of the circuit unobstructed. */
+#lab-view .view-help{bottom:58px;left:20%;right:39%;justify-content:center;flex-wrap:wrap}
+#lab-view .wire-tools{bottom:85px;left:40%}
+
+.xr-status{font-size:11px;line-height:1.5;color:#6c7d73;margin:0 0 12px}.quest-preview-active .view-help,.quest-preview-active .wire-tools{display:none}

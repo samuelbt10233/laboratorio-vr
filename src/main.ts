@@ -1,3 +1,4 @@
+import { routeWire } from './wire-routing';
 import { LED_MODEL, ledState } from './led-solver';
 import { Engine, Scene, Camera, ArcRotateCamera, Vector3, HemisphericLight, DirectionalLight, MeshBuilder, StandardMaterial, Color3, Color4, DynamicTexture, PointerEventTypes, PointerDragBehavior, Mesh, TransformNode } from '@babylonjs/core';
 import { preset, solve, validate, terminal, connect, type Circuit, type Part } from './circuit';
@@ -168,7 +169,12 @@ for(const p of circuit.parts){const root=new TransformNode(p.id,scene);root.pare
 for(const side of [0,1]){const pin=MeshBuilder.CreateSphere('pin',{diameter:.38,segments:16},scene);pin.parent=root;pin.position.set(side===0?-.95:.95,.22,0);pin.material=p.kind==='source'&&side===0?red:metal;pin.metadata={terminal:terminal(p.id,side),part:p.id,baseMaterial:pin.material};terminalMeshes.set(terminal(p.id,side),pin);}
 const drag=new PointerDragBehavior({dragPlaneNormal:new Vector3(0,1,0)});drag.moveAttached=false;body.addBehavior(drag);drag.onDragStartObservable.add(()=>{if(selected!==p.id){selected=p.id;update();}});drag.onDragObservable.add(e=>{tableRoot.computeWorldMatrix(true);const localDelta=Vector3.TransformNormal(e.delta,tableRoot.getWorldMatrix().clone().invert());const moved=movePartOnTable(root.position.x,root.position.z,localDelta.x,localDelta.z);root.position.x=moved.x;root.position.z=moved.z;p.x=root.position.x;p.z=root.position.z;drawWires();if(e.delta.lengthSquared()>0)recordTutorialAction('move');});}
 drawWires();update();}
-function drawWires(){const paths=new Map<string,Vector3[]>();wireMeshes.forEach(m=>m.dispose());wireMeshes=[];for(const w of circuit.wires){const ma=terminalMeshes.get(w.a),mb=terminalMeshes.get(w.b);if(!ma||!mb)continue;ma.computeWorldMatrix(true);mb.computeWorldMatrix(true);tableRoot.computeWorldMatrix(true);const inverse=tableRoot.getWorldMatrix().clone().invert();const a=Vector3.TransformCoordinates(ma.getAbsolutePosition(),inverse),b=Vector3.TransformCoordinates(mb.getAbsolutePosition(),inverse);const path=[a.clone(),new Vector3(a.x,.1,a.z),new Vector3(a.x,.1,(a.z+b.z)/2),new Vector3(b.x,.1,(a.z+b.z)/2),new Vector3(b.x,.1,b.z),b.clone()];const mesh=MeshBuilder.CreateTube('cable',{path,radius:.035,tessellation:8},scene);mesh.parent=tableRoot;mesh.material=teal;mesh.isPickable=false;wireMeshes.push(mesh);paths.set(w.id,path);}currentAnimation.setPaths(paths);}
+function drawWires(){
+  const paths=new Map<string,Vector3[]>();wireMeshes.forEach(m=>m.dispose());wireMeshes=[];
+  circuit.wires.forEach((wire,index)=>{const path=routeWire(circuit,wire,index).map(p=>new Vector3(p.x,p.y,p.z));if(path.length<2)return;
+    const mesh=MeshBuilder.CreateTube('cable',{path,radius:.045,tessellation:10,cap:Mesh.CAP_ALL},scene);mesh.parent=tableRoot;mesh.material=teal;mesh.isPickable=false;wireMeshes.push(mesh);paths.set(wire.id,path);
+  });currentAnimation.setPaths(paths);
+}
 function terminalName(id:string){const [part,side]=id.split(':');const kind=circuit.parts.find(p=>p.id===part)?.kind;const source=kind==='source';return `${part} · ${source?(side==='0'?'+':'−'):kind==='led'?(side==='0'?'A +':'K −'):(side==='0'?'A':'B')}`;}
 function connectTerminals(a:string,b:string){
   const next=connect(circuit,a,b);

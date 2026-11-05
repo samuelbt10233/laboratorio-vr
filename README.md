@@ -135,3 +135,9 @@ El cálculo nodal enumera los estados de hasta cuatro LED; una conductancia num�
 ### Mesa inclinada
 
 La superficie de trabajo se eleva 40° hacia el fondo, tanto en PC como en VR (`questLayout.tableTilt`). Componentes, terminales, cables y corriente comparten la transformación de la mesa; el monitor permanece vertical. El arrastre convierte el desplazamiento del espacio a coordenadas de la superficie, manteniendo sus límites. Las patas se adaptan a la altura de cada punto de apoyo. La posición guardada de los elementos sigue usando las coordenadas locales de la mesa.
+
+### Recorrido de los cables
+
+`wire-routing.ts` calcula rutas ortogonales en las coordenadas locales de la mesa. Cada cable sale hacia fuera del terminal, deja margen alrededor de las bases de los dispositivos y busca un camino libre sobre la superficie. Pequeñas diferencias de margen y altura separan rutas próximas y cruces. Los cables tienen mayor grosor y sus extremos permanecen unidos a los terminales.
+
+Al mover cualquier componente se recalculan todos los recorridos, incluidas las esferas de corriente. Si la colocación bloquea las salidas laterales o no deja un paso libre, se usa un puente por encima de los dispositivos. Superponer físicamente dos componentes todavía puede ocultar sus propios terminales; el trazado no cambia la posición del montaje. La geometría del cable es visual y no altera las conexiones ni los cálculos eléctricos. Las pruebas comprueban terminales, desvíos alrededor de obstáculos, movimiento, rutas elevadas y separación de carriles.

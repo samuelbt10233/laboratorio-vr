@@ -93,8 +93,8 @@ export class SpatialGuide {
       if(line)text(line,x,y,size,color);return y+lineHeight;
     };
     const button=(id:string,label:string,x:number,y:number,w:number,h:number,primary=false,disabled=false)=>{
-      ctx.fillStyle=disabled?'#e5eae4':this.hovered===id?'#c9dfd1':primary?(c.ready?'#fff0b8':'#254b3c'):'#ffffff';ctx.fillRect(x,y,w,h);ctx.lineWidth=c.ready&&primary?5:2;ctx.strokeStyle=c.ready&&primary?'#bd8a16':'#c1d1c6';ctx.strokeRect(x,y,w,h);
-      ctx.textAlign='center';ctx.fillStyle=disabled?'#8e9b92':primary&&!c.ready?'#ffffff':'#294d3d';ctx.font='500 29px sans-serif';ctx.fillText(label,x+w/2,y+h/2+10);ctx.textAlign='left';if(!disabled)this.hits.push({id,x,y,w,h});
+      ctx.fillStyle=disabled?'#e5eae4':this.hovered===id?'#c9dfd1':primary?(c.ready?'#fff0b8':'#254b3c'):'#dce9e3';ctx.fillRect(x,y,w,h);ctx.lineWidth=c.ready&&primary?5:3;ctx.strokeStyle=c.ready&&primary?'#bd8a16':'#789583';ctx.strokeRect(x,y,w,h);
+      ctx.textAlign='center';ctx.fillStyle=disabled?'#8e9b92':primary&&!c.ready?'#ffffff':'#294d3d';ctx.font='600 29px sans-serif';ctx.fillText(label,x+w/2,y+h/2+10);ctx.textAlign='left';if(!disabled)this.hits.push({id,x,y,w,h});
     };
     if(this.minimized){
       text(c.confirmation?'¡Paso completado!':'Tu guía virtual',150,49,38,'#244435',true);

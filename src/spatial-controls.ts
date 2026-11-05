@@ -76,7 +76,7 @@ export class SpatialControls {
       const text=(value:string,x:number,y:number,size=29,color='#49605c',bold=false)=>{ctx.fillStyle=color;ctx.font=`${bold?'600':'400'} ${size}px sans-serif`;ctx.textAlign='left';ctx.fillText(value,x,y);};
       const line=(y:number)=>{ctx.fillStyle='#d9e2dd';ctx.fillRect(32,y,496,2);};
       const button=(id:string,label:string,x:number,y:number,w=496,h=80,active=false)=>{
-        const guide=this.highlighted===id;ctx.fillStyle=guide?'#fff0b8':this.hovered===id?'#dfeae4':active?'#d8e8e0':'#ffffff';ctx.fillRect(x,y,w,h);ctx.strokeStyle=guide?'#b77a00':active?'#789d89':'#cbd7d0';ctx.lineWidth=guide?6:2;ctx.strokeRect(x,y,w,h);ctx.fillStyle='#26483e';ctx.font='500 30px sans-serif';ctx.textAlign='center';ctx.fillText(label,x+w/2,y+h/2+10);ctx.textAlign='left';panel.hits.push({id,x,y,w,h});
+        const guide=this.highlighted===id;ctx.fillStyle=guide?'#fff0b8':this.hovered===id?'#b9d9c8':active?'#bfdcca':'#dce9e3';ctx.fillRect(x,y,w,h);ctx.strokeStyle=guide?'#b77a00':active?'#477b5d':'#789583';ctx.lineWidth=guide?6:3;ctx.strokeRect(x,y,w,h);ctx.fillStyle='#173b2a';ctx.font='600 30px sans-serif';ctx.textAlign='center';ctx.fillText(label,x+w/2,y+h/2+10);ctx.textAlign='left';panel.hits.push({id,x,y,w,h});
       };
       text(index===0?'BANCO DE TRABAJO':'COMPONENTE ACTIVO',32,58,26,'#688175',true);line(85);
       if(index===0){

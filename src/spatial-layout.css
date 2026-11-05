@@ -53,3 +53,16 @@
 #lab-view .wire-tools{bottom:85px;left:40%}
 
 .xr-status{font-size:11px;line-height:1.5;color:#6c7d73;margin:0 0 12px}.quest-preview-active .view-help,.quest-preview-active .wire-tools{display:none}
+
+/* Opaque controls stay legible against the scene and the graph monitor. */
+#lab-view .camera-tools{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;min-width:0;gap:7px;padding:8px;background:#172c34;border:1px solid #56717a;border-radius:10px;box-shadow:0 5px 16px #0005}
+#lab-view .camera-tools button{flex-shrink:0;min-height:34px;padding:8px 11px;background:#f2f6f3;color:#17352b;border:1px solid #9bb5a8;border-radius:6px;font-size:11px;font-weight:600;line-height:1.25;box-shadow:0 2px 0 #0003;opacity:1}
+#lab-view .camera-tools button:hover:not(:disabled){background:#d4eadc;border-color:#6baf89;color:#102c20}
+#lab-view .camera-tools button[aria-pressed="true"]{background:#bfe4cf;border-color:#74bb92;color:#143e29}
+#lab-view .camera-tools button:active:not(:disabled){background:#acd6bd;box-shadow:none;transform:translateY(1px)}
+#lab-view .camera-tools button:focus-visible{outline:3px solid #ffd66e;outline-offset:3px}
+#lab-view .camera-tools button:disabled{background:#c5d0d3;color:#45585f;border-color:#83989e;box-shadow:none;cursor:not-allowed;opacity:1}
+.quest-preview-active #lab-view #quest-preview{background:#ffe29b;border-color:#cba847;color:#443205}
+@media(max-width:680px){#lab-view .camera-tools{gap:5px;padding:6px;max-width:100%}#lab-view .camera-tools button{font-size:10px;padding:7px 9px;min-height:32px}}
+
+@media(max-width:1000px){#lab-view .view-top>span{display:none}#lab-view .camera-tools{max-width:100%;width:100%}}

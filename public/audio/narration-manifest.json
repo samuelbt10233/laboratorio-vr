@@ -4,6 +4,62 @@
   "generator": "edge-tts 7.3.1",
   "recordings": [
     {
+      "classId": "primeros-pasos",
+      "stepId": "bienvenida",
+      "audio": "/audio/salome-tutorial-bienvenida.mp3",
+      "durationSeconds": 43.08,
+      "textSha256": "044d801a42efd13d4cbb413af285cc5bdef6b27e3929ec2e906976d7bd15764d"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "seleccionar",
+      "audio": "/audio/salome-tutorial-seleccionar.mp3",
+      "durationSeconds": 24.144,
+      "textSha256": "19c2dc8421c66df75f1dc07cccc59c52ed12895a7026d7843e36923f616471c9"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "mover",
+      "audio": "/audio/salome-tutorial-mover.mp3",
+      "durationSeconds": 24.408,
+      "textSha256": "0da64e98f95b987798aaf66f1934dbfd0cb15e4331bb756bbfc1a8b6832eef38"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "valor",
+      "audio": "/audio/salome-tutorial-valor.mp3",
+      "durationSeconds": 26.664,
+      "textSha256": "d51a78df2245424512575693309dac036d34166f29aa3d3fb92db939c1ce4200"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "interruptor",
+      "audio": "/audio/salome-tutorial-interruptor.mp3",
+      "durationSeconds": 23.16,
+      "textSha256": "cec79f357c295b04c949eb226aeece9d7efd079c32974b7404f74392427cf5ed"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "cables",
+      "audio": "/audio/salome-tutorial-cables.mp3",
+      "durationSeconds": 35.448,
+      "textSha256": "89336ee508824e4814fdc3853290e37d457dc4ba71001ef5a7df5bc772f97d06"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "graficas",
+      "audio": "/audio/salome-tutorial-graficas.mp3",
+      "durationSeconds": 28.944,
+      "textSha256": "ca8bcb2066a773608cb72b9ec46182d776dcb0da57bc665330775709f09daf85"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "guardar",
+      "audio": "/audio/salome-tutorial-guardar.mp3",
+      "durationSeconds": 43.224,
+      "textSha256": "caf86db479b15c705b01859c18d6bd49f53373b1d2fab05e0e3baf7847b3f32f"
+    },
+    {
       "classId": "ley-de-ohm",
       "stepId": "cerrar",
       "audio": "/audio/salome-intro-clase-1.mp3",
@@ -54,6 +110,62 @@
     }
   ],
   "confirmations": [
+    {
+      "classId": "primeros-pasos",
+      "stepId": "bienvenida",
+      "audio": "/audio/salome-tutorial-logro-bienvenida.mp3",
+      "durationSeconds": 5.16,
+      "textSha256": "51aeb628d433d78cede4743174dc5fbc351340e9c95e0a579b23b8bb0b187c54"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "seleccionar",
+      "audio": "/audio/salome-tutorial-logro-seleccionar.mp3",
+      "durationSeconds": 8.496,
+      "textSha256": "c333e80ddcf34daa0d0e0c83a31dff7a8d91eefe70b771a273cdd66224671d1f"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "mover",
+      "audio": "/audio/salome-tutorial-logro-mover.mp3",
+      "durationSeconds": 8.088,
+      "textSha256": "595d6998d199b5ee97439a820fd85c70da91d1a6fea24cec72dc2c634500946d"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "valor",
+      "audio": "/audio/salome-tutorial-logro-valor.mp3",
+      "durationSeconds": 8.76,
+      "textSha256": "60e34120dab05f2cbd003d4796a1b44fe07b41d9e1dcf0cf76e523995306594c"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "interruptor",
+      "audio": "/audio/salome-tutorial-logro-interruptor.mp3",
+      "durationSeconds": 7.824,
+      "textSha256": "2a67f1be3c554dab2d32117416ea3f801ec972f9b3aa37fc55baacfc41f254e3"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "cables",
+      "audio": "/audio/salome-tutorial-logro-cables.mp3",
+      "durationSeconds": 8.232,
+      "textSha256": "58f4089699bf1a79a4ffb6d74e4e3d73eb924b2352859f3e2fa0df4af293248e"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "graficas",
+      "audio": "/audio/salome-tutorial-logro-graficas.mp3",
+      "durationSeconds": 7.752,
+      "textSha256": "cd400a24c94724b8bc22effbdc7848b8f0df9df4e5263ff3ecb479192f6c6c26"
+    },
+    {
+      "classId": "primeros-pasos",
+      "stepId": "guardar",
+      "audio": "/audio/salome-tutorial-logro-guardar.mp3",
+      "durationSeconds": 9.768,
+      "textSha256": "f24cd19b33fdc3f9f9c466be656356110d11358b01e1fbab265ac77b751cd222"
+    },
     {
       "classId": "ley-de-ohm",
       "stepId": "cerrar",

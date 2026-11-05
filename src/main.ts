@@ -4,7 +4,7 @@ import './style.css';
 import './cloud-theme.css';
 import { Narrator, type NarrationState } from './narration';
 import { classes, getClass } from './lessons';
-import { pendingGoal, SessionStore, classSessionKey } from './class-engine';
+import { recordAppAction, pendingGoal, SessionStore, classSessionKey } from './class-engine';
 import { layout } from './template';
 import { CircuitCharts } from './circuit-charts';
 import { SpatialControls } from './spatial-controls';
@@ -55,7 +55,7 @@ function syncSpatialGuide(){
   spatialGuide.update({confirmation:mode==='class'&&guideReady&&activeClass.steps[step].goals.length?activeClass.steps[step].success.text:mode==='free'?freeCompletion?.text:undefined,title:$('#lesson-title').textContent??'',text:$('#lesson-text').textContent??'',task:$('#lesson-task').textContent??'',hint:mode==='class'?$('#guide-cue').textContent??'':'',tag:$('#guide-tag').textContent??'',progress:mode==='class'?(step+1)/activeClass.steps.length:1,classMode:mode==='class',lastStep:step===activeClass.steps.length-1,ready:guideReady,voice:narrationState,status:$('#voice-status').textContent??''});
 }
 const overview=()=>{if(xrRuntime?.isImmersive())return;navigationKeys.clear();camera.inertialPanningX=0;camera.inertialPanningY=0;camera.target=new Vector3(0,0,-1.2);camera.alpha=-Math.PI/2;camera.beta=1.05;camera.radius=22;};
-function focusCharts(section?:'iv'|'voltage'){if(xrRuntime?.isImmersive()){xrRuntime.message('Las gráficas están detrás de la mesa. Apunta con el mando para seleccionar.');return;}circuitCharts.setVisible(true);$('#toggle-charts').setAttribute('aria-pressed','true');$('#toggle-charts').textContent='Ocultar gráficas';const target=circuitCharts.position.clone();if(section)target.x+=section==='iv'?-2.2:2.2;camera.target=target;camera.alpha=-Math.PI/2;camera.beta=1.35;camera.radius=section?7:12;}
+function focusCharts(section?:'iv'|'voltage'){recordTutorialAction('charts');if(xrRuntime?.isImmersive()){xrRuntime.message('Las gráficas están detrás de la mesa. Apunta con el mando para seleccionar.');return;}circuitCharts.setVisible(true);$('#toggle-charts').setAttribute('aria-pressed','true');$('#toggle-charts').textContent='Ocultar gráficas';const target=circuitCharts.position.clone();if(section)target.x+=section==='iv'?-2.2:2.2;camera.target=target;camera.alpha=-Math.PI/2;camera.beta=1.35;camera.radius=section?7:12;}
 $('#focus-charts').onclick=()=>focusCharts();
 $('#fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await $('.viewport').requestFullscreen();}catch{toast('No se pudo activar la pantalla completa en este navegador.');}};
 document.addEventListener('fullscreenchange',()=>{$('#fullscreen').textContent=document.fullscreenElement?'Salir de pantalla completa':'Pantalla completa';});
@@ -154,21 +154,21 @@ function updateSelection(){
 function rebuild(){pending=null;updateHint();nodes.forEach(n=>{n.getChildMeshes().forEach(m=>{if(m.material?.name==='text')m.material.dispose(false,true);});n.dispose();});nodes=[];terminalMeshes.clear();
 for(const p of circuit.parts){const root=new TransformNode(p.id,scene);root.parent=labRoot;root.position.set(p.x,0,p.z);nodes.push(root);const body=partVisual(root,p);
 for(const side of [0,1]){const pin=MeshBuilder.CreateSphere('pin',{diameter:.38,segments:16},scene);pin.parent=root;pin.position.set(side===0?-.95:.95,.22,0);pin.material=p.kind==='source'&&side===0?red:metal;pin.metadata={terminal:terminal(p.id,side),part:p.id,baseMaterial:pin.material};terminalMeshes.set(terminal(p.id,side),pin);}
-const drag=new PointerDragBehavior({dragPlaneNormal:new Vector3(0,1,0)});drag.moveAttached=false;body.addBehavior(drag);drag.onDragStartObservable.add(()=>{if(selected!==p.id){selected=p.id;update();}});drag.onDragObservable.add(e=>{const moved=movePartOnTable(root.position.x,root.position.z,e.delta.x/labRoot.scaling.x,e.delta.z/labRoot.scaling.z);root.position.x=moved.x;root.position.z=moved.z;p.x=root.position.x;p.z=root.position.z;drawWires();});}
+const drag=new PointerDragBehavior({dragPlaneNormal:new Vector3(0,1,0)});drag.moveAttached=false;body.addBehavior(drag);drag.onDragStartObservable.add(()=>{if(selected!==p.id){selected=p.id;update();}});drag.onDragObservable.add(e=>{const moved=movePartOnTable(root.position.x,root.position.z,e.delta.x/labRoot.scaling.x,e.delta.z/labRoot.scaling.z);root.position.x=moved.x;root.position.z=moved.z;p.x=root.position.x;p.z=root.position.z;drawWires();if(e.delta.lengthSquared()>0)recordTutorialAction('move');});}
 drawWires();update();}
 function drawWires(){const paths=new Map<string,Vector3[]>();wireMeshes.forEach(m=>m.dispose());wireMeshes=[];for(const w of circuit.wires){const ma=terminalMeshes.get(w.a),mb=terminalMeshes.get(w.b);if(!ma||!mb)continue;ma.computeWorldMatrix(true);mb.computeWorldMatrix(true);labRoot.computeWorldMatrix(true);const inverse=labRoot.getWorldMatrix().clone().invert();const a=Vector3.TransformCoordinates(ma.getAbsolutePosition(),inverse),b=Vector3.TransformCoordinates(mb.getAbsolutePosition(),inverse);const path=[a.clone(),new Vector3(a.x,.1,a.z),new Vector3(a.x,.1,(a.z+b.z)/2),new Vector3(b.x,.1,(a.z+b.z)/2),new Vector3(b.x,.1,b.z),b.clone()];const mesh=MeshBuilder.CreateTube('cable',{path,radius:.035,tessellation:8},scene);mesh.parent=labRoot;mesh.material=teal;mesh.isPickable=false;wireMeshes.push(mesh);paths.set(w.id,path);}currentAnimation.setPaths(paths);}
 function terminalName(id:string){const [part,side]=id.split(':');const source=circuit.parts.find(p=>p.id===part)?.kind==='source';return `${part} · ${source?(side==='0'?'+':'−'):(side==='0'?'A':'B')}`;}
 function connectTerminals(a:string,b:string){
   const next=connect(circuit,a,b);
   if(typeof next==='string'){toast(next);return false;}
-  circuit=next;pending=null;drawWires();updateHint();update();toast(`Conectado: ${terminalName(a)} ↔ ${terminalName(b)}`);return true;
+  circuit=next;pending=null;recordTutorialAction('connect',{a,b});drawWires();updateHint();update();toast(`Conectado: ${terminalName(a)} ↔ ${terminalName(b)}`);return true;
 }
 function pickTerminal(id:string){if(!pending){pending=id;updateHint();return;}if(pending===id){pending=null;updateHint();return;}connectTerminals(pending,id);}
 const spatialControls=new SpatialControls(scene,camera,id=>{
-  if(id.startsWith('move:')){const part=circuit.parts.find(p=>p.id===selected);if(part){const moved=movePartOnTable(part.x,part.z,id==='move:left'?-.4:id==='move:right'?.4:0,id==='move:away'?.4:id==='move:near'?-.4:0);Object.assign(part,moved);rebuild();}return;}
+  if(id.startsWith('move:')){const part=circuit.parts.find(p=>p.id===selected);if(part){const moved=movePartOnTable(part.x,part.z,id==='move:left'?-.4:id==='move:right'?.4:0,id==='move:away'?.4:id==='move:near'?-.4:0);const changed=part.x!==moved.x||part.z!==moved.z;Object.assign(part,moved);rebuild();if(changed)recordTutorialAction('move');}return;}
   if(id.startsWith('part:')){selected=id.slice(5);update();return;}
   if(id.startsWith('pin:')){pickTerminal(id.slice(4));return;}
-  if(id.startsWith('wire:')){circuit.wires=circuit.wires.filter(w=>w.id!==id.slice(5));drawWires();update();return;}
+  if(id.startsWith('wire:')){const removed=circuit.wires.find(w=>w.id===id.slice(5));circuit.wires=circuit.wires.filter(w=>w.id!==id.slice(5));recordTutorialAction('disconnect',removed);drawWires();update();return;}
   if(id==='increase'||id==='decrease'){
     const part=circuit.parts.find(p=>p.id===selected);const input=document.querySelector<HTMLInputElement>('#inspector input');
     if(part&&input){input.value=String(Math.max(Number(input.min),Math.min(Number(input.max),part.value+(id==='increase'?1:-1)*(part.kind==='source'?1:10))));$('#inspector .apply-value').click();}return;
@@ -224,7 +224,7 @@ if(p.kind!=='switch'){const lab=document.createElement('label');lab.textContent=
 else{const button=document.createElement('button');button.className='switch-button';button.textContent=p.closed?'● Cerrado · pulsar para abrir':'○ Abierto · pulsar para cerrar';button.onclick=()=>{p.closed=!p.closed;rebuild();};inspector.append(button);}
 const reading=result.readings[p.id];if(reading){const text=document.createElement('p');text.className='reading';text.textContent=`${Math.abs(reading.voltage).toFixed(2)} V · ${(Math.abs(reading.current)*1000).toFixed(1)} mA · ${reading.power.toFixed(3)} W`;inspector.append(text);}if(p.kind!=='source'){const remove=document.createElement('button');remove.className='text-button';remove.textContent='Eliminar componente';remove.onclick=()=>{circuit.parts=circuit.parts.filter(x=>x.id!==p.id);circuit.wires=circuit.wires.filter(w=>!w.a.startsWith(`${p.id}:`)&&!w.b.startsWith(`${p.id}:`));selected='V1';rebuild();};inspector.append(remove);}}
 else inspector.textContent='Selecciona un componente en la mesa.';
-$('#wire-count').textContent=`(${circuit.wires.length})`;const list=$('#wire-list');list.replaceChildren();for(const w of circuit.wires){const row=document.createElement('div');row.className='wire-row';const text=document.createElement('span');text.textContent=`${terminalName(w.a)} ↔ ${terminalName(w.b)}`;const button=document.createElement('button');button.textContent='×';button.setAttribute('aria-label',`Eliminar cable ${w.a} a ${w.b}`);button.onclick=()=>{circuit.wires=circuit.wires.filter(x=>x.id!==w.id);drawWires();update();};row.append(text,button);list.append(row);}updateConnectionOptions();renderLesson();}
+$('#wire-count').textContent=`(${circuit.wires.length})`;const list=$('#wire-list');list.replaceChildren();for(const w of circuit.wires){const row=document.createElement('div');row.className='wire-row';const text=document.createElement('span');text.textContent=`${terminalName(w.a)} ↔ ${terminalName(w.b)}`;const button=document.createElement('button');button.textContent='×';button.setAttribute('aria-label',`Eliminar cable ${w.a} a ${w.b}`);button.onclick=()=>{circuit.wires=circuit.wires.filter(x=>x.id!==w.id);recordTutorialAction('disconnect',w);drawWires();update();};row.append(text,button);list.append(row);}updateConnectionOptions();renderLesson();}
 function updateConnectionOptions(){
   for(const selector of ['#wire-from','#wire-to']){const select=$<HTMLSelectElement>(selector);const previous=select.value;select.replaceChildren();const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Selecciona un terminal';select.append(placeholder);for(const p of circuit.parts)for(const side of [0,1]){const option=document.createElement('option');option.value=terminal(p.id,side);option.textContent=terminalName(option.value);select.append(option);}if(Array.from(select.options).some(o=>o.value===previous))select.value=previous;}
 }
@@ -253,6 +253,10 @@ function cuePart(id:string){
   const arrow=decorate(MeshBuilder.CreateCylinder('lesson target arrow',{diameterTop:0,diameterBottom:.22,height:.32,tessellation:12},scene),root,cueMaterial);arrow.rotation.z=Math.PI;arrow.position.set(0,1.08,0);
   cueMeshes.push(ring,arrow);
 }
+function recordTutorialAction(action:import('./class-engine').AppAction,wire?:{a:string;b:string}){
+  if(mode!=='class'||currentView!=='lab')return;
+  if(recordAppAction(activeClass.steps[step],{circuit,selected,seen:inspectedParts},action,wire))refreshGuidance();
+}
 function refreshGuidance(){
   clearGuidance();if(mode!=='class'){cueStep=-1;inspectedParts.clear();spatialControls.update(circuit,solve(circuit),selected,pending);syncSpatialGuide();return;}
   if(cueStep!==step){inspectedParts.clear();cueStep=step;}
@@ -262,8 +266,13 @@ function refreshGuidance(){
   const celebrate=stepConfirmation.observe(`${activeClass.id}:${lesson.id}`,guideReady,lesson.goals.length>0);
   if(goal&&narrationPurpose==='confirmation'){narrationPurpose='lesson';narrator.stop();}
   let hint='';
-  if(!goal){hint=step===activeClass.steps.length-1?'Has terminado. Pulsa «Finalizar y explorar» para hacer tus propias pruebas.':'Lo has conseguido. Pulsa «Comprobar y continuar» para seguir.';cueElement('#next','Continuar');}
-  else if(goal.kind==='repair'){
+  if(!goal){hint=lesson.goals.length===0?(lesson.hint??lesson.task):step===activeClass.steps.length-1?'Has terminado. Pulsa «Finalizar y explorar» para hacer tus propias pruebas.':'Lo has conseguido. Pulsa «Comprobar y continuar» para seguir.';cueElement('#next','Continuar');}
+  else if(goal.kind==='action'){
+    hint=goal.hint;if(goal.target)spatialControls.highlight(goal.target);
+    if(goal.action==='move')cuePart(selected);
+    if(goal.action==='charts')cueElement('#focus-charts','Consultar monitor');
+    if(goal.action==='save')cueElement('#save','Guardar montaje');
+  }else if(goal.kind==='repair'){
     hint=`Pulsa «${goal.preset==='simple'?'Simple':goal.preset==='series'?'Serie':'Paralelo'}» en el panel izquierdo para volver al circuito de este paso.`;
     cueElement(`[data-preset="${goal.preset}"]`,'Retomar montaje');
   }else{
@@ -320,7 +329,7 @@ function nextPosition(){for(const z of [-1.6,0,1.6])for(const x of [-3.2,0,3.2])
 function add(kind:'resistor'|'switch'){if(circuit.parts.length>=8 || kind==='resistor'&&circuit.parts.filter(p=>p.kind==='resistor').length>=4){toast('La demo admite hasta 4 resistencias y 8 componentes en total.');return;}let i=1;const prefix=kind==='resistor'?'R':'S';while(circuit.parts.some(p=>p.id===`${prefix}${i}`))i++;const id=`${prefix}${i}`;circuit.parts.push({id,kind,value:kind==='resistor'?100:0,...(kind==='switch'?{closed:false}:{}),...nextPosition()});selected=id;rebuild();}
 $('#add-r').onclick=()=>add('resistor');$('#add-s').onclick=()=>add('switch');$('#cancel-wire').onclick=()=>{pending=null;updateHint();};window.addEventListener('keydown',e=>{if(e.key==='Escape'){pending=null;updateHint();}});
 $('#camera').onclick=overview;$('#empty').onclick=()=>{circuit=preset('empty');selected='V1';rebuild();};
-$('#save').onclick=()=>{try{localStorage.setItem('umbral-circuit-v1',JSON.stringify(circuit));toast('Montaje guardado en este navegador.');}catch{toast('No se pudo guardar en este navegador.');}};
+$('#save').onclick=()=>{try{localStorage.setItem('umbral-circuit-v1',JSON.stringify(circuit));recordTutorialAction('save');toast('Montaje guardado en este navegador.');}catch{toast('No se pudo guardar en este navegador.');}};
 $('#load').onclick=()=>{try{const raw=localStorage.getItem('umbral-circuit-v1');if(!raw){toast('Todavía no hay un montaje guardado.');return;}const loaded=JSON.parse(raw);if(!validate(loaded))throw Error();circuit=loaded;selected='V1';rebuild();toast('Montaje recuperado.');}catch{toast('El montaje guardado no es válido.');}};
 const sessions=new SessionStore();
 function sessionKey(){return mode==='class'?classSessionKey(activeClass.id):'free';}
@@ -394,7 +403,7 @@ for(const [index,definition] of classes.entries()){
   button.className='experience-row';button.dataset.openMode='class';button.dataset.classId=definition.id;
   button.setAttribute('aria-label',`Abrir clase guiada: ${definition.title}`);
   button.innerHTML='<span class="experience-icon"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M1 12h5l3-6 4 12 4-12 4 12 3-6h7"/></svg></span><span class="experience-copy"><span class="experience-type"></span><strong></strong><span class="experience-description"></span><span class="experience-meta"></span></span><span class="experience-action"><span>Comenzar clase</span><span>↗</span></span>';
-  button.querySelector('.experience-type')!.textContent=`CLASE GUIADA · ${String(index+1).padStart(2,'0')}`;
+  button.querySelector('.experience-type')!.textContent=definition.id==='primeros-pasos'?'TUTORIAL · EMPIEZA AQUÍ':`CLASE GUIADA · ${String(index).padStart(2,'0')}`;
   button.querySelector('strong')!.textContent=definition.title;
   button.querySelector('.experience-description')!.textContent=definition.description;
   const meta=button.querySelector('.experience-meta')!;

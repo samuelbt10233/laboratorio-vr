@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { StepConfirmation } from './step-confirmation';
-import { classes } from './lessons';
+import { getClass } from './lessons';
 import { pendingGoal } from './class-engine';
 import { preset } from './circuit';
 
@@ -23,7 +23,7 @@ test('keeps confirmations independent across steps and classes',()=>{
   feedback.enter();assert.equal(feedback.observe('ohm:one',false,true),false);assert.equal(feedback.observe('ohm:one',true,true),false);
 });
 test('a real activity only triggers praise after the solver validates the closed circuit',()=>{
-  const feedback=new StepConfirmation(),context={circuit:preset('simple'),selected:'S1',seen:new Set<string>()},step=classes[0].steps[0];
+  const feedback=new StepConfirmation(),context={circuit:preset('simple'),selected:'S1',seen:new Set<string>()},step=getClass('ley-de-ohm').steps[0];
   const ready=()=>pendingGoal(step,context)===null;
   assert.equal(ready(),false);assert.equal(feedback.observe(step.id,ready(),true),false);
   context.circuit.parts.find(p=>p.id==='S1')!.closed=true;

@@ -115,3 +115,7 @@ Las dos clases usan diálogos para principiantes, con instrucciones sobre los bo
 ### Confirmación de actividades
 
 Cuando el estudiante completa las reglas de un paso, el guía muestra «Paso completado», reconoce el resultado con un mensaje específico y lo narra con Salomé. La tarjeta permanece verde y el botón cambia a «Continuar». La felicitación se reproduce una sola vez por paso durante la sesión y respeta el silencio. Si se modifica el circuito y deja de cumplir el objetivo, se recupera la indicación de la acción pendiente. Las confirmaciones se definen en `success` dentro de cada paso.
+
+### Tutorial de bienvenida
+
+«Primeros pasos en Umbral Labs» aparece primero en el catálogo de PC y en el catálogo 3D. Incluye ocho pasos para aprender los controles sin conocimientos de electrónica, con narraciones de Salomé y confirmaciones de actividad. Las flechas de movimiento del inspector están disponibles tanto en PC como en la distribución Quest. La navegación inicial se explica sin obligar a usar un dispositivo concreto; las actividades siguientes validan las acciones reales. Guardar conserva el montaje en ese navegador y reemplaza el anterior; no guarda el avance de clase.

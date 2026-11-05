@@ -38,7 +38,7 @@ export class SpatialControls {
   setVisible(value:boolean){this.visible=value;this.panels.forEach(p=>p.mesh.setEnabled(value));}
   isVisible(){return this.visible;}
   isEditing(){return this.editing;}
-  highlight(id:string){if(this.highlighted===id)return;this.highlighted=id;if(id==='value'||id==='apply'||id==='switch')this.tab='properties';this.draw();}
+  highlight(id:string){if(this.highlighted===id)return;this.highlighted=id;if(id==='value'||id==='apply'||id==='switch'||id.startsWith('move:'))this.tab='properties';if(id==='tab:wires')this.tab='wires';this.draw();}
   update(circuit:Circuit,result:Result,selected:string,pending:string|null){
     this.model={circuit,result,selected,pending};const p=circuit.parts.find(p=>p.id===selected),key=p?`${p.id}:${p.value}`:'';
     if(key!==this.valueKey){this.valueKey=key;this.draft=p?String(p.value):'';this.editing=false;}
@@ -66,6 +66,7 @@ export class SpatialControls {
     else return false;
     if(this.editing)this.edit(this.draft);this.draw();return true;
   }
+  private terminalLabel(id:string){const [part,side]=id.split(':');const source=this.model?.circuit.parts.find(p=>p.id===part)?.kind==='source';return `${part} ${source?(side==='0'?'+':'−'):(side==='0'?'A':'B')}`;}
   private draw(){
     if(!this.model)return;const {circuit,result,selected,pending}=this.model;
     const p=circuit.parts.find(part=>part.id===selected);
@@ -89,7 +90,7 @@ export class SpatialControls {
         button('tab:properties','Propiedades',32,108,240,70,this.tab==='properties');button('tab:wires',`Cables (${circuit.wires.length})`,288,108,240,70,this.tab==='wires');
         if(this.tab==='wires'){
           text('Pulsa × para quitar un cable.',32,240,27);const maxPage=Math.max(0,Math.ceil(circuit.wires.length/9)-1);this.wirePage=Math.min(Math.max(0,this.wirePage),maxPage);
-          circuit.wires.slice(this.wirePage*9,this.wirePage*9+9).forEach((w,i)=>{text(`${w.a}  ↔  ${w.b}`,32,321+i*90,29);button(`wire:${w.id}`,'×',447,275+i*90,81,65);});
+          circuit.wires.slice(this.wirePage*9,this.wirePage*9+9).forEach((w,i)=>{text(`${this.terminalLabel(w.a)} ↔ ${this.terminalLabel(w.b)}`,32,321+i*90,26);button(`wire:${w.id}`,'×',447,275+i*90,81,65);});
           if(this.wirePage>0)button('wires:prev','←',32,1140,100,65);
           if(this.wirePage<maxPage)button('wires:next','→',428,1140,100,65);
           text(`Página ${this.wirePage+1} / ${maxPage+1}`,170,1184,27);
@@ -117,8 +118,7 @@ export class SpatialControls {
           text(pending?`Origen: ${pending}`:'Elige un terminal y luego otro.',32,998,27);
           if(pending)button('cancel-wire','Cancelar conexión',32,1031,496,70);
           if(p.kind!=='source')button('remove','Eliminar componente',32,1144,496,76);
-          if(this.immersive){for(const [i,label] of ['←','→','↑','↓'].entries())button(['move:left','move:right','move:away','move:near'][i],label,32+i*128,1240,112,60);text('Flechas: mover sobre la mesa.',32,1360,25);}
-          else text('Selecciona en la mesa o en la lista.',32,1323,26);
+          {for(const [i,label] of ['←','→','↑','↓'].entries())button(['move:left','move:right','move:away','move:near'][i],label,32+i*128,1240,112,60);text('Flechas: mover sobre la mesa.',32,1360,25);}
         }
       }
       panel.texture.update();

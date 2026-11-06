@@ -1,5 +1,6 @@
 import { Color3, Color4, DirectionalLight, DynamicTexture, HemisphericLight, Mesh, MeshBuilder, StandardMaterial, TransformNode, Vector3, type Scene } from '@babylonjs/core';
 import type { Part } from './circuit';
+import { createLabEnvironment } from './lab-environment';
 /** Look of the electronics laboratory: lights, table and components. It holds no circuit logic or interaction. */
 export function createLabArt(scene:Scene,tableRoot:TransformNode){
   scene.clearColor=new Color4(.055,.095,.115,1);
@@ -84,5 +85,6 @@ export function createLabArt(scene:Scene,tableRoot:TransformNode){
     }
     return body;
   }
-  return {material,label,decorate,partVisual,ledLenses,red,metal,teal};
+  const environment=createLabEnvironment(scene,tableRoot.parent as TransformNode,tableRoot,material);
+  return {material,label,decorate,partVisual,ledLenses,red,metal,teal,environment};
 }

@@ -53,7 +53,7 @@ const labRoot=new TransformNode('laboratory coordinate space',scene);
 const tableRoot=new TransformNode('inclined tabletop coordinate space',scene);tableRoot.parent=labRoot;tableRoot.rotation.x=-questLayout.tableTilt;
 const navigationKeys=new Set<string>();
 const camera=new ArcRotateCamera('camera',-Math.PI/2,0.95,19,new Vector3(0,1.2,.8),scene);camera.fov=.95;camera.fovMode=Camera.FOVMODE_HORIZONTAL_FIXED;camera.attachControl(canvas,false);camera.inputs.attached.pointers && ((camera.inputs.attached.pointers as any).buttons=[2]);camera.lowerRadiusLimit=7;camera.upperRadiusLimit=26;camera.upperBetaLimit=1.35;
-const {material,label,decorate,partVisual,ledLenses,red,metal,teal}=createLabArt(scene,tableRoot);
+const {material,label,decorate,partVisual,ledLenses,red,metal,teal,environment}=createLabArt(scene,tableRoot);
 const circuitCharts=new CircuitCharts(scene,labRoot);
 const currentAnimation=new CurrentAnimation(scene,tableRoot);
 const spatialGuide=new SpatialGuide(scene,camera,id=>{
@@ -474,7 +474,7 @@ $('.brand').onclick=event=>{event.preventDefault();navigateCatalogue('all');};
 xrRuntime=new QuestRuntime(scene,camera,{
   isLab:()=>currentView!=='menu',onStart:()=>{if(currentView==='ready')activateSimulation();},onRestart:restartClass,onStop:()=>{navigationKeys.clear();narrator.stop();},
   onMode:active=>{
-    navigationKeys.clear();labRoot.scaling.setAll(active?questLayout.scale:1);labRoot.position.y=active?questLayout.tableHeight:0;labRoot.computeWorldMatrix(true);
+    navigationKeys.clear();labRoot.scaling.setAll(active?questLayout.scale:1);environment.setEnabled(!active);labRoot.position.y=active?questLayout.tableHeight:0;labRoot.computeWorldMatrix(true);
     spatialControls.setImmersive(active);spatialGuide.setImmersive(active);spatialControls.setVisible(active?true:preferredControlsVisible);
     $('#quest-preview').textContent=active?'Volver a vista PC':'Vista Quest en PC';document.body.classList.toggle('quest-preview-active',active);
     if(!active){resizeSpatialControls();if(currentView==='ready'){$('#launch-view').hidden=false;$('#lab-view').hidden=true;if(document.fullscreenElement)void document.exitFullscreen().catch(()=>{});}}rebuild();

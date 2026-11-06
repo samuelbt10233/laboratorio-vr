@@ -21,7 +21,7 @@ WebXR necesita un contexto seguro y una acción del usuario para entrar. El `loc
 - Para cablear, selecciona dos terminales en la mesa o en el inspector. La pestaña «Cables» permite eliminar conexiones.
 - Pulsa el valor de una fuente o resistencia, introduce los números en el teclado 3D y pulsa «Aplicar». «Cancelar» recupera el valor anterior. También hay botones −/+.
 - Las cuatro flechas del inspector permiten mover el elemento seleccionado sin arrastrarlo. El arrastre mediante rayo es complementario y debe verificarse en el dispositivo.
-- La palanca izquierda activa el teletransporte a tres posiciones marcadas frente a la mesa. No hay desplazamiento continuo con WASD en modo inmersivo.
+- La palanca izquierda permite caminar: adelante/atrás según la mirada, e izquierda/derecha para desplazarse lateralmente. La barra VR permite alternar «Modo: caminar» y «Modo: teletransporte». WASD sigue reservado al PC.
 - «Volver al inicio» recupera la posición horizontal frente a la mesa; se conserva la altura de cabeza proporcionada por el visor.
 - «Clases y modo libre» abre el catálogo 3D. Permite cambiar de experiencia o volver al circuito actual sin salir de VR.
 - «Salir de VR» vuelve a la página y conserva el montaje. La finalización de la sesión desde el navegador también restaura el modo PC.
@@ -42,10 +42,12 @@ En la primera prueba con gafas hay que revisar:
 - Narración tras pulsar «Escuchar», confirmaciones de paso y silencio.
 - Fluidez con cuatro resistencias, cables y esferas de corriente; ajustar resolución o cantidad de partículas según la medición real.
 
-El suelo virtual mide 4,8 × 4,8 m; los destinos de teletransporte están restringidos frente a la mesa. Esto limita la navegación virtual. El espacio físico lo gestiona el límite de seguridad del visor.
+El suelo virtual mide 4,8 × 4,8 m; al caminar, la posición virtual queda limitada a X/Z ±2,1 m y se evita entrar en el espacio de la mesa. Los destinos de teletransporte siguen restringidos frente a la mesa. Esto limita la navegación virtual. El espacio físico lo gestiona el límite de seguridad del visor.
 
 ## Implementación
 
 `quest-runtime.ts` gestiona WebXR, mandos, teletransporte, entrada/salida y vista de PC. `quest-interface.ts` contiene la navegación y el catálogo 3D. `quest-layout.ts` define escala y límites. El modelo eléctrico y las reglas de clase son compartidos entre PC y VR. Las coordenadas del circuito conservan su formato al guardar; la transformación a metros solo afecta a su representación.
 
 Fuentes: [WebXR y contexto seguro (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession), [seguridad y permisos (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API/Permissions_and_security), [experiencia WebXR de Babylon.js](https://github.com/BabylonJS/Documentation/blob/master/content/features/featuresDeepDive/webXR/webXRExperienceHelpers.md).
+
+El modo caminar usa una zona muerta de 0,18, velocidad máxima de 0,75 m/s y conserva la altura del visor. Se pausa al abrir el catálogo o la preparación y cuando la sesión pierde visibilidad. Lee el estado actual del mando cada fotograma, sin conservar entradas al desconectarlo. Los límites son de navegación virtual, no sustituyen el límite físico del visor. Esta incorporación afecta al runtime de electrónica; los laboratorios independientes tienen controles propios. La lógica está cubierta por pruebas; uso y comodidad en Quest real pendientes.

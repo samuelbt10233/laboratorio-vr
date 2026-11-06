@@ -1,0 +1,2 @@
+# Both agents append to the log; keep both sides instead of conflicting.
+docs/bitacora.md merge=union

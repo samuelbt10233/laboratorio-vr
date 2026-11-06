@@ -1,3 +1,4 @@
+import { walkInLab } from './vr-walking';
 import { ArcRotateCamera, Color3, MeshBuilder, Scene, StandardMaterial, TransformNode, Vector3, WebXRDefaultExperience, WebXRSessionManager, WebXRState, type AbstractMesh } from '@babylonjs/core';
 import { questLayout, xrAvailability } from './quest-layout';
 import { QuestInterface } from './quest-interface';
@@ -10,6 +11,8 @@ export class QuestRuntime {
   private active=false;
   private preview=false;
   private busy=false;
+  private walking=true;
+  private navigationPaused=true;
   private pendingLaunch:{title:string;classMode:boolean;canRestart:boolean}|null=null;
   private savedCamera:{target:Vector3;alpha:number;beta:number;radius:number;fov:number;minZ:number}|null=null;
   constructor(private scene:Scene,private camera:ArcRotateCamera,private options:Options){
@@ -21,6 +24,18 @@ export class QuestRuntime {
     for(const x of [-1.1,0,1.1]){const spot=MeshBuilder.CreateTorus('quest teleport zone',{diameter:.38,thickness:.015,tessellation:24},scene);spot.parent=this.room;spot.position.set(x,.012,-1.8);spot.material=material(`quest teleport ${x}`,'#78c3a5');spot.isPickable=false;}
     this.ui=new QuestInterface(scene,action=>this.handleAction(action));
     this.room.setEnabled(false);
+    scene.onBeforeRenderObservable.add(()=>{
+      if(!this.isXR()||!this.walking||this.navigationPaused||!this.helper)return;
+      const session=this.helper.baseExperience.sessionManager.session;
+      if(session?.visibilityState!=='visible')return;
+      const controller=this.helper.input.controllers.find(c=>c.inputSource.handedness==='left');
+      const stick=controller?.motionController?.getComponentOfType('thumbstick');
+      if(!stick)return;
+      const xrCamera=this.helper.baseExperience.camera;
+      const forward=xrCamera.getDirection(new Vector3(0,0,scene.useRightHandedSystem?-1:1));
+      const next=walkInLab(xrCamera.position,stick.axes,forward,scene.getEngine().getDeltaTime()/1000);
+      xrCamera.position.x=next.x;xrCamera.position.z=next.z;
+    });
   }
   isImmersive(){return this.active;}
   canEnterVR(){return this.helper!==null;}
@@ -31,6 +46,7 @@ export class QuestRuntime {
     try{if(window.isSecureContext&&'xr' in navigator)supported=await WebXRSessionManager.IsSessionSupportedAsync('immersive-vr');
       if(supported){
         this.helper=await WebXRDefaultExperience.CreateAsync(this.scene,{disableDefaultUI:true,disableNearInteraction:true,disableHandTracking:true,floorMeshes:[this.floor],inputOptions:{doNotLoadControllerMeshes:true,disableOnlineControllerRepository:true,disableControllerAnimation:true},pointerSelectionOptions:{enablePointerSelectionOnAllControllers:true,maxPointerDistance:5},teleportationOptions:{forceHandedness:'left',snapPointsOnly:true,snapPositions:[new Vector3(-1.1,0,-1.8),new Vector3(0,0,-1.8),new Vector3(1.1,0,-1.8)]},optionalFeatures:['local-floor'],outputCanvasOptions:{canvasOptions:{framebufferScaleFactor:1}}});
+        if(this.walking)this.helper.teleportation?.detach();
         this.helper.baseExperience.camera.minZ=.03;this.helper.baseExperience.camera.maxZ=15;
         this.helper.baseExperience.onInitialXRPoseSetObservable.add(xrCamera=>{xrCamera.position.x=questLayout.start.x;xrCamera.position.z=questLayout.start.z;});
         this.helper.baseExperience.onStateChangedObservable.add(state=>{if(state===WebXRState.IN_XR){this.helper!.baseExperience.sessionManager.fixedFoveation=.6;button.textContent='Salir de VR';}if(state===WebXRState.NOT_IN_XR){this.finish();button.textContent='Entrar en VR';}});
@@ -62,10 +78,11 @@ export class QuestRuntime {
     this.scene.activeCamera=this.camera;this.camera.lowerRadiusLimit=7;this.camera.upperRadiusLimit=26;
     if(this.savedCamera){this.camera.target=this.savedCamera.target;this.camera.alpha=this.savedCamera.alpha;this.camera.beta=this.savedCamera.beta;this.camera.radius=this.savedCamera.radius;this.savedCamera=null;}
   }
-  showLaunch(title:string,classMode:boolean,canRestart:boolean){this.pendingLaunch={title,classMode,canRestart};this.options.onStop();this.ui.showLaunch(title,classMode,canRestart);this.options.onCatalogue(true);}
-  completeLaunch(){this.pendingLaunch=null;this.ui.showCatalogue(false);this.options.onCatalogue(false);}
-  openCatalogue(){this.options.onStop();this.ui.showCatalogue(true);this.options.onCatalogue(true);}
+  showLaunch(title:string,classMode:boolean,canRestart:boolean){this.navigationPaused=true;this.pendingLaunch={title,classMode,canRestart};this.options.onStop();this.ui.showLaunch(title,classMode,canRestart);this.options.onCatalogue(true);}
+  completeLaunch(){this.navigationPaused=false;this.pendingLaunch=null;this.ui.showCatalogue(false);this.options.onCatalogue(false);}
+  openCatalogue(){this.navigationPaused=true;this.options.onStop();this.ui.showCatalogue(true);this.options.onCatalogue(true);}
   private handleAction(action:string){
+    if(action==='locomotion'){this.walking=!this.walking;if(this.helper?.teleportation)this.helper.teleportation.disableAutoAttach=this.walking;if(this.walking)this.helper?.teleportation?.detach();else this.helper?.teleportation?.attach();this.ui.setWalking(this.walking);return;}
     if(action==='exit'){void this.exit();return;}
     if(action==='catalogue'){this.openCatalogue();return;}
     if(action==='recenter'){
@@ -75,7 +92,7 @@ export class QuestRuntime {
     if(action==='start'){this.completeLaunch();this.options.onStart();return;}
     if(action==='restart'){this.options.onRestart();return;}
     if(action==='resume'&&this.pendingLaunch){this.showLaunch(this.pendingLaunch.title,this.pendingLaunch.classMode,this.pendingLaunch.canRestart);return;}
-    if(action==='resume'){this.ui.showCatalogue(false);this.options.onCatalogue(false);return;}
+    if(action==='resume'){this.navigationPaused=false;this.ui.showCatalogue(false);this.options.onCatalogue(false);return;}
     if(action==='free'||action.startsWith('class:')){this.ui.showCatalogue(false);this.options.onCatalogue(false);this.options.onExperience(action==='free'?'free':'class',action.startsWith('class:')?action.slice(6):undefined);}
   }
   pick(name:string,u:number,v:number){this.ui.pick(name,u,v);}

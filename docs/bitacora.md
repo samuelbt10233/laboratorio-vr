@@ -186,3 +186,14 @@ Formato:
 - Archivos: `src/content/concept-drawings.ts`, `src/content/concept-figure.ts`, `src/content/concept-drawings.css`, `src/concept-drawings.test.ts` (9 pruebas) y dos líneas en `src/main.ts`, junto a las de T5.
 - Para T7 (Codex): para añadir dibujos a su lectura basta una entrada en el mapa `drawings` de `concept-drawings.ts` o su propio módulo con el mismo patrón; `fluidos.ts` no se tocó.
 - Pendiente: no se probó en Quest; las lecturas se ven en el navegador de escritorio. El torno no tiene dibujos. Los conceptos siguen sin audio.
+
+## 2026-11-06 · Codex · Desplazamiento VR · inicio
+- Qué: movimiento continuo con palanca izquierda y selector Caminar/Teletransporte en la barra espacial, por petición del responsable.
+- Archivos: quest-runtime.ts, quest-interface.ts, vr-walking.ts y pruebas, ayuda y documentación Quest.
+- Rama: codex/vr-walking; carpeta laboratorio-vr-codex-vr.
+- Pendiente: validar reglas de movimiento; prueba en Quest real pendiente. Alcance inicial: runtime compartido de electrónica; los módulos independientes tienen sus propios controles.
+
+## 2026-11-06 · Codex · Desplazamiento VR · fin
+- Qué: caminar a 0,75 m/s como máximo con palanca izquierda, orientación horizontal de la mirada, zona muerta y límites de sala/mesa. Selector espacial Caminar/Teletransporte; pausa en catálogo, preparación y sesión no visible.
+- Validación: 105 pruebas superadas, incluidos rumbo, diagonal, límites, bloqueo de mesa y tiempo. Compilación correcta; selector visible en vista Quest en PC, sin errores de consola. Evidencia en docs/evidencia-vr/.
+- Pendiente: integración de codex/vr-walking. No validado con mandos físicos ni Quest real; la vista PC no emula el movimiento del joystick. Runtime de electrónica; los módulos independientes no se modificaron.

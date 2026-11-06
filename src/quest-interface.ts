@@ -7,7 +7,9 @@ export class QuestInterface {
   private bar:Surface;
   private catalogue:Surface;
   private summary='Apunta con un mando y pulsa el gatillo para seleccionar.';
-  private note='Palanca izquierda: teletransporte a las zonas marcadas.';
+  private note='Palanca izquierda: caminar. Avanza hacia donde miras; lateral para desplazarte.';
+  private walking=true;
+  setWalking(value:boolean){this.walking=value;this.note=value?'Palanca izquierda: caminar hacia donde miras.':'Palanca izquierda: teletransporte a las zonas marcadas.';this.draw();}
   private open=false;
   private launch:{title:string;classMode:boolean;canRestart:boolean}|null=null;
   private laboratoryId:string|null=null;
@@ -37,7 +39,7 @@ export class QuestInterface {
       const ctx=panel.ctx;panel.hits=[];ctx.fillStyle='#122e34';ctx.fillRect(0,0,1200,panel.height);
       const text=(value:string,x:number,y:number,size=32)=>{ctx.fillStyle='#e6f3e9';ctx.font=`500 ${size}px sans-serif`;ctx.textAlign='left';ctx.fillText(value,x,y);};
       const button=(id:string,label:string,x:number,y:number,w:number,h:number)=>{ctx.fillStyle='#e3eee5';ctx.fillRect(x,y,w,h);ctx.fillStyle='#244d3b';ctx.font='500 32px sans-serif';ctx.textAlign='center';ctx.fillText(label,x+w/2,y+h/2+11);panel.hits.push({id,x,y,w,h});};
-      if(panel===this.bar){text(this.summary,28,49,30);text(this.note.length>93?this.note.slice(0,90)+'…':this.note,28,91,24);button('catalogue','Bienvenida y laboratorios',28,126,450,78);button('recenter','Volver al inicio',495,126,340,78);button('exit','Salir de VR',852,126,320,78);}
+      if(panel===this.bar){text(this.summary,28,49,30);text(this.note.length>93?this.note.slice(0,90)+'…':this.note,28,91,24);button('catalogue','Catálogo',28,126,270,78);button('locomotion',this.walking?'Modo: caminar':'Modo: teletransporte',312,126,300,78);button('recenter','Volver al inicio',626,126,270,78);button('exit','Salir de VR',910,126,262,78);}
       else if(this.launch){
         text('Cuando estés listo',40,73,45);
         text(this.launch.title,40,155,34);

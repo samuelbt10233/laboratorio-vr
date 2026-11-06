@@ -92,7 +92,7 @@ Antes de empezar, cambia tu fila a «en curso». Estados: `pendiente`, `en curso
 | T2 | Preparar la división del código | Evita cruces en la fase 3 | Claude Code | hecha | T1 |
 | T3 | Nuevo diseño del portal | Primera impresión del cliente | Codex | hecha | T2 |
 | T4 | Estética de laboratorio real en circuitos | Credibilidad ante el cliente | Claude Code | hecha | T2 |
-| T5 | Lecturas de electrónica | Reforzar enseñanza → práctica | Codex | pendiente | T2 |
+| T5 | Lecturas de electrónica | Reforzar enseñanza → práctica | Codex | en revisión | T2 |
 | T6 | Laboratorio de capacitación industrial | Demostrar la oferta a empresas | Claude Code | hecha | T2 |
 | T7 | Laboratorio de prensa hidráulica | Demostrar otra disciplina | Codex | pendiente | T2 |
 | T8 | Lecturas y tarjetas de «Concepto» | Mostrar amplitud | Quien termine antes | pendiente | T2 |

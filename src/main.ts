@@ -1,3 +1,5 @@
+import { electronicsDrawing } from './content/electronics-drawings';
+import './content/electronics-drawings.css';
 import { platformArtwork } from './platform-art';
 import { enterPresentation } from './start-presentation';
 import { welcomeClassId } from './laboratories';
@@ -371,7 +373,7 @@ function openReading(id:string){
     const title=document.createElement('h2');title.textContent=section.title;
     const text=document.createElement('p');text.textContent=section.text;
     const example=document.createElement('aside');example.textContent=section.example;
-    article.append(number,title,text,example);sections.append(article);
+    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
     const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=`0${index+1}  ${section.title}`;outline.append(link);
   });
   const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId&&!content.labId;

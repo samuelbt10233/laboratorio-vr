@@ -127,3 +127,27 @@ Formato:
 - Por qué: fijar el esquema que orienta la demo (T0) y adelantar el material de T11.
 - Archivos: ninguno del repositorio; la presentación vive en el artefacto.
 - Pendiente (T11, tras T10): sustituir las capturas por otras en alta resolución y añadir el portal cuando T3 termine; rellenar los corchetes (nombre, fecha, contacto, laboratorios reales, piloto y resultado de la prueba en Quest); ajustar la tarjeta de fluidos cuando se integre T7; ajustar la decisión que se pide, que el plan deja abierta. Las cifras del problema no se inventaron: sustituir por datos del cliente si los hay.
+
+## 2026-11-06 · Codex · T5 · inicio
+- Qué: ampliar las cuatro lecturas de electrónica con conceptos, ejemplos, predicciones y preparación de la práctica.
+- Por qué: acompañar a estudiantes sin conocimientos previos antes del entorno 3D.
+- Archivos: `src/content/electronica.ts`.
+- Rama y carpeta: `codex/t5-lecturas`, `laboratorio-vr-codex-t5`, desde origin/main.
+- Pendiente: revisión de contenidos y navegador, pruebas y compilación. Audios reservados para T9; no se modifican pasos del laboratorio.
+
+## 2026-11-06 · Codex · T5 · fin
+- Qué: cuatro lecturas ampliadas (21 secciones en total) con objetivos, conceptos para principiantes, ejemplos numéricos, errores frecuentes, predicciones con respuesta y preparación de la práctica. Tiempo de lectura separado del tiempo de laboratorio.
+- Archivos: `src/content/electronica.ts`; evidencia `docs/evidencia-t5/lectura-ohm.png` en la rama codex/t5-lecturas.
+- Validación: npm test (88 pruebas), npm run build correctos. Las cuatro lecturas y sus accesos a práctica revisados en PC, sin errores de consola. Ley de Ohm enlaza con preparación y conserva inicio manual. Ejemplos contrastados con los valores y objetivos de las clases existentes.
+- Pendiente: revisión e integración de T5. No se tocaron src/classes/, audios, manifiesto ni simuladores. Las lecturas son texto, sin nueva narración; cualquier locución adicional corresponde a T9. No probado en Quest real.
+
+## 2026-11-06 · Codex · T5 · ilustraciones
+- Qué: por petición del responsable, añadir esquemas SVG locales a las lecturas de electrónica.
+- Archivos: `src/content/electronics-drawings.ts`, CSS asociado y conexión mínima en el render de lectura de `src/main.ts`.
+- Por qué: explicar camino cerrado/abierto, resistencia, serie/paralelo, cable ausente y polaridad LED. La ampliación a main.ts responde a la petición explícita de mostrar dibujos en la lectura; no cambia el runtime.
+- Pendiente: comprobación visual y validación.
+
+## 2026-11-06 · Codex · T5 · ilustraciones verificadas
+- Qué: ocho figuras SVG con pie explicativo y descripción accesible, sin servicios externos ni cambios al modelo. Revisión visual de Ohm y LED y navegación de las figuras de paralelo y cable ausente.
+- Validación: 88 pruebas superadas; compilación correcta. Revisada la correspondencia de polaridad de la fuente y del LED. Captura en docs/evidencia-t5/ilustraciones.png.
+- Pendiente: revisión e integración de T5, sin publicación externa.

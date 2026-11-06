@@ -22,6 +22,14 @@ test('keeps confirmations independent across steps and classes',()=>{
   for(const key of ['ohm:one','ohm:two','parallel:one']){assert.equal(feedback.observe(key,false,true),false);assert.equal(feedback.observe(key,true,true),true);}
   feedback.enter();assert.equal(feedback.observe('ohm:one',false,true),false);assert.equal(feedback.observe('ohm:one',true,true),false);
 });
+test('restarting a class allows its confirmations again without affecting other classes',()=>{
+  const feedback=new StepConfirmation();
+  for(const key of ['ohm:one','parallel:one']){feedback.observe(key,false,true);assert.equal(feedback.observe(key,true,true),true);}
+  feedback.forgetClass('ohm');feedback.enter();
+  assert.equal(feedback.observe('ohm:one',false,true),false);assert.equal(feedback.observe('ohm:one',true,true),true);
+  feedback.enter();
+  assert.equal(feedback.observe('parallel:one',false,true),false);assert.equal(feedback.observe('parallel:one',true,true),false);
+});
 test('a real activity only triggers praise after the solver validates the closed circuit',()=>{
   const feedback=new StepConfirmation(),context={circuit:preset('simple'),selected:'S1',seen:new Set<string>()},step=getClass('ley-de-ohm').steps[0];
   const ready=()=>pendingGoal(step,context)===null;

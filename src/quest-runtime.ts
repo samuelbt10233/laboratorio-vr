@@ -1,8 +1,7 @@
 import { ArcRotateCamera, Color3, MeshBuilder, Scene, StandardMaterial, TransformNode, Vector3, WebXRDefaultExperience, WebXRSessionManager, WebXRState, type AbstractMesh } from '@babylonjs/core';
 import { questLayout, xrAvailability } from './quest-layout';
 import { QuestInterface } from './quest-interface';
-import { classes as classesForUI } from './lessons';
-interface Options {onMode:(active:boolean)=>void;onCatalogue:(open:boolean)=>void;onExperience:(mode:'class'|'free',id?:string)=>void;onStop:()=>void;isLab:()=>boolean}
+interface Options {onMode:(active:boolean)=>void;onCatalogue:(open:boolean)=>void;onExperience:(mode:'class'|'free',id?:string)=>void;onStart:()=>void;onRestart:()=>void;onStop:()=>void;isLab:()=>boolean}
 export class QuestRuntime {
   private helper:WebXRDefaultExperience|null=null;
   private room:TransformNode;
@@ -11,6 +10,7 @@ export class QuestRuntime {
   private active=false;
   private preview=false;
   private busy=false;
+  private pendingLaunch:{title:string;classMode:boolean;canRestart:boolean}|null=null;
   private savedCamera:{target:Vector3;alpha:number;beta:number;radius:number;fov:number;minZ:number}|null=null;
   constructor(private scene:Scene,private camera:ArcRotateCamera,private options:Options){
     this.room=new TransformNode('quest room',scene);
@@ -19,10 +19,11 @@ export class QuestRuntime {
     this.floor=MeshBuilder.CreateGround('quest bounded teleport floor',{width:questLayout.floorSize,height:questLayout.floorSize},scene);this.floor.parent=this.room;this.floor.material=floorMat;
     for(const x of [-.72,.72])for(const z of [-.35,.35]){const angle=questLayout.tableTilt,underside=.325*questLayout.scale,height=questLayout.tableHeight+z*Math.sin(angle)-underside*Math.cos(angle);const leg=MeshBuilder.CreateCylinder('quest table leg',{height,diameter:.06,tessellation:8},scene);leg.parent=this.room;leg.position.set(x,height/2,z*Math.cos(angle)+underside*Math.sin(angle));leg.material=tableMat;leg.isPickable=false;}
     for(const x of [-1.1,0,1.1]){const spot=MeshBuilder.CreateTorus('quest teleport zone',{diameter:.38,thickness:.015,tessellation:24},scene);spot.parent=this.room;spot.position.set(x,.012,-1.8);spot.material=material(`quest teleport ${x}`,'#78c3a5');spot.isPickable=false;}
-    this.ui=new QuestInterface(scene,classesForUI,action=>this.handleAction(action));
+    this.ui=new QuestInterface(scene,action=>this.handleAction(action));
     this.room.setEnabled(false);
   }
   isImmersive(){return this.active;}
+  canEnterVR(){return this.helper!==null;}
   isXR(){return this.active&&!this.preview;}
   async initialize(button:HTMLButtonElement,status:HTMLElement){
     button.disabled=true;button.textContent='Comprobando VR…';
@@ -49,9 +50,9 @@ export class QuestRuntime {
     this.camera.fov=1.5;this.camera.minZ=.03;this.camera.lowerRadiusLimit=.7;this.camera.upperRadiusLimit=4.5;this.camera.target=new Vector3(0,1.22,0);this.camera.alpha=-Math.PI/2;this.camera.beta=1.35;this.camera.radius=2.45;
   }
   async enter(status:HTMLElement){
-    if(this.busy||!this.helper||!this.options.isLab())return;this.busy=true;
-    try{if(this.preview)this.finish();this.prepare(false);await this.helper.baseExperience.enterXRAsync('immersive-vr','local-floor',this.helper.renderTarget);}
-    catch{this.finish();status.textContent='No se pudo entrar en VR. Comprueba las gafas y vuelve a intentarlo.';}
+    if(this.busy||!this.helper||!this.options.isLab())return false;this.busy=true;
+    try{if(this.preview)this.finish();this.prepare(false);await this.helper.baseExperience.enterXRAsync('immersive-vr','local-floor',this.helper.renderTarget);return true;}
+    catch{this.finish();status.textContent='No se pudo entrar en VR. Comprueba las gafas y vuelve a intentarlo.';return false;}
     finally{this.busy=false;}
   }
   togglePreview(){if(!this.options.isLab()||this.isXR())return;if(this.preview)this.finish();else this.prepare(true);}
@@ -61,6 +62,8 @@ export class QuestRuntime {
     this.scene.activeCamera=this.camera;this.camera.lowerRadiusLimit=7;this.camera.upperRadiusLimit=26;
     if(this.savedCamera){this.camera.target=this.savedCamera.target;this.camera.alpha=this.savedCamera.alpha;this.camera.beta=this.savedCamera.beta;this.camera.radius=this.savedCamera.radius;this.savedCamera=null;}
   }
+  showLaunch(title:string,classMode:boolean,canRestart:boolean){this.pendingLaunch={title,classMode,canRestart};this.options.onStop();this.ui.showLaunch(title,classMode,canRestart);this.options.onCatalogue(true);}
+  completeLaunch(){this.pendingLaunch=null;this.ui.showCatalogue(false);this.options.onCatalogue(false);}
   openCatalogue(){this.options.onStop();this.ui.showCatalogue(true);this.options.onCatalogue(true);}
   private handleAction(action:string){
     if(action==='exit'){void this.exit();return;}
@@ -69,6 +72,9 @@ export class QuestRuntime {
       if(this.isXR()&&this.helper){this.helper.baseExperience.camera.position.x=questLayout.start.x;this.helper.baseExperience.camera.position.z=questLayout.start.z;}
       else{this.camera.target=new Vector3(0,1.22,0);this.camera.alpha=-Math.PI/2;this.camera.beta=1.35;this.camera.radius=2.45;}return;
     }
+    if(action==='start'){this.completeLaunch();this.options.onStart();return;}
+    if(action==='restart'){this.options.onRestart();return;}
+    if(action==='resume'&&this.pendingLaunch){this.showLaunch(this.pendingLaunch.title,this.pendingLaunch.classMode,this.pendingLaunch.canRestart);return;}
     if(action==='resume'){this.ui.showCatalogue(false);this.options.onCatalogue(false);return;}
     if(action==='free'||action.startsWith('class:')){this.ui.showCatalogue(false);this.options.onCatalogue(false);this.options.onExperience(action==='free'?'free':'class',action.startsWith('class:')?action.slice(6):undefined);}
   }

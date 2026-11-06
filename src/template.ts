@@ -1,31 +1,39 @@
+import { platformArtwork, introArtwork } from './platform-art';
 const resistorIcon = '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M1 12h5l3-6 4 12 4-12 4 12 3-6h7"/></svg>';
 const switchIcon = '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M1 16h7m16 0h7M9 15 23 5"/><circle cx="8" cy="16" r="2"/><circle cx="24" cy="16" r="2"/></svg>';
 export const layout = `
-<aside class="app-sidebar" aria-label="Navegación principal">
+<header class="atlas-header" aria-label="Navegación principal">
   <a class="brand" href="#" aria-label="Umbral Labs"><span class="brand-symbol">u</span><span class="sidebar-brand-name">umbral<span class="brand-tag">labs</span></span></a>
-  <button id="quick-search" class="sidebar-search" aria-label="Buscar experiencias" title="Buscar experiencias (Ctrl K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span class="nav-label">Búsqueda rápida…</span><kbd>Ctrl K</kbd></button>
   <nav aria-label="Experiencias de aprendizaje">
-    <button class="nav-item active" data-nav-filter="all" aria-label="Inicio" aria-current="page" title="Inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8"/></svg><span class="nav-label">Inicio</span></button>
-    <button class="nav-item" data-nav-filter="recent" aria-label="Recientes" title="Recientes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8a9 9 0 1 1-1 6M3 3v6h6M12 7v5l4 2"/></svg><span class="nav-label">Recientes</span><span class="nav-chevron">›</span></button>
-    <div class="nav-section-label">Aprender</div>
-    <button class="nav-item" data-nav-filter="class" aria-label="Clases guiadas" title="Clases guiadas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 8 10-5 10 5-10 5-10-5Zm4 3v7l6 3 6-3v-7m4-3v10"/></svg><span class="nav-label">Clases guiadas</span><span class="nav-chevron">›</span></button>
-    <div class="nav-section-label">Experimentar</div>
-    <button class="nav-item" data-nav-filter="free" aria-label="Modo libre" title="Modo libre"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm-9 5 9 5 9-5m-9 5v10"/></svg><span class="nav-label">Modo libre</span><span class="nav-chevron">›</span></button>
+    <button class="nav-item active" data-nav-filter="all" aria-current="page">Inicio</button>
+    <div id="laboratory-nav"></div>
+    
+    <button class="nav-item" id="welcome-nav">Bienvenida</button>
   </nav>
-  <div class="sidebar-footer"><span class="sidebar-version"><i></i> Versión de demostración</span><button id="collapse-sidebar" aria-label="Contraer menú lateral" aria-expanded="true" title="Contraer o expandir menú"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg></button></div>
-</aside>
+  <button id="quick-search" class="atlas-search" aria-label="Buscar experiencias" title="Buscar experiencias (Ctrl K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span>Buscar</span><kbd>Ctrl K</kbd></button>
+</header>
 <div class="app-content">
-<header class="app-topbar"><div class="topbar-context">Umbral <span>/</span> <span id="header-context">Catálogo de experiencias</span></div><div class="header-right"><button id="back-menu" class="back-menu" hidden>← Menú general</button><span class="demo">DEMO · PC</span></div></header>
+<header class="app-topbar"><div class="topbar-context">Umbral <span>/</span> <span id="header-context">Catálogo de experiencias</span></div><div class="header-right"><button id="back-menu" class="back-menu" hidden>← Clases del laboratorio</button><span class="demo">VERSIÓN DE DEMOSTRACIÓN</span></div></header>
 <main id="main-menu" class="menu-page">
+  <nav id="catalogue-path" class="catalogue-path" aria-label="Ubicación" hidden><button id="catalogue-home">Inicio</button><span aria-hidden="true">/</span><span id="catalogue-lab-name"></span></nav>
   <section class="menu-hero">
-    <div class="menu-hero-copy"><div class="menu-kicker"><span>u</span> Tu espacio de aprendizaje</div><h1 id="menu-title">¿Qué quieres explorar hoy?</h1><p id="menu-subtitle">Aprende electrónica en un laboratorio 3D: conecta componentes, prueba ideas y observa lo que ocurre.</p></div>
-
+    <div class="menu-hero-copy"><div class="menu-kicker" id="menu-kicker">APRENDIZAJE QUE PUEDES EXPLORAR</div><h1 id="menu-title"><span id="menu-title-lead">El conocimiento se construye</span> <em id="menu-title-accent">explorando.</em></h1><p id="menu-subtitle">Del concepto al descubrimiento. Empieza con la bienvenida o elige un laboratorio para aprender haciendo.</p><div class="atlas-hero-actions"><button id="browse-labs" class="atlas-primary">Explorar laboratorios <span aria-hidden="true">↗</span></button><button id="hero-welcome" class="atlas-text-button">Primera vez por aquí →</button></div></div>
+    <div class="atlas-art" id="catalogue-art"><span class="atlas-art-tag">LABORATORIO 01 / ELECTRÓNICA</span>${introArtwork('catalogue-hero')}<div class="atlas-art-caption"><span class="intro-captions" aria-hidden="true"><span>01 / CONECTA LOS ELEMENTOS</span><span>02 / CIERRA EL CIRCUITO</span><span>03 / OBSERVA LA CORRIENTE</span></span><span>UMBRAL LABS</span></div></div>
+  </section>
+  <section class="catalogue-band"><div class="catalogue-search-frame"><label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input id="experience-search" type="search" aria-label="Buscar clases y laboratorios" placeholder="Buscar una clase o laboratorio…" autocomplete="off"/><span class="search-shortcut"><kbd>Ctrl</kbd><kbd>K</kbd></span></label></div>
+  <section class="experience-catalogue" aria-labelledby="catalogue-title">
+    <div class="catalogue-heading"><div><div class="eyebrow">EXPLORA UMBRAL</div><h2 id="catalogue-title">Bienvenida y laboratorios</h2></div><span id="catalogue-result-count" class="catalogue-count" role="status" aria-live="polite">2 experiencias</span></div>
+    <div id="class-filters" class="class-filters" role="group" aria-label="Filtrar experiencias" hidden><button data-entry-filter="all" aria-pressed="true">Todas</button><button data-entry-filter="class" aria-pressed="false">Clases con contenido</button><button data-entry-filter="free" aria-pressed="false">Modo libre</button></div>
+    <ul class="experience-list"></ul>
+    <div id="empty-catalogue" class="empty-catalogue" hidden><h3>No hay experiencias para mostrar</h3><p id="empty-catalogue-text">Prueba con otra búsqueda.</p><button id="reset-catalogue">Ver todas las experiencias</button></div>
+    <div class="catalogue-note"><span class="online-dot"></span> Disponible en PC desde tu navegador <span>·</span> Puedes guardar tus montajes en este navegador.</div>
+  </section>
   </section>
   <section id="getting-started" class="getting-started" aria-labelledby="getting-started-title">
-    <div class="getting-started-heading"><div><span class="welcome-eyebrow">BIENVENIDO AL LABORATORIO</span><h2 id="getting-started-title">¿Es tu primera visita?</h2><p>No necesitas saber de circuitos. Empieza por conocer tu mesa de trabajo.</p></div><button id="start-tutorial" class="start-tutorial">Empezar el tutorial <span aria-hidden="true">↗</span></button></div>
+    <div class="getting-started-heading"><div><span class="welcome-eyebrow">BIENVENIDO A UMBRAL LABS</span><h2 id="getting-started-title">¿Es tu primera visita?</h2><p>Conoce los controles y a tu guía. El tutorial utiliza una mesa de electrónica para practicar.</p></div><button id="start-tutorial" class="start-tutorial">Abrir bienvenida <span aria-hidden="true">↗</span></button></div>
     <ol class="getting-started-steps">
       <li><span class="welcome-number" aria-hidden="true">1</span><div><h3>Aprende los controles</h3><p>En «Primeros pasos» practicarás cómo seleccionar, mover y conectar elementos, con ayuda del guía.</p></div></li>
-      <li><span class="welcome-number" aria-hidden="true">2</span><div><h3>Sigue una clase</h3><p>El guía te explica cada actividad. Realízala y espera la confirmación antes de continuar.</p></div></li>
+      <li><span class="welcome-number" aria-hidden="true">2</span><div><h3>Elige una materia</h3><p>Lee el contenido de una clase y después comprueba lo aprendido en su laboratorio.</p></div></li>
       <li><span class="welcome-number" aria-hidden="true">3</span><div><h3>Explora a tu ritmo</h3><p>En el modo libre puedes crear tus propios circuitos y ver cómo cambian las lecturas y las gráficas.</p></div></li>
     </ol>
   </section>
@@ -35,19 +43,32 @@ export const layout = `
       <article><h3>En tu PC</h3><p>Pulsa la escena y usa <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> para desplazarte. Arrastra con el botón derecho para girar la vista y usa la rueda para acercarte.</p><p>Pulsa un elemento o su nombre en la lista para seleccionarlo. Arrastra su cuerpo o usa las flechas de «Propiedades» para moverlo.</p></article>
       <article><h3>Dentro del laboratorio</h3><p>El panel izquierdo permite añadir elementos; el derecho muestra sus propiedades. Para crear un cable, pulsa un terminal y después otro. Para quitarlo, abre «Cables» y pulsa su cruz.</p><p>Para cambiar un valor, pulsa el número y confirma con «Aplicar». En PC también puedes escribir y pulsar <kbd>Enter</kbd>.</p></article>
       <article><h3>Tu guía y tus montajes</h3><p>Pulsa «Escuchar» para oír al guía y abre la explicación o las pistas para leer más. Al completar una actividad verás una confirmación y podrás continuar.</p><p>«Guardar» conserva el montaje en este navegador y dispositivo; «Recuperar» lo carga después. Guardar reemplaza el montaje anterior. Cargar un ejemplo también reemplaza la mesa actual.</p></article>
-      <article><h3>Con Meta Quest</h3><p>Abre esta página en el navegador de las gafas, elige una experiencia y pulsa «Entrar en VR». Apunta con el mando y usa el gatillo para seleccionar. La palanca izquierda permite ir a las zonas marcadas.</p><p>Los paneles y el guía permanecen dentro del entorno. «Vista Quest en PC» permite revisar esa distribución con ratón; no activa la realidad virtual.</p></article>
+      <article><h3>Con Meta Quest</h3><p>Abre esta página en el navegador de las gafas, elige una experiencia y pulsa «Iniciar clase» o «Iniciar simulación». Si VR está disponible, solicitaremos acceso a las gafas. Apunta con el mando y usa el gatillo para seleccionar. La palanca izquierda permite ir a las zonas marcadas.</p><p>Los paneles y el guía permanecen dentro del entorno. «Vista Quest en PC» permite revisar esa distribución con ratón; no activa la realidad virtual.</p></article>
     </div>
   </details>
-  <div class="catalogue-search-frame"><label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input id="experience-search" type="search" aria-label="Buscar clases y laboratorios" placeholder="Buscar una clase o laboratorio…" autocomplete="off"/><span class="search-shortcut"><kbd>Ctrl</kbd><kbd>K</kbd></span></label></div>
-  <section class="experience-catalogue" aria-labelledby="catalogue-title">
-    <div class="catalogue-heading"><div><div class="eyebrow">EXPERIENCIAS DISPONIBLES</div><h2 id="catalogue-title">Electrónica básica</h2></div><span id="catalogue-result-count" class="catalogue-count" role="status" aria-live="polite">2 experiencias</span></div>
-    <ul class="experience-list">
-      <li><button class="experience-row sandbox-row" data-open-mode="free" aria-label="Abrir modo libre: Banco de electrónica"><span class="experience-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 3 11 6v14l-11 6-11-6V9l11-6Zm-11 6 11 7 11-7m-11 7v13"/></svg></span><span class="experience-copy"><span class="experience-type">MODO LIBRE</span><strong>Banco de electrónica</strong><span class="experience-description">Una mesa para tus ideas. Añade componentes, diseña conexiones y observa las mediciones y gráficas.</span><span class="experience-meta"><span>Exploración abierta</span><i></i><span>A tu ritmo</span></span></span><span class="experience-action"><span id="free-entry-label">Explorar</span><span>↗</span></span></button></li>
-    </ul>
-    <div id="empty-catalogue" class="empty-catalogue" hidden><h3>No hay experiencias para mostrar</h3><p id="empty-catalogue-text">Prueba con otra búsqueda.</p><button id="reset-catalogue">Ver todas las experiencias</button></div>
-    <div class="catalogue-note"><span class="online-dot"></span> Disponible en PC desde tu navegador <span>·</span> Puedes guardar tus montajes en este navegador.</div>
-  </section>
   <footer><span>UMBRAL LABS <i></i> Un espacio para aprender experimentando.</span><span>Versión de demostración</span></footer>
+</main>
+<main id="study-view" class="study-page" hidden>
+  <section class="study-hero"><div class="portal-wrap"><button id="study-back" class="atlas-text-button">← <span id="study-subject"></span></button><div class="study-intro"><div><span class="welcome-eyebrow">APRENDE ANTES DE EXPERIMENTAR</span><h1 id="study-title"></h1><p id="study-description"></p></div><aside class="study-facts"><span>EN ESTA CLASE</span><strong id="study-duration"></strong><p>3 ideas para comprender</p><p id="study-status"></p><a href="#study-practice">Ver la práctica ↓</a></aside></div></div></section>
+  <div class="reading-layout portal-wrap"><aside class="reading-index"><span class="welcome-eyebrow">TU RECORRIDO</span><nav id="study-outline" aria-label="Contenido de la clase"></nav><p>Lee a tu ritmo. Al final encontrarás el acceso a la práctica.</p></aside><div id="study-sections"></div></div>
+  <section id="study-practice" class="practice-band"><div class="portal-wrap"><div><span class="welcome-eyebrow">DEL CONCEPTO A LA EXPERIENCIA</span><h2 id="study-lab-title"></h2><p id="study-practice-description"></p></div><button id="study-prepare" class="atlas-primary"></button></div></section>
+  <footer class="portal-wrap"><span>UMBRAL LABS · Aprende experimentando.</span><span>Versión de demostración</span></footer>
+</main>
+<main id="launch-view" class="menu-page launch-page" hidden>
+  <div class="atlas-launch-path"><button id="launch-back" class="atlas-text-button">← Volver al catálogo</button><span>Antes de empezar</span></div>
+  <div class="atlas-launch-layout">
+    <section class="atlas-class-intro" aria-labelledby="launch-title"><span class="welcome-eyebrow" id="launch-category">CLASE GUIADA</span><h1 id="launch-title"></h1><p id="launch-description"></p><div class="launch-meta" id="launch-meta"></div><div class="atlas-class-preview">${platformArtwork('class-preview')}<span>ILUSTRACIÓN DEL LABORATORIO</span></div><div class="atlas-outcomes"><h2>Lo que vas a descubrir</h2><p id="launch-outcomes"></p></div></section>
+    <aside class="launch-card" aria-labelledby="launch-card-title">
+      <span class="welcome-eyebrow">A TU RITMO, DESDE EL PRINCIPIO</span><h2 id="launch-card-title">Prepara tu espacio.</h2><p>Tu guía esperará hasta que estés listo. Acomódate antes de comenzar.</p>
+      <div class="atlas-device" id="launch-device" role="status">Comprobando el modo de inicio…</div>
+      <button id="start-simulation" class="start-tutorial" disabled>Iniciar clase</button>
+      <button id="launch-restart" class="atlas-text-button" hidden>Empezar desde el principio</button>
+      <p id="launch-error" role="alert" hidden></p><button id="launch-window" hidden>Continuar en esta ventana</button>
+      <p class="launch-note"><span aria-hidden="true">◌</span> La simulación y el audio esperan hasta que pulses iniciar.</p>
+      <div class="atlas-launch-steps"><span class="welcome-eyebrow">ASÍ SERÁ TU EXPERIENCIA</span><ol class="launch-steps"><li>Entra al entorno 3D en tu PC o tus gafas.</li><li>Escucha al guía y realiza la actividad.</li><li>Recibe confirmación y continúa.</li></ol></div>
+    </aside>
+  </div>
+  <footer><span>UMBRAL LABS <i></i> Aprender haciendo, desde cualquier lugar.</span><span>Versión de demostración</span></footer>
 </main>
 <main id="lab-view" hidden>
   <div class="breadcrumb">Laboratorios <span>›</span> Física e ingeniería <span>›</span><strong>Electrónica básica</strong></div>

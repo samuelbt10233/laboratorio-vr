@@ -2,6 +2,8 @@
 
 Primera demo local de electrónica básica en navegador. TypeScript, Vite y Babylon.js. Incluye mesa 3D, cableado editable, fuente de 1–12 V, hasta cuatro resistencias, interruptores, inspector, mediciones, clase guiada de cuatro pasos y modo libre. No requiere cuentas ni servicios de IA.
 
+Para incorporar otro agente y preparar la evolución hacia laboratorios de distintas disciplinas, comenzar por [la guía de arquitectura e integración](INTEGRACION_AGENTES.md). Distingue el estado actual de la arquitectura propuesta, los contratos que deben preservarse y las comprobaciones de entrega.
+
 ## Ejecutar
 
 ```sh
@@ -77,7 +79,7 @@ El monitor 3D muestra la característica I–V del circuito completo (barrido te
 
 ## Menú general
 
-La pantalla inicial lista la clase «Ley de Ohm y circuitos básicos» y el modo libre «Banco de electrónica». El botón «Menú general» y el logotipo permiten regresar. Cada modo conserva su montaje y el paso de la clase en memoria al volver al menú durante la misma sesión de página. Recargar reinicia esa memoria; «Guardar» mantiene un montaje en el almacenamiento local para recuperarlo después. La narración y el renderizado 3D se detienen mientras se muestra el menú.
+La pantalla inicial lista la clase «Ley de Ohm y circuitos básicos» y el modo libre «Banco de electrónica». El botón «Menú general» y el logotipo permiten regresar. Cada modo conserva su montaje y el paso de la clase en memoria al volver al menú durante la misma sesión de página. Recargar reinicia esa memoria; «Empezar desde el principio», en la preparación de una clase ya abierta, reinicia solo esa clase, también dentro de VR. «Guardar» mantiene un montaje en el almacenamiento local para recuperarlo después. La narración y el renderizado 3D se detienen mientras se muestra el menú.
 
 ## Navegación y tema visual
 
@@ -141,3 +143,21 @@ La superficie de trabajo se eleva 40° hacia el fondo, tanto en PC como en VR (`
 `wire-routing.ts` genera cables flexibles en las coordenadas locales de la mesa. Primero intenta una curva cúbica con salida lateral y una ligera holgura. Si atraviesa una base, busca un recorrido corto entre esquinas con margen y redondea sus cambios de dirección. Las curvas se comprueban por segmentos contra las bases; se conserva una conexión exacta en cada terminal. Ya no se usan escalones ni carriles ortogonales.
 
 Al mover cualquier componente se recalculan todos los recorridos, incluidas las esferas de corriente. Si la colocación bloquea las salidas laterales o no deja un paso libre, se usa un arco suave elevado. Superponer físicamente dos componentes todavía puede ocultar sus propios terminales; el trazado no cambia la posición del montaje. La geometría del cable es visual y no altera las conexiones ni los cálculos eléctricos. Las pruebas comprueban terminales, desvíos alrededor de obstáculos, movimiento, rutas elevadas, continuidad de las curvas y ausencia de giros bruscos.
+
+### Catálogo por laboratorio
+
+El inicio permite elegir la bienvenida («Primeros pasos») o un laboratorio. Al abrir Electrónica básica aparecen sus cuatro clases y el modo libre. El botón de regreso de cada práctica lleva a las clases del laboratorio; Inicio vuelve a la selección general. Búsqueda y Recientes respetan esta jerarquía.
+
+`src/laboratories.ts` contiene los laboratorios disponibles y genera las opciones de ambos catálogos, web y 3D. Cada `LabClass` declara `laboratoryId`; la bienvenida usa `null`. Esta separación prepara la navegación para más disciplinas; el runtime de simulación actual sigue siendo exclusivamente de electrónica.
+
+### Inicio explícito de la simulación
+
+Abrir una clase, la bienvenida o el modo libre muestra primero una pantalla de preparación sin audio. «Iniciar clase» / «Iniciar simulación» solicita una sesión WebXR si está disponible, o pantalla completa en PC. La guía y la escena activa comienzan después de entrar. Si se rechaza la solicitud, se puede reintentar o pulsar «Continuar en esta ventana»; no hay inicio automático tras el error. Las experiencias seleccionadas dentro de VR muestran la preparación en un panel 3D. El paso final de una clase puede continuar directamente al modo libre, sin interrumpir la sesión que el usuario ya inició.
+
+### Identidad visual Atlas
+
+El portal usa `src/atlas-theme.css`: tonos crema y terracota, títulos editoriales y navegación horizontal. Inicio mantiene la selección de bienvenida o laboratorio; el catálogo conserva búsqueda, Recientes y sesiones. La ficha previa de cada clase presenta descripción, duración, pasos e inicio manual, con el dispositivo detectado automáticamente. Las ilustraciones SVG de `src/platform-art.ts` son decorativas e independientes de Babylon. El tema anterior `cloud-theme.css` ya no se carga. No se incorporan perfiles, progreso ficticio ni laboratorios conceptuales del mockup. Los controles espaciales y el inicio a pantalla completa / WebXR mantienen su funcionamiento.
+
+La ilustración principal de Atlas incluye una introducción silenciosa de 7 segundos (`introArtwork`): dibuja los tres cables, cierra el interruptor y muestra partículas de corriente antes de reiniciarse. Usa SVG y animaciones CSS, sin iniciar Babylon ni reproducir la clase. Las miniaturas y la preparación de clase mantienen ilustraciones estáticas. La preferencia de movimiento reducido presenta el circuito conectado sin animación.
+
+El portal académico permite explorar materias y leer una introducción a cada clase antes de preparar el laboratorio. Electrónica incluye cuatro clases operativas y modo libre. Mecánica de fluidos y Mecánica muestran propuestas de contenido, con sus simulaciones identificadas como pendientes. Las materias se registran en `src/subjects.ts` y las lecturas en `src/learning-content.ts`.

@@ -1,8 +1,8 @@
 # Añadir una clase
 
-Cada clase se define en un archivo de `src/classes/` que exporta un objeto de tipo `LabClass`. Usa `ohm.ts` o `parallel.ts` como ejemplo y registra el objeto en el arreglo `classes` de `src/lessons.ts`. El catálogo, la búsqueda, el número de pasos y el reproductor se actualizan automáticamente.
+Cada clase se define en un archivo de `src/classes/` que exporta un objeto de tipo `LabClass`. Usa `ohm.ts` o `parallel.ts` como ejemplo y registra el objeto en el arreglo `classes` de `src/lessons.ts`. El catálogo del laboratorio, la búsqueda, el número de pasos y el reproductor se actualizan automáticamente. El inicio muestra la bienvenida y los laboratorios definidos en `src/laboratories.ts`; al entrar en uno aparecen únicamente sus clases y su modo libre. El tutorial `primeros-pasos` pertenece a la bienvenida y no se repite dentro de Electrónica.
 
-La definición incluye un `id` único y estable, título, descripción, duración, nivel, `initialPreset`, `initialSelection` y una lista de `steps`. Los montajes disponibles son `simple`, `series`, `parallel` y `empty`. Los identificadores de componentes deben existir en el montaje usado: `V1`, `R1`, `R2` y `S1`.
+La definición incluye `laboratoryId` (`electronics` para las clases de este laboratorio; `null` para la bienvenida general), un `id` único y estable, título, descripción, duración, nivel, `initialPreset`, `initialSelection` y una lista de `steps`. Los montajes disponibles son `simple`, `series`, `parallel` y `empty`. Los identificadores de componentes deben existir en el montaje usado: `V1`, `R1`, `R2` y `S1`.
 
 Cada paso tiene `id`, `title`, `text`, `task`, `audio`, `success`, `repairPreset` y `goals`. Las reglas se evalúan en orden; la primera pendiente determina la indicación visual y bloquea el avance:
 
@@ -51,7 +51,7 @@ Las reglas `action` permiten verificar operaciones de interfaz: `move`, `disconn
 
 Un paso puede incluir `setup: Circuit`. Al entrar a ese paso se carga una copia independiente del montaje; al retomar una sesión se conserva el circuito que el estudiante estaba editando. Las clases sin `setup` mantienen su comportamiento anterior: el montaje continúa entre pasos. `createStepCircuit` prepara copias para la entrada y el reinicio.
 
-«Encuentra el fallo» (`src/classes/find-fault.ts`) usa tres montajes: interruptor abierto, cable faltante y conexión que puentea la resistencia y cortocircuita la fuente. La regla `diagnose` contiene `expected: Circuit` y `hint`. Compara componentes, valores, interruptores y conexiones; ignora posiciones, identificadores de cables y dirección de sus extremos. Así exige reparar el montaje y no acepta obtener la misma corriente con otros valores.
+«Encuentra el fallo» (`src/classes/find-fault.ts`) usa tres montajes: interruptor abierto, cable faltante y conexión que puentea la resistencia y cortocircuita la fuente. La regla `diagnose` contiene `expected: Circuit` y `hint`. Compara componentes, valores, estado de los interruptores y los nodos que forman los cables; ignora posiciones, identificadores y dirección de los cables, y la orientación de resistencias e interruptores, que no tienen polaridad. La fuente y los LED sí la conservan. Así exige reparar el montaje y no acepta obtener la misma corriente con otros valores ni puenteando un componente; en ese caso la guía explica que la corriente es correcta, pero el recorrido no coincide.
 
 La guía muestra «Ver pistas» en estos retos. La vista ampliada permite «Reiniciar este reto», que restaura solo el montaje del paso actual. Las indicaciones de diagnóstico orientan sin señalar directamente el elemento culpable. Cada reparación válida utiliza las confirmaciones y narraciones comunes.
 

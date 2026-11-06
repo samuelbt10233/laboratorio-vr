@@ -48,6 +48,13 @@ test('sessions preserve separate circuits and inspection progress without shared
   const saved=store.get(key)!;assert.equal(saved.step,1);assert.deepEqual(saved.seen,['R1']);assert.equal(saved.circuit.parts[0].value,6);
   saved.step=9;assert.equal(store.get(key)!.step,1);assert.equal(store.get('free')!.circuit.parts.length,1);assert.equal(store.get(classSessionKey(getClass('circuitos-en-paralelo').id))!.step,0);
 });
+test('deleting a session restarts only that class',()=>{
+  const store=new SessionStore(),key=classSessionKey('ley-de-ohm'),other=classSessionKey('circuitos-en-paralelo');
+  const session={circuit:preset('simple'),selected:'S1',step:3,seen:[],completed:true};
+  store.save(key,session);store.save(other,session);
+  store.delete(key);
+  assert.equal(store.has(key),false);assert.equal(store.get(key),undefined);assert.equal(store.get(other)!.step,3);
+});
 
 test('recorded narration matches the current dialogue for every registered step',()=>{
   const manifest=JSON.parse(readFileSync('public/audio/narration-manifest.json','utf8'));

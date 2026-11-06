@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { subjects, subjectEntries, subjectForLaboratory, getSubject } from './subjects';
+import { readingEntry, subjects, subjectEntries, subjectForLaboratory, getSubject } from './subjects';
 import { learningContents, getLearningContent } from './learning-content';
 import { classes, getClass } from './lessons';
 import { laboratories } from './laboratories';
@@ -29,6 +29,13 @@ test('planned subjects cannot launch a simulator or expose a free mode',()=>{
       assert.equal(getLearningContent(entry.classId!).runtimeClassId,null);
     }
   }
+});
+test('a reading is planned only until it has a laboratory module',()=>{
+  const reading={id:'x',runtimeClassId:null,subjectId:'fluids',title:'T',description:'D',duration:'5 min',laboratoryTitle:'L',sections:[]};
+  assert.equal(readingEntry('fluids',reading).planned,true);
+  const practice=readingEntry('fluids',{...reading,labId:'prensa'});
+  assert.equal(practice.planned,false);assert.equal(practice.classId,'x');assert.equal(practice.kind,'class');
+  assert.ok(!practice.meta.includes('Laboratorio en preparación'));
 });
 test('invalid subjects and reading links are rejected',()=>{
   assert.throws(()=>getSubject('missing'));assert.throws(()=>subjectForLaboratory('missing'));assert.throws(()=>getLearningContent('missing'));

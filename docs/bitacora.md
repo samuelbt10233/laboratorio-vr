@@ -29,3 +29,9 @@ Formato:
 - Por qué: es la condición para empezar T2.
 - Archivos: `docs/plan-demo.md`.
 - Pendiente: siguen abiertas las preguntas de la sección 3 del plan. T3 a T8 no empiezan hasta que T2 esté integrada.
+
+## 2026-11-06 · Claude Code · T2 · inicio
+- Qué: separar la estética, el contenido por materia y crear la entrada de laboratorios nuevos, sin cambiar el comportamiento actual.
+- Por qué: permitir que T3 a T8 avancen en paralelo sin editar las mismas líneas.
+- Archivos: `src/main.ts`, `src/learning-content.ts`, `src/content/`, `src/labs/`, `src/lab-art.ts`, `src/subjects.ts`, `src/template.ts`.
+- Pendiente: mientras esta tarea siga en curso, no empezar T3 a T8.

@@ -89,7 +89,7 @@ Antes de empezar, cambia tu fila a «en curso». Estados: `pendiente`, `en curso
 | --- | --- | --- | --- | --- | --- |
 | T0 | Guion y esquema de diapositivas | Fija el alcance | Responsable + Claude Code | en curso | — |
 | T1 | Aprobar el catálogo | Define qué se construye | Responsable | hecha | — |
-| T2 | Preparar la división del código | Evita cruces en la fase 3 | Claude Code | pendiente | T1 |
+| T2 | Preparar la división del código | Evita cruces en la fase 3 | Claude Code | en curso | T1 |
 | T3 | Nuevo diseño del portal | Primera impresión del cliente | Codex | pendiente | T2 |
 | T4 | Estética de laboratorio real en circuitos | Credibilidad ante el cliente | Claude Code | pendiente | T2 |
 | T5 | Lecturas de electrónica | Reforzar enseñanza → práctica | Codex | pendiente | T2 |

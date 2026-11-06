@@ -23,7 +23,7 @@ El avatar lee título, explicación y tarea. `audio` apunta a un MP3 en `public/
 node --import tsx scripts/generate-narration.mjs
 ```
 
-El generador requiere `edge-tts==7.3.1`, acceso a Internet y `ffprobe` en el entorno de generación. Usa por defecto la voz neural colombiana Salomé (`es-CO-SalomeNeural`) con ritmo −5 %; no se carga el sintetizador en la aplicación. `TTS_PYTHON`, `TTS_VOICE` y `TTS_RATE` permiten configurar la generación. Usa una ruta `/audio/nombre-unico.mp3` por paso, directamente dentro de la carpeta audio. Después ejecuta `npm test` y `npm run build`.
+El generador requiere `edge-tts==7.3.1`, acceso a Internet y `ffprobe` en el entorno de generación. Usa por defecto la voz neural mexicana Dalia (`es-MX-DaliaNeural`) con ritmo −5 %; no se carga el sintetizador en la aplicación. `TTS_PYTHON`, `TTS_VOICE` y `TTS_RATE` permiten configurar la generación. Usa una ruta `/audio/nombre-unico.mp3` por paso, directamente dentro de la carpeta audio. Después ejecuta `npm test` y `npm run build`.
 
 El progreso se conserva por ID de clase al navegar dentro de la sesión de la página, incluidos circuito, selección, paso, componentes revisados y finalización. El modo libre tiene su propia sesión. Recargar la página reinicia ese progreso; Guardar/Recuperar sigue guardando únicamente un montaje en el navegador. El último paso completado ofrece acceso al modo libre; volver a una clase terminada permite revisarla.
 

@@ -36,8 +36,8 @@ export class Narrator {
   private speakWithBrowser(text:string,generation:number){
     const voices=this.voices();
     if(!this.synth||!voices.length){this.notify('error');return;}
-    const utterance=new SpeechSynthesisUtterance(spokenText(text));utterance.lang='es-CO';utterance.rate=.94;utterance.pitch=1;
-    utterance.voice=voices.find(v=>/Salome/i.test(v.name))??voices.find(v=>v.lang==='es-CO')??voices.find(v=>v.lang==='es-MX')??voices[0];
+    const utterance=new SpeechSynthesisUtterance(spokenText(text));utterance.lang='es-MX';utterance.rate=.94;utterance.pitch=1;
+    utterance.voice=voices.find(v=>/Dalia/i.test(v.name))??voices.find(v=>v.lang==='es-MX')??voices.find(v=>v.lang==='es-CO')??voices[0];
     this.utterance=utterance;
     const current=()=>this.alive&&generation===this.generation&&this.utterance===utterance;
     const fail=()=>{if(current()){this.stop();this.notify('error');}};

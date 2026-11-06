@@ -91,3 +91,9 @@ Formato:
   - El contenido de seguridad es didáctico: debe revisarlo una persona con criterio técnico antes de presentarse.
   - Para T3: la tarjeta de la materia industrial usa la ilustración genérica de electrónica; hace falta una en `subject-art.ts` y `platform-art.ts`.
   - Para T9: la lectura y los mensajes del laboratorio no tienen audio; son texto.
+
+## 2026-11-06 · Claude Code · T6 · integrada
+- Qué: PR #5 integrado en `main`; T6 queda hecha.
+- Por qué: la oferta a empresas ya se puede mostrar.
+- Archivos: `docs/plan-demo.md`.
+- Pendiente: probar la VR en gafas (T10); revisión técnica del contenido de seguridad; ilustración de la materia (T3); audios (T9).

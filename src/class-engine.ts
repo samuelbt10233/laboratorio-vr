@@ -9,7 +9,7 @@ export type Goal=
   | {kind:'measurement';quantity:'current'|'resistance';value:number}
   | {kind:'inspect';parts:string[]};
 export interface LessonStep {id:string;title:string;text:string;task:string;hint?:string;setup?:Circuit;audio:string;success:{text:string;audio:string};repairPreset:PresetName;goals:Goal[]}
-export interface LabClass {id:string;title:string;description:string;duration:string;level:string;initialPreset:PresetName;initialSelection:string;steps:LessonStep[]}
+export interface LabClass {laboratoryId:string|null;id:string;title:string;description:string;duration:string;level:string;initialPreset:PresetName;initialSelection:string;steps:LessonStep[]}
 export interface ClassContext {circuit:Circuit;selected:string;seen:Set<string>}
 export type PendingGoal=Exclude<Goal,{kind:'inspect'|'measurement'}>|{kind:'inspect';part:string}|{kind:'repair';preset:PresetName};
 // Ordered goals keep instructions and advancement governed by the same rules.

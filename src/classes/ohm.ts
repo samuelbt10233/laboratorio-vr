@@ -1,6 +1,6 @@
 import type { LabClass } from '../class-engine';
 export const ohmClass:LabClass={
-  id:'ley-de-ohm',title:'Ley de Ohm y circuitos básicos',
+  laboratoryId:'electronics',id:'ley-de-ohm',title:'Ley de Ohm y circuitos básicos',
   description:'Descubre para qué sirve cada elemento y observa qué hace que circule corriente. No necesitas conocimientos previos.',
   duration:'8–12 min',level:'Nivel introductorio',initialPreset:'simple',initialSelection:'S1',
   steps:[

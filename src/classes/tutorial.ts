@@ -1,7 +1,7 @@
 import type { LabClass, LessonStep } from '../class-engine';
 const step=(id:string,title:string,text:string,task:string,success:string,goals:LessonStep['goals']):LessonStep=>({id,title,text,task,goals,repairPreset:'simple',audio:`/audio/salome-tutorial-${id}.mp3`,success:{text:success,audio:`/audio/salome-tutorial-logro-${id}.mp3`}});
 export const tutorialClass:LabClass={
-  id:'primeros-pasos',title:'Primeros pasos en Umbral Labs',
+  laboratoryId:null,id:'primeros-pasos',title:'Primeros pasos en Umbral Labs',
   description:'Aprende a usar los controles, mover elementos, conectar cables y guardar un montaje. Empieza aquí si es tu primera visita.',
   duration:'5–8 min',level:'Tutorial de la app',initialPreset:'simple',initialSelection:'V1',
   steps:[

@@ -9,8 +9,9 @@ Esta vista permite revisar geometría y funcionamiento; no emula el visor, la vi
 ## Entrar desde las gafas
 
 1. Publica la aplicación en Railway y abre su URL HTTPS desde el navegador de Quest. El servidor incluido sirve `dist/`; comandos: `npm ci && npm run build` y `npm start`. Esta adaptación no ha desplegado la aplicación.
-2. Elige una clase o el modo libre y pulsa «Entrar en VR». El botón solo se habilita cuando el navegador anuncia soporte para `immersive-vr`.
-3. Acepta la solicitud del navegador para iniciar la sesión inmersiva.
+2. Elige una clase o el modo libre. Se abre una pantalla de preparación sin narración ni simulación activa.
+3. Pulsa «Iniciar clase» o «Iniciar simulación». Si la inicialización detectó soporte para `immersive-vr`, el mismo gesto solicita la sesión inmersiva. Acepta la solicitud del navegador. La clase comienza después de entrar. En PC, el botón solicita pantalla completa.
+4. Si el acceso falla, la clase sigue esperando: reintenta o elige explícitamente «Continuar en esta ventana». «Entrar en VR» sigue disponible como control durante una simulación ya iniciada. Al cambiar de experiencia desde el catálogo espacial, también aparece un botón «Iniciar clase» dentro del entorno.
 
 WebXR necesita un contexto seguro y una acción del usuario para entrar. El `localhost` del visor apunta al propio visor; no al PC donde se ejecuta Vite. Para la prueba inicial utiliza una URL HTTPS accesible desde las gafas.
 

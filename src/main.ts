@@ -1,9 +1,15 @@
+import { platformArtwork } from './platform-art';
+import { enterPresentation } from './start-presentation';
+import { welcomeClassId } from './laboratories';
+import { getSubject, subjectEntries, subjectForLaboratory, type SubjectEntry } from './subjects';
+import { getLearningContent } from './learning-content';
+import { subjectArtwork } from './subject-art';
 import { routeWire } from './wire-routing';
 import { LED_MODEL, ledState } from './led-solver';
 import { Engine, Scene, Camera, ArcRotateCamera, Vector3, HemisphericLight, DirectionalLight, MeshBuilder, StandardMaterial, Color3, Color4, DynamicTexture, PointerEventTypes, PointerDragBehavior, Mesh, TransformNode } from '@babylonjs/core';
 import { preset, solve, validate, terminal, connect, type Circuit, type Part } from './circuit';
 import './style.css';
-import './cloud-theme.css';
+import './atlas-theme.css';
 import { Narrator, type NarrationState } from './narration';
 import { classes, getClass } from './lessons';
 import { createStepCircuit, recordAppAction, pendingGoal, SessionStore, classSessionKey } from './class-engine';
@@ -11,6 +17,7 @@ import { layout } from './template';
 import { CircuitCharts } from './circuit-charts';
 import { SpatialControls } from './spatial-controls';
 import './spatial-layout.css';
+import './subjects-theme.css';
 import { moveWithinLab, movementKeys } from './navigation';
 import { wireCurrents } from './wire-flow';
 import { CurrentAnimation } from './current-animation';
@@ -22,7 +29,8 @@ import { movePartOnTable, questLayout } from './quest-layout';
 const app=document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML=layout;
 const $=<T extends HTMLElement=HTMLElement>(s:string)=>document.querySelector<T>(s)!;
-let currentView:'menu'|'lab'='menu';
+let currentView:'menu'|'study'|'ready'|'lab'='menu';
+let presentationReady=false,launchBusy=false,launchVersion=0;
 let xrRuntime:QuestRuntime|null=null;
 let preferredControlsVisible=true;
 let circuit:Circuit=preset('simple'), selected='S1', pending:string|null=null, mode:'class'|'free'='class', step=0;
@@ -50,7 +58,7 @@ const circuitCharts=new CircuitCharts(scene,labRoot);
 const currentAnimation=new CurrentAnimation(scene,tableRoot);
 const spatialGuide=new SpatialGuide(scene,camera,id=>{
   const selectors:Record<string,string>={speak:'#speak-lesson',stop:'#stop-lesson',mute:'#mute-lesson',next:'#next',reset:'#reset-challenge'};
-  if(id==='classes'){if(xrRuntime?.isImmersive())xrRuntime.openCatalogue();else navigateCatalogue('class');return;}
+  if(id==='classes'){if(xrRuntime?.isImmersive())xrRuntime.openCatalogue();else openLaboratory(activeClass.laboratoryId??'electronics');return;}
   if(selectors[id])$(selectors[id]).click();
 });
 function syncSpatialGuide(){
@@ -329,8 +337,8 @@ const narrator=new Narrator(state=>{
   $<HTMLButtonElement>('#speak-lesson').disabled=state==='muted';
   $('#speak-lesson').textContent=state==='finished'?'↻ Repetir':'▶ Escuchar';syncSpatialGuide();
 });
-function narrateLesson(){if(mode!=='class')return;narrationPurpose='lesson';const l=activeClass.steps[step];narrator.speak(`${l.title} ${l.text} ${l.task}`,l.audio);}
-function narrateConfirmation(success:{text:string;audio:string}){narrationPurpose='confirmation';narrator.speak(success.text,success.audio);}
+function narrateLesson(){if(currentView!=='lab'||mode!=='class')return;narrationPurpose='lesson';const l=activeClass.steps[step];narrator.speak(`${l.title} ${l.text} ${l.task}`,l.audio);}
+function narrateConfirmation(success:{text:string;audio:string}){if(currentView!=='lab')return;narrationPurpose='confirmation';narrator.speak(success.text,success.audio);}
 function narrateCurrentGuide(){if(mode==='free'&&freeCompletion)narrateConfirmation(freeCompletion);else if(mode==='class'&&guideReady&&activeClass.steps[step].goals.length)narrateConfirmation(activeClass.steps[step].success);else narrateLesson();}
 $('#speak-lesson').onclick=()=>narrateCurrentGuide();
 $('#stop-lesson').onclick=()=>narrator.stop();
@@ -342,11 +350,11 @@ function renderLesson(){const lesson=activeClass.steps[step];$('#class-mode').cl
 $('#next').onclick=()=>{
   const goal=pendingGoal(activeClass.steps[step],{circuit,selected,seen:inspectedParts});
   if(goal){toast('Completa la indicación resaltada antes de continuar.');refreshGuidance();return;}
-  if(step===activeClass.steps.length-1){const success=activeClass.steps[step].success,announce=activeClass.steps[step].goals.length===0;completed=true;saveSession();openLab('free');freeCompletion=success;$('#step-confirmation').textContent=success.text;syncSpatialGuide();if(announce)narrateConfirmation(success);}
+  if(step===activeClass.steps.length-1){const success=activeClass.steps[step].success,announce=activeClass.steps[step].goals.length===0;completed=true;saveSession();openLab('free',activeClass.id,true);freeCompletion=success;$('#step-confirmation').textContent=success.text;syncSpatialGuide();if(announce)narrateConfirmation(success);}
   else{step++;inspectedParts.clear();if(activeClass.steps[step].setup){circuit=createStepCircuit(activeClass,step);selected=activeClass.initialSelection;rebuild();}else renderLesson();}
 };
 $('#reset-challenge').onclick=()=>{if(mode!=='class'||!activeClass.steps[step].setup)return;narrator.stop();narrationPurpose='lesson';stepConfirmation.enter();inspectedParts.clear();circuit=createStepCircuit(activeClass,step);selected=activeClass.initialSelection;rebuild();narrateLesson();};
-$('#class-mode').onclick=()=>{saveSession();openLab('class',activeClass.id);};
+$('#class-mode').onclick=()=>{if(xrRuntime?.isImmersive())xrRuntime.openCatalogue();else openLaboratory(activeClass.laboratoryId??'electronics');};
 $('#free-mode').onclick=()=>{saveSession();openLab('free');};
 document.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach(b=>b.onclick=()=>{circuit=preset(b.dataset.preset as 'simple'|'series'|'parallel');selected='R1';rebuild();});
 function nextPosition(){for(const z of [-1.6,0,1.6])for(const x of [-3.2,0,3.2])if(!circuit.parts.some(p=>Math.abs(p.x-x)<2.2&&Math.abs(p.z-z)<1.1))return {x,z};return {x:0,z:0};}
@@ -358,100 +366,190 @@ $('#load').onclick=()=>{try{const raw=localStorage.getItem('umbral-circuit-v1');
 const sessions=new SessionStore();
 function sessionKey(){return mode==='class'?classSessionKey(activeClass.id):'free';}
 function saveSession(){if(currentView==='lab')sessions.save(sessionKey(),{circuit,selected,step,seen:[...inspectedParts],completed});}
-type CatalogueFilter='all'|'class'|'free'|'recent';
+type CatalogueFilter='all'|'recent';
 let catalogueFilter:CatalogueFilter='all';
+let entryFilter:'all'|'class'|'free'='all';
+let catalogueSubject:string|null=null;
 const normalise=(value:string)=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function entryVisited(entry:SubjectEntry):boolean{
+  if(entry.kind==='subject')return subjectEntries(entry.subjectId).some(entryVisited);
+  return !entry.planned&&sessions.has(entry.classId?classSessionKey(entry.classId):'free');
+}
 function renderCatalogue(){
   const query=normalise($<HTMLInputElement>('#experience-search').value.trim());
-  let count=0;
-  document.querySelectorAll<HTMLButtonElement>('[data-open-mode]').forEach(row=>{
-    const rowMode=row.dataset.openMode as 'class'|'free';
-    const matchesFilter=catalogueFilter==='all'||catalogueFilter===rowMode||catalogueFilter==='recent'&&sessions.has(rowMode==='class'?classSessionKey(row.dataset.classId!):'free');
-    const matchesSearch=!query||normalise(row.textContent??'').includes(query);
-    row.parentElement!.hidden=!(matchesFilter&&matchesSearch);if(matchesFilter&&matchesSearch)count++;
-  });
-  $('#catalogue-result-count').textContent=`${count} ${count===1?'experiencia':'experiencias'}`;
-  $('.experience-list').hidden=count===0;$('#empty-catalogue').hidden=count>0;
-  $('#empty-catalogue-text').textContent=catalogueFilter==='recent'&&!query?'Las experiencias que visites aparecerán aquí.':'Prueba con otro término o vuelve a todas las experiencias.';
-  const titles:Record<CatalogueFilter,string>={all:'¿Qué quieres explorar hoy?',class:'Clases guiadas',free:'Experimenta a tu ritmo',recent:'Retoma tu aprendizaje'};
-  $('#menu-title').textContent=titles[catalogueFilter];
-  $('#getting-started').hidden=catalogueFilter!=='all'||!!query;
-  document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
+  const subject=catalogueSubject?getSubject(catalogueSubject):null;
+  const entries=subjectEntries(catalogueSubject).filter(entry=>(!subject||entryFilter==='all'||entry.kind===entryFilter)&&(catalogueFilter!=='recent'||entryVisited(entry))&&(!query||normalise(`${entry.title} ${entry.description} ${entry.meta.join(' ')}`).includes(query)));
+  const list=$('.experience-list');list.replaceChildren();
+  list.classList.toggle('subject-grid',!subject);
+  $('#class-filters').hidden=!subject;
+  document.querySelectorAll<HTMLButtonElement>('[data-entry-filter]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.entryFilter===entryFilter)));
+  for(const entry of entries){
+    const item=document.createElement('li'),button=document.createElement('button');
+    button.className=`experience-row experience-${entry.kind}`;button.dataset.catalogueEntry=entry.id;
+    button.innerHTML='<span class="experience-icon" aria-hidden="true"></span><span class="experience-copy"><span class="experience-type"></span><strong></strong><span class="experience-description"></span><span class="experience-meta"></span></span><span class="experience-action"><span></span><span aria-hidden="true">↗</span></span>';
+    button.querySelector('.experience-icon')!.innerHTML=entry.kind==='subject'||entry.planned?subjectArtwork[entry.subjectId]:platformArtwork(`card-${entry.id.replace(/[^a-z0-9]/gi,'-')}`);
+    button.querySelector('.experience-type')!.textContent=entry.planned?'EN PREPARACIÓN':entry.kind==='subject'?'MATERIA':entry.kind==='free'?'EXPLORACIÓN LIBRE':'CLASE CON LABORATORIO';
+    button.querySelector('strong')!.textContent=entry.title;
+    button.querySelector('.experience-description')!.textContent=entry.description;
+    const meta=button.querySelector('.experience-meta')!;
+    for(const text of entry.meta){const span=document.createElement('span');span.textContent=text;meta.append(span);}
+    button.querySelector('.experience-action span')!.textContent=entry.kind==='subject'?'Explorar materia':entry.kind==='free'?'Entrar al modo libre':entry.planned?'Ver contenido propuesto':'Comenzar por el contenido';
+    button.onclick=()=>{if(entry.kind==='subject')openSubject(entry.subjectId);else if(entry.kind==='free')openLab('free');else openReading(entry.classId!);};
+    item.append(button);list.append(item);
+  }
+  $('#catalogue-result-count').textContent=`${entries.length} ${entries.length===1?'opción':'opciones'}`;
+  list.hidden=entries.length===0;$('#empty-catalogue').hidden=entries.length>0;
+  $('#empty-catalogue-text').textContent=catalogueFilter==='recent'&&!query?'Todavía no has visitado estas experiencias.':'Prueba con otro término dentro de esta sección.';
+  $('#main-menu').classList.toggle('subject-page',!!subject);
+  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Aprende la idea.';
+  $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'Llévala al laboratorio.';
+  $('#menu-kicker').textContent=subject?'EXPLORA LA MATERIA':'APRENDIZAJE QUE PUEDES EXPLORAR';
+  $('#browse-labs').firstChild!.textContent=subject?'Explorar las clases ':'Explorar materias ';
+  $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
+  $('#hero-welcome').hidden=!!subject;
+  $('#menu-subtitle').textContent=subject?subject.description:'Comprende los conceptos, descubre cómo se relacionan y ponlos a prueba en un laboratorio virtual. A tu ritmo, desde tu navegador.';
+  $('#catalogue-title').textContent=subject?'Clases y laboratorios':'Encuentra tu próxima materia';
+  $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
+  $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
+  const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar una materia…';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
+  document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=!subject&&button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }
-function navigateCatalogue(filter:CatalogueFilter){if(xrRuntime?.isImmersive()){xrRuntime.openCatalogue();return;}catalogueFilter=filter;$<HTMLInputElement>('#experience-search').value='';showMenu();}
-function focusSearch(){catalogueFilter='all';showMenu();$<HTMLInputElement>('#experience-search').focus();}
-$('#start-tutorial').onclick=()=>openLab('class','primeros-pasos');
+function openSubject(id:string){getSubject(id);entryFilter='all';catalogueSubject=id;catalogueFilter='all';$<HTMLInputElement>('#experience-search').value='';showMenu();}
+function openLaboratory(id:string){openSubject(subjectForLaboratory(id).id);}
+function navigateCatalogue(filter:CatalogueFilter){if(xrRuntime?.isImmersive()){xrRuntime.openCatalogue();return;}catalogueSubject=null;catalogueFilter=filter;$<HTMLInputElement>('#experience-search').value='';showMenu();}
+let readingId:string|null=null;
+function openReading(id:string){
+  const content=getLearningContent(id);saveSession();showMenu();
+  readingId=id;catalogueSubject=content.subjectId;currentView='study';
+  $('#main-menu').hidden=true;$('#study-view').hidden=false;
+  $('#header-context').textContent=content.title;document.title=`${content.title} · Umbral Labs`;
+  $('#study-subject').textContent=getSubject(content.subjectId).title;
+  $('#study-title').textContent=content.title;$('#study-description').textContent=content.description;
+  $('#study-duration').textContent=content.duration;$('#study-lab-title').textContent=content.laboratoryTitle;
+  $('#study-status').textContent=content.runtimeClassId?'Contenido + práctica guiada':'Contenido propuesto · Laboratorio en preparación';
+  const sections=$('#study-sections'),outline=$('#study-outline');sections.replaceChildren();outline.replaceChildren();
+  content.sections.forEach((section,index)=>{
+    const article=document.createElement('article');article.id=`reading-${index}`;article.className='reading-section';
+    const number=document.createElement('span');number.className='reading-number';number.textContent=`0${index+1}`;
+    const title=document.createElement('h2');title.textContent=section.title;
+    const text=document.createElement('p');text.textContent=section.text;
+    const example=document.createElement('aside');example.textContent=section.example;
+    article.append(number,title,text,example);sections.append(article);
+    const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=`0${index+1}  ${section.title}`;outline.append(link);
+  });
+  const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId;
+  button.textContent=content.runtimeClassId?'Ir al laboratorio →':'Laboratorio en preparación';
+  button.onclick=()=>{if(content.runtimeClassId)openLab('class',content.runtimeClassId);};
+  $('#study-practice-description').textContent=content.runtimeClassId?'Ya conoces la idea. Ahora compruébala con ayuda de tu guía. En el siguiente paso podrás preparar tu espacio antes de iniciar.':'Esta materia muestra la estructura prevista. Su simulación todavía está en preparación.';
+  window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});
+}
+$('#study-back').onclick=()=>{if(catalogueSubject)openSubject(catalogueSubject);else showMenu();};
+function focusSearch(){showMenu();$<HTMLInputElement>('#experience-search').focus();}
+$('#start-tutorial').onclick=$('#hero-welcome').onclick=$('#welcome-nav').onclick=()=>{saveSession();openLab('class',welcomeClassId);};
 $('#experience-search').oninput=renderCatalogue;
+document.querySelectorAll<HTMLButtonElement>('[data-entry-filter]').forEach(button=>button.onclick=()=>{entryFilter=button.dataset.entryFilter as typeof entryFilter;renderCatalogue();});
+$('#browse-labs').onclick=()=>{const heading=$('#catalogue-title');heading.tabIndex=-1;heading.focus({preventScroll:true});heading.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});};
 $('#quick-search').onclick=focusSearch;
-$('#reset-catalogue').onclick=()=>navigateCatalogue('all');
+$('#reset-catalogue').onclick=()=>{catalogueFilter='all';entryFilter='all';$<HTMLInputElement>('#experience-search').value='';renderCatalogue();};
+$('#catalogue-home').onclick=()=>navigateCatalogue('all');
+const subjectsButton=document.createElement('button');subjectsButton.className='nav-item';subjectsButton.textContent='Materias';subjectsButton.onclick=()=>{navigateCatalogue('all');$('#browse-labs').click();};$('#laboratory-nav').append(subjectsButton);
 document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>button.onclick=()=>navigateCatalogue(button.dataset.navFilter as CatalogueFilter));
-$('#collapse-sidebar').onclick=()=>{const collapsed=document.body.classList.toggle('sidebar-collapsed');$('#collapse-sidebar').setAttribute('aria-expanded',String(!collapsed));$('#collapse-sidebar').setAttribute('aria-label',collapsed?'Expandir menú lateral':'Contraer menú lateral');};
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();focusSearch();}});
 
+function clearReadingAnchor(){if(/^#(?:reading-\d+|study-practice)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search);}
 function showMenu(){
+  clearReadingAnchor();
+  launchVersion++;launchBusy=false;$('#launch-view').hidden=true;$('#study-view').hidden=true;
   if(xrRuntime?.isImmersive())void xrRuntime.exit();
   if(document.fullscreenElement)void document.exitFullscreen().catch(()=>{});
   navigationKeys.clear();
   saveSession();
   narrator.stop();pending=null;updateHint();currentView='menu';document.body.classList.remove('in-lab');
   $('#lab-view').hidden=true;$('#main-menu').hidden=false;$('#back-menu').hidden=true;
-  $('#header-context').textContent='Catálogo de experiencias';document.title='Umbral Labs · Menú general';
-  document.querySelectorAll<HTMLButtonElement>('[data-class-id]').forEach(row=>{
-    const saved=sessions.get(classSessionKey(row.dataset.classId!));
-    row.querySelector('.experience-action span')!.textContent=saved?.completed?'Revisar clase':saved?`Continuar · paso ${saved.step+1}`:'Comenzar clase';
-  });
-  $('#free-entry-label').textContent=sessions.has('free')?'Retomar montaje':'Explorar';
+  $('#header-context').textContent=catalogueSubject?getSubject(catalogueSubject).title:'Materias y laboratorios';document.title='Umbral Labs · Catálogo';
   renderCatalogue();window.scrollTo({top:0,behavior:'auto'});
   const heading=$('#main-menu h1');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }
-function openLab(targetMode:'class'|'free',classId=activeClass.id){
+function openLab(targetMode:'class'|'free',classId=activeClass.id,startImmediately=false){
+  clearReadingAnchor();
+  launchVersion++;launchBusy=false;
   stepConfirmation.enter();freeCompletion=null;narrationPurpose='lesson';$('#step-confirmation').textContent='';
   window.clearTimeout(toastTimer);$('#toast').classList.remove('visible');$('#toast').textContent='';
   narrator.stop();lastNarratedStep=-1;cueStep=-1;mode=targetMode;
   if(targetMode==='class')activeClass=getClass(classId);
+  catalogueSubject=targetMode==='class'?(activeClass.laboratoryId?subjectForLaboratory(activeClass.laboratoryId).id:null):'electronics';
+  $('#study-view').hidden=true;
+  $('#back-menu').textContent=catalogueSubject?'← Clases del laboratorio':'← Inicio';
   const session=sessions.get(sessionKey());
   circuit=session?.circuit??(targetMode==='class'?createStepCircuit(activeClass,0):preset('empty'));
   selected=session?.selected??(targetMode==='class'?activeClass.initialSelection:'V1');step=session?.step??0;completed=session?.completed??false;
   inspectedParts.clear();session?.seen.forEach(id=>inspectedParts.add(id));cueStep=step;
-  currentView='lab';document.body.classList.add('in-lab');$('#main-menu').hidden=true;$('#lab-view').hidden=false;$('#back-menu').hidden=false;
+  currentView='ready';document.body.classList.remove('in-lab');$('#main-menu').hidden=true;$('#lab-view').hidden=false;$('#back-menu').hidden=false;
   $('#header-context').textContent=mode==='class'?activeClass.title:'Banco de electrónica';document.title=`${mode==='class'?activeClass.title:'Banco de electrónica'} · Umbral Labs`;
   $('#lab-view h1').textContent=mode==='class'?activeClass.title:'Banco de electrónica';
-  rebuild();engine.resize();resizeSpatialControls();overview();window.scrollTo({top:0,behavior:'auto'});
-  const heading=$('#lab-view h1');heading.tabIndex=-1;heading.focus({preventScroll:true});
-  if(mode==='class')narrateLesson();
+  $('#lab-view').hidden=true;$('#back-menu').hidden=true;$('#launch-view').hidden=false;
+  $('#launch-back').textContent=mode==='class'&&readingId===activeClass.id?'← Volver al contenido':'← Volver al catálogo';
+  $('#launch-title').textContent=mode==='class'?activeClass.title:'Banco de electrónica';
+  $('#launch-category').textContent=mode==='free'?'EXPLORACIÓN LIBRE':activeClass.laboratoryId?'CLASE GUIADA · NIVEL INTRODUCTORIO':'BIENVENIDA · CONOCE LA PLATAFORMA';
+  $('#launch-outcomes').textContent=mode==='class'?activeClass.steps.slice(0,3).map(item=>item.title).join(' · '):'Construye un montaje, cambia sus valores y compara las mediciones y las gráficas a tu ritmo.';
+  $('#launch-description').textContent=mode==='class'?activeClass.description:'Crea y explora tus propios circuitos sin una actividad obligatoria.';
+  $('#launch-meta').textContent=mode==='class'?`${activeClass.duration} · ${activeClass.steps.length} pasos${session?` · Retomarás el paso ${step+1}`:''}`:'Modo libre · A tu ritmo';
+  $('#launch-error').hidden=true;$('#launch-window').hidden=true;updateLaunchButton();
+  window.scrollTo({top:0,behavior:'auto'});
+  if(startImmediately){activateSimulation();return;}
+  if(xrRuntime?.isImmersive()){$('#launch-view').hidden=true;$('#lab-view').hidden=false;xrRuntime.showLaunch(mode==='class'?activeClass.title:'Banco de electrónica',mode==='class');}
+  else{const heading=$('#launch-title');heading.tabIndex=-1;heading.focus({preventScroll:true});}
 }
-$('#back-menu').onclick=()=>navigateCatalogue('all');
+function updateLaunchButton(){
+  const button=$<HTMLButtonElement>('#start-simulation');button.disabled=!presentationReady||launchBusy;
+  button.textContent=launchBusy?'Abriendo el entorno…':mode==='class'?'Iniciar clase':'Iniciar simulación';
+  $('#launch-device').textContent=!presentationReady?'Comprobando el modo de inicio…':xrRuntime?.canEnterVR()?'VR disponible: al iniciar solicitaremos acceso a las gafas.':'Modo PC: al iniciar abriremos la simulación a pantalla completa.';
+}
+function activateSimulation(){
+  currentView='lab';document.body.classList.add('in-lab');$('#launch-view').hidden=true;$('#lab-view').hidden=false;$('#back-menu').hidden=false;
+  xrRuntime?.completeLaunch();rebuild();engine.resize();resizeSpatialControls();overview();
+  canvas.focus({preventScroll:true});if(mode==='class')narrateLesson();
+}
+function abandonPresentation(){
+  if(currentView==='lab')return;
+  if(xrRuntime?.isXR())void xrRuntime.exit();
+  if(document.fullscreenElement)void document.exitFullscreen().catch(()=>{});
+}
+async function startSimulation(){
+  if(currentView!=='ready'||launchBusy||!presentationReady)return;
+  const version=launchVersion;launchBusy=true;updateLaunchButton();$('#launch-error').hidden=true;$('#launch-window').hidden=true;
+  // Reveal the render surface for the platform request, retaining the preparation screen on failure.
+  $('#lab-view').hidden=false;
+  const result=await enterPresentation({inXR:xrRuntime?.isXR()??false,supportsXR:xrRuntime?.canEnterVR()??false,
+    enterXR:()=>xrRuntime!.enter($('#xr-status')),
+    enterFullscreen:()=>document.fullscreenElement?Promise.resolve():$('.viewport').requestFullscreen()});
+  if(version!==launchVersion||currentView!=='ready'){abandonPresentation();return;}
+  launchBusy=false;updateLaunchButton();
+  if(result==='ready'){activateSimulation();return;}
+  $('#lab-view').hidden=true;$('#launch-view').hidden=false;
+  $('#launch-error').textContent=result==='vr-denied'?'No se pudo abrir VR. Puedes pulsar iniciar para reintentar o continuar en esta ventana.':'El navegador no permitió la pantalla completa. Puedes reintentar o continuar en esta ventana.';
+  $('#launch-error').hidden=false;$('#launch-window').hidden=false;
+}
+$('#start-simulation').onclick=()=>void startSimulation();
+$('#launch-window').onclick=()=>{if(currentView==='ready'&&!launchBusy)activateSimulation();};
+$('#launch-back').onclick=()=>{if(mode==='class'&&readingId===activeClass.id)openReading(readingId);else showMenu();};
+$('#back-menu').onclick=()=>{catalogueFilter='all';$<HTMLInputElement>('#experience-search').value='';showMenu();};
 $('.brand').onclick=event=>{event.preventDefault();navigateCatalogue('all');};
-// Catalogue entries are derived from the registry, never duplicated in the template.
-const catalogue=$('.experience-list');
-for(const [index,definition] of classes.entries()){
-  const item=document.createElement('li');const button=document.createElement('button');
-  button.className='experience-row';button.dataset.openMode='class';button.dataset.classId=definition.id;
-  button.setAttribute('aria-label',`Abrir clase guiada: ${definition.title}`);
-  button.innerHTML='<span class="experience-icon"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M1 12h5l3-6 4 12 4-12 4 12 3-6h7"/></svg></span><span class="experience-copy"><span class="experience-type"></span><strong></strong><span class="experience-description"></span><span class="experience-meta"></span></span><span class="experience-action"><span>Comenzar clase</span><span>↗</span></span>';
-  button.querySelector('.experience-type')!.textContent=definition.id==='primeros-pasos'?'TUTORIAL · EMPIEZA AQUÍ':`CLASE GUIADA · ${String(index).padStart(2,'0')}`;
-  button.querySelector('strong')!.textContent=definition.title;
-  button.querySelector('.experience-description')!.textContent=definition.description;
-  const meta=button.querySelector('.experience-meta')!;
-  for(const text of [`${definition.steps.length} pasos`,definition.duration,definition.level]){if(meta.childNodes.length)meta.append(document.createElement('i'));const span=document.createElement('span');span.textContent=text;meta.append(span);}
-  item.append(button);catalogue.insertBefore(item,catalogue.querySelector('li:last-child'));
-}
-document.querySelectorAll<HTMLButtonElement>('[data-open-mode]').forEach(button=>button.onclick=()=>openLab(button.dataset.openMode as 'class'|'free',button.dataset.classId));
 xrRuntime=new QuestRuntime(scene,camera,{
-  isLab:()=>currentView==='lab',onStop:()=>{navigationKeys.clear();narrator.stop();},
+  isLab:()=>currentView!=='menu',onStart:()=>{if(currentView==='ready')activateSimulation();},onStop:()=>{navigationKeys.clear();narrator.stop();},
   onMode:active=>{
     navigationKeys.clear();labRoot.scaling.setAll(active?questLayout.scale:1);labRoot.position.y=active?questLayout.tableHeight:0;labRoot.computeWorldMatrix(true);
     spatialControls.setImmersive(active);spatialGuide.setImmersive(active);spatialControls.setVisible(active?true:preferredControlsVisible);
     $('#quest-preview').textContent=active?'Volver a vista PC':'Vista Quest en PC';document.body.classList.toggle('quest-preview-active',active);
-    if(!active)resizeSpatialControls();rebuild();
+    if(!active){resizeSpatialControls();if(currentView==='ready'){$('#launch-view').hidden=false;$('#lab-view').hidden=true;if(document.fullscreenElement)void document.exitFullscreen().catch(()=>{});}}rebuild();
   },
   onCatalogue:open=>{labRoot.setEnabled(!open);spatialControls.setVisible(!open);spatialGuide.setVisible(!open);},
   onExperience:(target,id)=>{saveSession();openLab(target,id);}
 });
 $('#quest-preview').onclick=()=>xrRuntime?.togglePreview();
-void xrRuntime.initialize($<HTMLButtonElement>('#enter-vr'),$('#xr-status'));
+void xrRuntime.initialize($<HTMLButtonElement>('#enter-vr'),$('#xr-status')).finally(()=>{presentationReady=true;updateLaunchButton();});
 rebuild();showMenu();engine.runRenderLoop(()=>{
-  if(currentView!=='lab')return;
+  if(currentView!=='lab'){if(currentView==='ready'&&xrRuntime?.isImmersive())scene.render();return;}
   if(document.activeElement!==canvas||spatialControls.isEditing())navigationKeys.clear();
   if(!xrRuntime?.isImmersive()){const target=moveWithinLab(camera.target,camera.alpha,navigationKeys,engine.getDeltaTime()/1000);camera.target.set(target.x,target.y,target.z);}currentAnimation.tick(engine.getDeltaTime()/1000);spatialGuide.tick(engine.getDeltaTime()/1000);scene.render();
 });

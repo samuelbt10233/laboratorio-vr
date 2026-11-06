@@ -1,8 +1,8 @@
 # Añadir una clase
 
-Cada clase se define en un archivo de `src/classes/` que exporta un objeto de tipo `LabClass`. Usa `ohm.ts` o `parallel.ts` como ejemplo y registra el objeto en el arreglo `classes` de `src/lessons.ts`. El catálogo, la búsqueda, el número de pasos y el reproductor se actualizan automáticamente.
+Cada clase se define en un archivo de `src/classes/` que exporta un objeto de tipo `LabClass`. Usa `ohm.ts` o `parallel.ts` como ejemplo y registra el objeto en el arreglo `classes` de `src/lessons.ts`. El catálogo del laboratorio, la búsqueda, el número de pasos y el reproductor se actualizan automáticamente. El inicio muestra la bienvenida y los laboratorios definidos en `src/laboratories.ts`; al entrar en uno aparecen únicamente sus clases y su modo libre. El tutorial `primeros-pasos` pertenece a la bienvenida y no se repite dentro de Electrónica.
 
-La definición incluye un `id` único y estable, título, descripción, duración, nivel, `initialPreset`, `initialSelection` y una lista de `steps`. Los montajes disponibles son `simple`, `series`, `parallel` y `empty`. Los identificadores de componentes deben existir en el montaje usado: `V1`, `R1`, `R2` y `S1`.
+La definición incluye `laboratoryId` (`electronics` para las clases de este laboratorio; `null` para la bienvenida general), un `id` único y estable, título, descripción, duración, nivel, `initialPreset`, `initialSelection` y una lista de `steps`. Los montajes disponibles son `simple`, `series`, `parallel` y `empty`. Los identificadores de componentes deben existir en el montaje usado: `V1`, `R1`, `R2` y `S1`.
 
 Cada paso tiene `id`, `title`, `text`, `task`, `audio`, `success`, `repairPreset` y `goals`. Las reglas se evalúan en orden; la primera pendiente determina la indicación visual y bloquea el avance:
 

@@ -27,7 +27,7 @@ Abrir la URL indicada por Vite. Se necesita un navegador con WebGL. Los recursos
 
 `src/circuit.ts` no depende de Babylon.js ni del DOM. Agrupa nodos unidos por cables e interruptores cerrados y aplica análisis nodal a redes resistivas con una única fuente ideal. Soporta redes serie, paralelo y mixtas; las ramas flotantes tienen corriente cero. Identifica circuitos abiertos y cortocircuitos directos a través de conductores ideales. En cortocircuito se bloquea la medición: el modelo no incluye resistencia interna ni corriente máxima de la fuente. Las corrientes por resistencia usan como referencia terminal 0 → 1; el inspector muestra magnitudes. «∞ Ω» significa que no hay recorrido conductor entre los polos.
 
-No modela transitorios, temperatura, daño, resistencia de cables o tolerancias. El LED usa la aproximación por tramos descrita más abajo; los demás elementos conservan su comportamiento ideal. La medición del inspector es una sonda virtual ideal; todavía no hay un multímetro con puntas manipulables. La clase incluye un avatar sencillo con animación de habla y un cuadro de diálogo. La narración reproduce primero los audios neurales incluidos en `public/audio/`, generados con la voz colombiana Salomé (`es-CO-SalomeNeural`) y ritmo −5 %. La voz del navegador se usa únicamente si una grabación no puede cargarse. Pulsa «Escuchar» al abrir la página; al entrar a la clase o avanzar de paso se inicia la narración. Puedes detener, repetir o silenciar. Al pasar al modo libre se detiene. La boca se anima durante la reproducción; no es sincronización fonética. La guía es una introducción, no una evaluación formal del aprendizaje.
+No modela transitorios, temperatura, daño, resistencia de cables o tolerancias. El LED usa la aproximación por tramos descrita más abajo; los demás elementos conservan su comportamiento ideal. La medición del inspector es una sonda virtual ideal; todavía no hay un multímetro con puntas manipulables. La clase incluye un avatar sencillo con animación de habla y un cuadro de diálogo. La narración reproduce primero los audios neurales incluidos en `public/audio/`, generados con la voz mexicana Dalia (`es-MX-DaliaNeural`) y ritmo −5 %. La voz del navegador se usa únicamente si una grabación no puede cargarse. Pulsa «Escuchar» al abrir la página; al entrar a la clase o avanzar de paso se inicia la narración. Puedes detener, repetir o silenciar. Al pasar al modo libre se detiene. La boca se anima durante la reproducción; no es sincronización fonética. La guía es una introducción, no una evaluación formal del aprendizaje.
 
 ## Verificación
 
@@ -55,7 +55,7 @@ Los textos están en `src/classes/` y se registran en `src/lessons.ts`. Para man
 node --import tsx scripts/generate-narration.mjs
 ```
 
-Requiere acceso a Internet y `ffprobe` (incluido con ffmpeg). `TTS_PYTHON` permite elegir el ejecutable del entorno; `TTS_VOICE` y `TTS_RATE` permiten cambiar voz y ritmo. El valor predeterminado es `es-CO-SalomeNeural` con ritmo `-5%`. El generador utiliza el servicio de lectura en voz alta de Microsoft a través de edge-tts. Es una herramienta de preparación de contenido; no se distribuye en el navegador ni se ejecuta en Railway.
+Requiere acceso a Internet y `ffprobe` (incluido con ffmpeg). `TTS_PYTHON` permite elegir el ejecutable del entorno; `TTS_VOICE` y `TTS_RATE` permiten cambiar voz y ritmo. El valor predeterminado es `es-MX-DaliaNeural` con ritmo `-5%`. El generador utiliza el servicio de lectura en voz alta de Microsoft a través de edge-tts. Es una herramienta de preparación de contenido; no se distribuye en el navegador ni se ejecuta en Railway.
 
 Los siete MP3 se validan antes de copiarlos a `public/audio/`. `narration-manifest.json` registra voz, ritmo, duración y hash del texto de cada paso. La aplicación sirve estos archivos estáticos y no necesita credenciales ni llamar al servicio de síntesis durante las clases.
 
@@ -112,23 +112,23 @@ El avatar es un robot geométrico dentro de Babylon.js. Su boca se anima mientra
 
 La guía se presenta como una tarjeta compacta en la esquina inferior derecha. Muestra la indicación actual y los controles principales; «Ver explicación» despliega el contenido completo. «−» minimiza la tarjeta y «Abrir» la recupera. La selección se mantiene al cambiar de paso.
 
-Las dos clases usan diálogos para principiantes, con instrucciones sobre los botones visibles, definiciones de los conceptos al introducirlos y resultados que el estudiante puede observar. Los siete audios de Salomé corresponden a esta redacción.
+Las dos clases usan diálogos para principiantes, con instrucciones sobre los botones visibles, definiciones de los conceptos al introducirlos y resultados que el estudiante puede observar. Los siete audios de Dalia corresponden a esta redacción.
 
 ### Confirmación de actividades
 
-Cuando el estudiante completa las reglas de un paso, el guía muestra «Paso completado», reconoce el resultado con un mensaje específico y lo narra con Salomé. La tarjeta permanece verde y el botón cambia a «Continuar». La felicitación se reproduce una sola vez por paso durante la sesión y respeta el silencio. Si se modifica el circuito y deja de cumplir el objetivo, se recupera la indicación de la acción pendiente. Las confirmaciones se definen en `success` dentro de cada paso.
+Cuando el estudiante completa las reglas de un paso, el guía muestra «Paso completado», reconoce el resultado con un mensaje específico y lo narra con Dalia. La tarjeta permanece verde y el botón cambia a «Continuar». La felicitación se reproduce una sola vez por paso durante la sesión y respeta el silencio. Si se modifica el circuito y deja de cumplir el objetivo, se recupera la indicación de la acción pendiente. Las confirmaciones se definen en `success` dentro de cada paso.
 
 ### Tutorial de bienvenida
 
-«Primeros pasos en Umbral Labs» aparece primero en el catálogo de PC y en el catálogo 3D. Incluye ocho pasos para aprender los controles sin conocimientos de electrónica, con narraciones de Salomé y confirmaciones de actividad. Las flechas de movimiento del inspector están disponibles tanto en PC como en la distribución Quest. La navegación inicial se explica sin obligar a usar un dispositivo concreto; las actividades siguientes validan las acciones reales. Guardar conserva el montaje en ese navegador y reemplaza el anterior; no guarda el avance de clase.
+«Primeros pasos en Umbral Labs» aparece primero en el catálogo de PC y en el catálogo 3D. Incluye ocho pasos para aprender los controles sin conocimientos de electrónica, con narraciones de Dalia y confirmaciones de actividad. Las flechas de movimiento del inspector están disponibles tanto en PC como en la distribución Quest. La navegación inicial se explica sin obligar a usar un dispositivo concreto; las actividades siguientes validan las acciones reales. Guardar conserva el montaje en ese navegador y reemplaza el anterior; no guarda el avance de clase.
 
 ### Encuentra el fallo
 
-Clase de diagnóstico de tres retos independientes: interruptor abierto, cable faltante y conexión incorrecta que provoca un cortocircuito. El estudiante debe recuperar el montaje de 6 V, 100 Ω y 60 mA. Las reglas comprueban las conexiones y los valores, permitiendo mover elementos. Incluye voz de Salomé, pistas y reinicio del reto desde la guía 3D. La sesión conserva la reparación al volver al catálogo; avanzar carga el siguiente fallo. El modelo ideal bloquea las lecturas de cortocircuito y no simula daños.
+Clase de diagnóstico de tres retos independientes: interruptor abierto, cable faltante y conexión incorrecta que provoca un cortocircuito. El estudiante debe recuperar el montaje de 6 V, 100 Ω y 60 mA. Las reglas comprueban las conexiones y los valores, permitiendo mover elementos. Incluye voz de Dalia, pistas y reinicio del reto desde la guía 3D. La sesión conserva la reparación al volver al catálogo; avanzar carga el siguiente fallo. El modelo ideal bloquea las lecturas de cortocircuito y no simula daños.
 
 ### Enciende un LED
 
-Clase de cuatro pasos: identificar ánodo/cátodo, encender con resistencia en serie, corregir polaridad invertida y atenuar la luz. Incluye narración y confirmaciones de Salomé, reinicio por paso y LED disponible desde el banco de componentes en PC y VR.
+Clase de cuatro pasos: identificar ánodo/cátodo, encender con resistencia en serie, corregir polaridad invertida y atenuar la luz. Incluye narración y confirmaciones de Dalia, reinicio por paso y LED disponible desde el banco de componentes en PC y VR.
 
 `led-solver.ts` usa un modelo didáctico por tramos: corriente nula en inversa o por debajo del umbral; en conducción, `V_LED = 2 V + I × 20 Ω`. No representa un LED comercial concreto. La luz depende de la corriente y cambia a naranja con aviso por encima del límite elegido de 20 mA. No simula destrucción, temperatura, tolerancias ni ruptura inversa. Con 6 V y 220 Ω circulan 16,67 mA; con 470 Ω, 8,16 mA. No deben usarse estos números como especificaciones de un componente real.
 

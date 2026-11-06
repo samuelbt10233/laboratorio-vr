@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { classes } from '../src/lessons.ts';
 import { spokenText } from '../src/narration.ts';
-const voice=process.env.TTS_VOICE??'es-CO-SalomeNeural',rate=process.env.TTS_RATE??'-5%';
+const voice=process.env.TTS_VOICE??'es-MX-DaliaNeural',rate=process.env.TTS_RATE??'-5%';
 const folder=fileURLToPath(new URL('../public/audio/',import.meta.url));
 const manifestPath=join(folder,'narration-manifest.json');
 const previous=existsSync(manifestPath)?JSON.parse(readFileSync(manifestPath,'utf8')):null;

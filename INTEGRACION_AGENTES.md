@@ -2,7 +2,9 @@
 
 Actualizado: 6 de noviembre de 2026. Estado: demo funcional de electrónica, con adaptación inicial a WebXR.
 
-Este documento es el punto de entrada para un agente que se incorpore al repositorio. Describe el código existente y propone una evolución hacia múltiples laboratorios. **Las secciones de arquitectura propuesta no describen funcionalidades ya implementadas.** Antes de modificar, contrasta esta guía con los archivos y las pruebas de la revisión que recibiste.
+**El trabajo en curso, su reparto y sus prioridades están en [docs/plan-demo.md](docs/plan-demo.md).** Si choca con esta guía en lo referente a arquitectura o refactorización, manda el plan.
+
+Este documento es la referencia técnica para un agente que se incorpore al repositorio. Describe el código existente y propone una evolución hacia múltiples laboratorios. **Las secciones de arquitectura propuesta no describen funcionalidades ya implementadas.** Antes de modificar, contrasta esta guía con los archivos y las pruebas de la revisión que recibiste.
 
 ## 1. Objetivo del producto y alcance de esta entrega
 
@@ -130,7 +132,7 @@ Un paso sin metas es informativo. No felicitar por cargar una sesión ya resuelt
 
 Clases existentes: `primeros-pasos`, `ley-de-ohm`, `circuitos-en-paralelo`, `encuentra-el-fallo`, `enciende-un-led`. Conservar IDs y comportamiento. Para añadir electrónica, ver [docs/adding-classes.md](docs/adding-classes.md).
 
-La voz principal son MP3 locales de Salomé (`es-CO-SalomeNeural`, ritmo −5 %); la síntesis del navegador es respaldo si falla una grabación. El avatar anima su boca al reproducir, sin sincronización fonética. Cambiar título, explicación, tarea o confirmación requiere actualizar sus audios y el manifiesto:
+La voz principal son MP3 locales de Dalia (`es-MX-DaliaNeural`, ritmo −5 %; los archivos conservan su nombre histórico `salome-*`); la síntesis del navegador es respaldo si falla una grabación. El avatar anima su boca al reproducir, sin sincronización fonética. Cambiar título, explicación, tarea o confirmación requiere actualizar sus audios y el manifiesto:
 
 ```sh
 node --import tsx scripts/generate-narration.mjs

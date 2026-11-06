@@ -1,5 +1,5 @@
 {
-  "voice": "es-CO-SalomeNeural",
+  "voice": "es-MX-DaliaNeural",
   "rate": "-5%",
   "generator": "edge-tts 7.3.1",
   "recordings": [
@@ -7,154 +7,154 @@
       "classId": "primeros-pasos",
       "stepId": "bienvenida",
       "audio": "/audio/salome-tutorial-bienvenida.mp3",
-      "durationSeconds": 43.08,
+      "durationSeconds": 41.928,
       "textSha256": "044d801a42efd13d4cbb413af285cc5bdef6b27e3929ec2e906976d7bd15764d"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "seleccionar",
       "audio": "/audio/salome-tutorial-seleccionar.mp3",
-      "durationSeconds": 24.144,
+      "durationSeconds": 24.432,
       "textSha256": "19c2dc8421c66df75f1dc07cccc59c52ed12895a7026d7843e36923f616471c9"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "mover",
       "audio": "/audio/salome-tutorial-mover.mp3",
-      "durationSeconds": 24.408,
+      "durationSeconds": 23.88,
       "textSha256": "0da64e98f95b987798aaf66f1934dbfd0cb15e4331bb756bbfc1a8b6832eef38"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "valor",
       "audio": "/audio/salome-tutorial-valor.mp3",
-      "durationSeconds": 26.664,
+      "durationSeconds": 25.92,
       "textSha256": "d51a78df2245424512575693309dac036d34166f29aa3d3fb92db939c1ce4200"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "interruptor",
       "audio": "/audio/salome-tutorial-interruptor.mp3",
-      "durationSeconds": 23.16,
+      "durationSeconds": 22.008,
       "textSha256": "cec79f357c295b04c949eb226aeece9d7efd079c32974b7404f74392427cf5ed"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "cables",
       "audio": "/audio/salome-tutorial-cables.mp3",
-      "durationSeconds": 35.448,
+      "durationSeconds": 34.2,
       "textSha256": "89336ee508824e4814fdc3853290e37d457dc4ba71001ef5a7df5bc772f97d06"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "graficas",
       "audio": "/audio/salome-tutorial-graficas.mp3",
-      "durationSeconds": 28.944,
+      "durationSeconds": 28.68,
       "textSha256": "ca8bcb2066a773608cb72b9ec46182d776dcb0da57bc665330775709f09daf85"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "guardar",
       "audio": "/audio/salome-tutorial-guardar.mp3",
-      "durationSeconds": 43.224,
+      "durationSeconds": 41.664,
       "textSha256": "caf86db479b15c705b01859c18d6bd49f53373b1d2fab05e0e3baf7847b3f32f"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "cerrar",
       "audio": "/audio/salome-intro-clase-1.mp3",
-      "durationSeconds": 28.848,
+      "durationSeconds": 28.632,
       "textSha256": "a9bf607aaef26ace6570d299738b2cfae7715319cd7f067e227626c04e1b0aba"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "resistencia",
       "audio": "/audio/salome-intro-clase-2.mp3",
-      "durationSeconds": 32.712,
+      "durationSeconds": 32.76,
       "textSha256": "5f6695e72bafe8fb94e310187840a546cc36295ae85f3f75311f350bf94504d2"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "serie",
       "audio": "/audio/salome-intro-clase-3.mp3",
-      "durationSeconds": 26.064,
+      "durationSeconds": 25.608,
       "textSha256": "60895ea98a36754ded290cebdc5a071f123814eaf5d82107b027daf7447e1df9"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "explorar",
       "audio": "/audio/salome-intro-clase-4.mp3",
-      "durationSeconds": 28.152,
+      "durationSeconds": 27.744,
       "textSha256": "5e5d676879cd9b11bd2dce932b50c790cc630b1557b86c745598e96daf4c4b52"
     },
     {
       "classId": "circuitos-en-paralelo",
       "stepId": "ramas",
       "audio": "/audio/salome-intro-paralelo-1.mp3",
-      "durationSeconds": 29.28,
+      "durationSeconds": 28.656,
       "textSha256": "6984e06461ded60baf3acc95730174e8fdbed8b99c949658a738104ca2f277c8"
     },
     {
       "classId": "circuitos-en-paralelo",
       "stepId": "cambiar-rama",
       "audio": "/audio/salome-intro-paralelo-2.mp3",
-      "durationSeconds": 32.592,
+      "durationSeconds": 32.4,
       "textSha256": "8cfcb483469c5b10bb5bdfac158153e026d443ef6af4d9960bf41e4b998a1691"
     },
     {
       "classId": "circuitos-en-paralelo",
       "stepId": "comparar",
       "audio": "/audio/salome-intro-paralelo-3.mp3",
-      "durationSeconds": 32.28,
+      "durationSeconds": 31.968,
       "textSha256": "3daa337fa158f528ba3e8d410f04117d21684e53254fce0f764ae1349170abf5"
     },
     {
       "classId": "encuentra-el-fallo",
       "stepId": "interruptor",
       "audio": "/audio/salome-fallo-interruptor.mp3",
-      "durationSeconds": 38.16,
+      "durationSeconds": 37.968,
       "textSha256": "1255eb4ab73a98bf09f397f62f9261c115a358554bf9d4d0ae210ea321c9c861"
     },
     {
       "classId": "encuentra-el-fallo",
       "stepId": "cable",
       "audio": "/audio/salome-fallo-cable.mp3",
-      "durationSeconds": 30.96,
+      "durationSeconds": 30.624,
       "textSha256": "cd14ec7b32966bd33832c1d3bc40a686c09c368d20ce92af26f826167d2df0f3"
     },
     {
       "classId": "encuentra-el-fallo",
       "stepId": "conexion",
       "audio": "/audio/salome-fallo-conexion.mp3",
-      "durationSeconds": 32.208,
+      "durationSeconds": 31.704,
       "textSha256": "0f92a326c5c41fbb098cda2e0983c2f98b1a17657362442d19a5cde356d5beb2"
     },
     {
       "classId": "enciende-un-led",
       "stepId": "polaridad",
       "audio": "/audio/salome-led-polaridad.mp3",
-      "durationSeconds": 34.944,
+      "durationSeconds": 35.088,
       "textSha256": "662ef9b6ea380e61abe39b84b874dfbdb2109fc3cea4e457e935418d2c2b4189"
     },
     {
       "classId": "enciende-un-led",
       "stepId": "encender",
       "audio": "/audio/salome-led-encender.mp3",
-      "durationSeconds": 30.936,
+      "durationSeconds": 30.96,
       "textSha256": "11a7e0e1b4c1ee6165fbb16105f9ba98fb090ed6931c049910dd922ed257496c"
     },
     {
       "classId": "enciende-un-led",
       "stepId": "invertido",
       "audio": "/audio/salome-led-invertido.mp3",
-      "durationSeconds": 31.824,
+      "durationSeconds": 31.872,
       "textSha256": "6e9cf86522bc0741ccd00cc44b6b35feb475254c1edb93fbdd410681a05cb266"
     },
     {
       "classId": "enciende-un-led",
       "stepId": "brillo",
       "audio": "/audio/salome-led-brillo.mp3",
-      "durationSeconds": 38.112,
+      "durationSeconds": 37.944,
       "textSha256": "a9dc5756fa1952070b316acb4896b5e421e312cab703ddf8f0ccc926ef1281e4"
     }
   ],
@@ -163,126 +163,126 @@
       "classId": "primeros-pasos",
       "stepId": "bienvenida",
       "audio": "/audio/salome-tutorial-logro-bienvenida.mp3",
-      "durationSeconds": 5.16,
+      "durationSeconds": 4.92,
       "textSha256": "51aeb628d433d78cede4743174dc5fbc351340e9c95e0a579b23b8bb0b187c54"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "seleccionar",
       "audio": "/audio/salome-tutorial-logro-seleccionar.mp3",
-      "durationSeconds": 8.496,
+      "durationSeconds": 8.808,
       "textSha256": "c333e80ddcf34daa0d0e0c83a31dff7a8d91eefe70b771a273cdd66224671d1f"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "mover",
       "audio": "/audio/salome-tutorial-logro-mover.mp3",
-      "durationSeconds": 8.088,
+      "durationSeconds": 8.4,
       "textSha256": "595d6998d199b5ee97439a820fd85c70da91d1a6fea24cec72dc2c634500946d"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "valor",
       "audio": "/audio/salome-tutorial-logro-valor.mp3",
-      "durationSeconds": 8.76,
+      "durationSeconds": 8.856,
       "textSha256": "60e34120dab05f2cbd003d4796a1b44fe07b41d9e1dcf0cf76e523995306594c"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "interruptor",
       "audio": "/audio/salome-tutorial-logro-interruptor.mp3",
-      "durationSeconds": 7.824,
+      "durationSeconds": 7.896,
       "textSha256": "2a67f1be3c554dab2d32117416ea3f801ec972f9b3aa37fc55baacfc41f254e3"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "cables",
       "audio": "/audio/salome-tutorial-logro-cables.mp3",
-      "durationSeconds": 8.232,
+      "durationSeconds": 8.664,
       "textSha256": "58f4089699bf1a79a4ffb6d74e4e3d73eb924b2352859f3e2fa0df4af293248e"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "graficas",
       "audio": "/audio/salome-tutorial-logro-graficas.mp3",
-      "durationSeconds": 7.752,
+      "durationSeconds": 7.872,
       "textSha256": "cd400a24c94724b8bc22effbdc7848b8f0df9df4e5263ff3ecb479192f6c6c26"
     },
     {
       "classId": "primeros-pasos",
       "stepId": "guardar",
       "audio": "/audio/salome-tutorial-logro-guardar.mp3",
-      "durationSeconds": 9.768,
+      "durationSeconds": 9.912,
       "textSha256": "f24cd19b33fdc3f9f9c466be656356110d11358b01e1fbab265ac77b751cd222"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "cerrar",
       "audio": "/audio/salome-logro-clase-1.mp3",
-      "durationSeconds": 9.528,
+      "durationSeconds": 9.888,
       "textSha256": "c09cb80a02112e315b5db696fd8a733ae006649298ee208d226d62af1cbac4b4"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "resistencia",
       "audio": "/audio/salome-logro-clase-2.mp3",
-      "durationSeconds": 9.24,
+      "durationSeconds": 9.168,
       "textSha256": "22f14186d846e136da18af3ca342e8cc03d6a46e5381076fab70b756d04d7591"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "serie",
       "audio": "/audio/salome-logro-clase-3.mp3",
-      "durationSeconds": 11.544,
+      "durationSeconds": 11.664,
       "textSha256": "0184ce5eb5a1e5fc36194e94b239fe4c44ddda36d981068042856dcef9cb271a"
     },
     {
       "classId": "ley-de-ohm",
       "stepId": "explorar",
       "audio": "/audio/salome-logro-clase-4.mp3",
-      "durationSeconds": 8.208,
+      "durationSeconds": 8.304,
       "textSha256": "e0ae014e41a49561e31a147e9f55a78a3f6e64eaafa135ea297dedfbf8e4fc75"
     },
     {
       "classId": "circuitos-en-paralelo",
       "stepId": "ramas",
       "audio": "/audio/salome-logro-paralelo-1.mp3",
-      "durationSeconds": 9.36,
+      "durationSeconds": 9.552,
       "textSha256": "e295236465e2274aedca2ba4af19a622c8da3e6521fd49ede7add0011467afe1"
     },
     {
       "classId": "circuitos-en-paralelo",
       "stepId": "cambiar-rama",
       "audio": "/audio/salome-logro-paralelo-2.mp3",
-      "durationSeconds": 11.184,
+      "durationSeconds": 11.28,
       "textSha256": "b0afd4e40ed5fa3890f8526fec696d40779f17fa2dbcd31e369b51448854c58e"
     },
     {
       "classId": "circuitos-en-paralelo",
       "stepId": "comparar",
       "audio": "/audio/salome-logro-paralelo-3.mp3",
-      "durationSeconds": 9.792,
+      "durationSeconds": 10.392,
       "textSha256": "93ac918fd0f873e005bdc59de20cf3d6a8601e697177be5e84dd260aa7856ed8"
     },
     {
       "classId": "encuentra-el-fallo",
       "stepId": "interruptor",
       "audio": "/audio/salome-fallo-logro-interruptor.mp3",
-      "durationSeconds": 8.616,
+      "durationSeconds": 8.784,
       "textSha256": "f6547b8f57abf1dcf75f95d4883540e95e810cc22511eda9722971c803726e80"
     },
     {
       "classId": "encuentra-el-fallo",
       "stepId": "cable",
       "audio": "/audio/salome-fallo-logro-cable.mp3",
-      "durationSeconds": 9.84,
+      "durationSeconds": 10.128,
       "textSha256": "c6a20940bae1e4d920a027dc8f6af715fcc74d4f11058de33f99d49546cd76fa"
     },
     {
       "classId": "encuentra-el-fallo",
       "stepId": "conexion",
       "audio": "/audio/salome-fallo-logro-conexion.mp3",
-      "durationSeconds": 12.168,
+      "durationSeconds": 12.216,
       "textSha256": "d3ee509cf5e2e82895771087f03bfb0c578bac9f7c8987c1c88c7cf242151a3d"
     },
     {
@@ -296,21 +296,21 @@
       "classId": "enciende-un-led",
       "stepId": "encender",
       "audio": "/audio/salome-led-logro-encender.mp3",
-      "durationSeconds": 9.408,
+      "durationSeconds": 9.6,
       "textSha256": "ad3774856c522ee738549a25c6a18d8c8bfc0ac44143166707ccda3929472bba"
     },
     {
       "classId": "enciende-un-led",
       "stepId": "invertido",
       "audio": "/audio/salome-led-logro-invertido.mp3",
-      "durationSeconds": 8.376,
+      "durationSeconds": 8.64,
       "textSha256": "42bfd7784b60a2d171d69b2297f9bc7ecff5173ca71e92ff0befa93cebc25165"
     },
     {
       "classId": "enciende-un-led",
       "stepId": "brillo",
       "audio": "/audio/salome-led-logro-brillo.mp3",
-      "durationSeconds": 9.216,
+      "durationSeconds": 9.24,
       "textSha256": "f934ab3e856554459d0d6444869fcd682347b50481de6a4fbadb6c09d42aad8c"
     }
   ]

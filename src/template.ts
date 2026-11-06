@@ -54,6 +54,7 @@ export const layout = `
   <section id="study-practice" class="practice-band"><div class="portal-wrap"><div><span class="welcome-eyebrow">DEL CONCEPTO A LA EXPERIENCIA</span><h2 id="study-lab-title"></h2><p id="study-practice-description"></p></div><button id="study-prepare" class="atlas-primary"></button></div></section>
   <footer class="portal-wrap"><span>UMBRAL LABS · Aprende experimentando.</span><span>Versión de demostración</span></footer>
 </main>
+<main id="external-lab" hidden><button id="external-back">← Volver al contenido</button><div id="external-lab-host"></div></main>
 <main id="launch-view" class="menu-page launch-page" hidden>
   <div class="atlas-launch-path"><button id="launch-back" class="atlas-text-button">← Volver al catálogo</button><span>Antes de empezar</span></div>
   <div class="atlas-launch-layout">

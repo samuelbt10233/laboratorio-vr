@@ -79,7 +79,7 @@ El monitor 3D muestra la característica I–V del circuito completo (barrido te
 
 ## Menú general
 
-La pantalla inicial lista la clase «Ley de Ohm y circuitos básicos» y el modo libre «Banco de electrónica». El botón «Menú general» y el logotipo permiten regresar. Cada modo conserva su montaje y el paso de la clase en memoria al volver al menú durante la misma sesión de página. Recargar reinicia esa memoria; «Guardar» mantiene un montaje en el almacenamiento local para recuperarlo después. La narración y el renderizado 3D se detienen mientras se muestra el menú.
+La pantalla inicial lista la clase «Ley de Ohm y circuitos básicos» y el modo libre «Banco de electrónica». El botón «Menú general» y el logotipo permiten regresar. Cada modo conserva su montaje y el paso de la clase en memoria al volver al menú durante la misma sesión de página. Recargar reinicia esa memoria; «Empezar desde el principio», en la preparación de una clase ya abierta, reinicia solo esa clase, también dentro de VR. «Guardar» mantiene un montaje en el almacenamiento local para recuperarlo después. La narración y el renderizado 3D se detienen mientras se muestra el menú.
 
 ## Navegación y tema visual
 

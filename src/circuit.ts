@@ -90,5 +90,7 @@ export function connect(circuit:Circuit,a:string,b:string):Circuit|string {
   if(a===b)return 'Elige dos terminales diferentes.';
   if(circuit.wires.some(w=>w.a===a&&w.b===b||w.a===b&&w.b===a))return 'Estos terminales ya están conectados.';
   if(circuit.wires.length>=32)return 'Límite de 32 cables. Elimina alguna conexión.';
-  return {...circuit,wires:[...circuit.wires,{id:`w${crypto.randomUUID()}`,a,b}]};
+  // IDs only need to be unique within the circuit; crypto.randomUUID requires a secure context.
+  let index=circuit.wires.length;while(circuit.wires.some(w=>w.id===`w${index}`))index++;
+  return {...circuit,wires:[...circuit.wires,{id:`w${index}`,a,b}]};
 }

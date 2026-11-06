@@ -62,6 +62,7 @@ export const layout = `
       <span class="welcome-eyebrow">A TU RITMO, DESDE EL PRINCIPIO</span><h2 id="launch-card-title">Prepara tu espacio.</h2><p>Tu guía esperará hasta que estés listo. Acomódate antes de comenzar.</p>
       <div class="atlas-device" id="launch-device" role="status">Comprobando el modo de inicio…</div>
       <button id="start-simulation" class="start-tutorial" disabled>Iniciar clase</button>
+      <button id="launch-restart" class="atlas-text-button" hidden>Empezar desde el principio</button>
       <p id="launch-error" role="alert" hidden></p><button id="launch-window" hidden>Continuar en esta ventana</button>
       <p class="launch-note"><span aria-hidden="true">◌</span> La simulación y el audio esperan hasta que pulses iniciar.</p>
       <div class="atlas-launch-steps"><span class="welcome-eyebrow">ASÍ SERÁ TU EXPERIENCIA</span><ol class="launch-steps"><li>Entra al entorno 3D en tu PC o tus gafas.</li><li>Escucha al guía y realiza la actividad.</li><li>Recibe confirmación y continúa.</li></ol></div>

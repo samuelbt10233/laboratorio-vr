@@ -116,7 +116,7 @@ Conservar contorno de selección contrastante, señales de la acción pendiente 
 ### Sesiones y almacenamiento
 
 - `SessionStore` guarda copias del circuito, selección, paso, inspecciones y finalización en memoria, con claves `class:<id>` y `free`.
-- Cambiar al menú y volver conserva la sesión; recargar la página la reinicia.
+- Cambiar al menú y volver conserva la sesión; recargar la página la reinicia. «Empezar desde el principio», en la preparación de una clase con sesión, borra solo la sesión de esa clase.
 - Guardar/Recuperar usa `localStorage['umbral-circuit-v1']` para un solo montaje. No guarda progreso docente ni sincroniza dispositivos.
 - No cambiar esa clave ni el formato sin una estrategia explícita de compatibilidad. Otros laboratorios deberán usar claves propias y formatos versionados; nunca interpretar datos de fluidos como un `Circuit`.
 
@@ -124,7 +124,7 @@ Conservar contorno de selección contrastante, señales de la acción pendiente 
 
 Una clase actual es un `LabClass`: `laboratoryId` (`electronics`, o `null` para la bienvenida), ID estable, título, descripción, duración, nivel, ejemplo inicial, selección inicial y pasos. Cada paso incluye título, explicación, tarea, audio, confirmación `success`, ejemplo de recuperación y objetivos. Puede incluir `setup: Circuit` para cargar un reto específico.
 
-Las metas actuales son `value`, `closed`, `measurement`, `inspect`, `action` y `diagnose`. Se evalúan en orden; la primera pendiente dirige las indicaciones. `diagnose` compara el montaje eléctrico e ignora posición, dirección del cable e ID del cable. Las acciones del tutorial solo se registran cuando están pendientes; reconectar exige restaurar los extremos desconectados.
+Las metas actuales son `value`, `closed`, `measurement`, `inspect`, `action` y `diagnose`. Se evalúan en orden; la primera pendiente dirige las indicaciones. `diagnose` compara los nodos eléctricos e ignora posición, dirección e ID del cable y la orientación de resistencias e interruptores; la fuente y los LED conservan su polaridad. Las acciones del tutorial solo se registran cuando están pendientes; reconectar exige restaurar los extremos desconectados.
 
 Un paso sin metas es informativo. No felicitar por cargar una sesión ya resuelta. Confirmar la transición a una actividad cumplida una vez por paso, respetar silencio y volver a la indicación pendiente si se invalida el resultado. Avanzar no debe ocurrir simplemente por reproducir el audio.
 

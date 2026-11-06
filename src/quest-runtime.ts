@@ -1,7 +1,7 @@
 import { ArcRotateCamera, Color3, MeshBuilder, Scene, StandardMaterial, TransformNode, Vector3, WebXRDefaultExperience, WebXRSessionManager, WebXRState, type AbstractMesh } from '@babylonjs/core';
 import { questLayout, xrAvailability } from './quest-layout';
 import { QuestInterface } from './quest-interface';
-interface Options {onMode:(active:boolean)=>void;onCatalogue:(open:boolean)=>void;onExperience:(mode:'class'|'free',id?:string)=>void;onStart:()=>void;onStop:()=>void;isLab:()=>boolean}
+interface Options {onMode:(active:boolean)=>void;onCatalogue:(open:boolean)=>void;onExperience:(mode:'class'|'free',id?:string)=>void;onStart:()=>void;onRestart:()=>void;onStop:()=>void;isLab:()=>boolean}
 export class QuestRuntime {
   private helper:WebXRDefaultExperience|null=null;
   private room:TransformNode;
@@ -10,7 +10,7 @@ export class QuestRuntime {
   private active=false;
   private preview=false;
   private busy=false;
-  private pendingLaunch:{title:string;classMode:boolean}|null=null;
+  private pendingLaunch:{title:string;classMode:boolean;canRestart:boolean}|null=null;
   private savedCamera:{target:Vector3;alpha:number;beta:number;radius:number;fov:number;minZ:number}|null=null;
   constructor(private scene:Scene,private camera:ArcRotateCamera,private options:Options){
     this.room=new TransformNode('quest room',scene);
@@ -62,7 +62,7 @@ export class QuestRuntime {
     this.scene.activeCamera=this.camera;this.camera.lowerRadiusLimit=7;this.camera.upperRadiusLimit=26;
     if(this.savedCamera){this.camera.target=this.savedCamera.target;this.camera.alpha=this.savedCamera.alpha;this.camera.beta=this.savedCamera.beta;this.camera.radius=this.savedCamera.radius;this.savedCamera=null;}
   }
-  showLaunch(title:string,classMode:boolean){this.pendingLaunch={title,classMode};this.options.onStop();this.ui.showLaunch(title,classMode);this.options.onCatalogue(true);}
+  showLaunch(title:string,classMode:boolean,canRestart:boolean){this.pendingLaunch={title,classMode,canRestart};this.options.onStop();this.ui.showLaunch(title,classMode,canRestart);this.options.onCatalogue(true);}
   completeLaunch(){this.pendingLaunch=null;this.ui.showCatalogue(false);this.options.onCatalogue(false);}
   openCatalogue(){this.options.onStop();this.ui.showCatalogue(true);this.options.onCatalogue(true);}
   private handleAction(action:string){
@@ -73,7 +73,8 @@ export class QuestRuntime {
       else{this.camera.target=new Vector3(0,1.22,0);this.camera.alpha=-Math.PI/2;this.camera.beta=1.35;this.camera.radius=2.45;}return;
     }
     if(action==='start'){this.completeLaunch();this.options.onStart();return;}
-    if(action==='resume'&&this.pendingLaunch){this.showLaunch(this.pendingLaunch.title,this.pendingLaunch.classMode);return;}
+    if(action==='restart'){this.options.onRestart();return;}
+    if(action==='resume'&&this.pendingLaunch){this.showLaunch(this.pendingLaunch.title,this.pendingLaunch.classMode,this.pendingLaunch.canRestart);return;}
     if(action==='resume'){this.ui.showCatalogue(false);this.options.onCatalogue(false);return;}
     if(action==='free'||action.startsWith('class:')){this.ui.showCatalogue(false);this.options.onCatalogue(false);this.options.onExperience(action==='free'?'free':'class',action.startsWith('class:')?action.slice(6):undefined);}
   }

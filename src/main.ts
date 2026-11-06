@@ -12,7 +12,7 @@ import './style.css';
 import './atlas-theme.css';
 import { Narrator, type NarrationState } from './narration';
 import { classes, getClass } from './lessons';
-import { createStepCircuit, recordAppAction, pendingGoal, SessionStore, classSessionKey } from './class-engine';
+import { createStepCircuit, diagnoseHint, recordAppAction, pendingGoal, SessionStore, classSessionKey } from './class-engine';
 import { layout } from './template';
 import { CircuitCharts } from './circuit-charts';
 import { SpatialControls } from './spatial-controls';
@@ -73,7 +73,9 @@ document.addEventListener('fullscreenchange',()=>{$('#fullscreen').textContent=d
 $('#toggle-charts').onclick=()=>{const visible=!circuitCharts.isVisible();circuitCharts.setVisible(visible);$('#toggle-charts').setAttribute('aria-pressed',String(visible));$('#toggle-charts').textContent=visible?'Ocultar gráficas':'Mostrar gráficas';if(!visible)overview();};
 const pendingMat=material('terminal seleccionado','#f3b75e',true);
 const board=MeshBuilder.CreateBox('board',{width:11.2,depth:6.5,height:.25},scene);board.parent=tableRoot;board.position.y=-.2;board.material=boardMat;board.isPickable=false;
-for(let x=-5;x<=5;x+=.5)for(let z=-2.75;z<=2.75;z+=.5){const dot=MeshBuilder.CreateSphere('grid',{diameter:.025,segments:4},scene);dot.parent=tableRoot;dot.position.set(x,-.061,z);dot.material=ink;dot.isPickable=false;}
+// One merged mesh: as separate spheres the grid alone costs 252 draw calls.
+const gridDots:Mesh[]=[];for(let x=-5;x<=5;x+=.5)for(let z=-2.75;z<=2.75;z+=.5){const dot=MeshBuilder.CreateSphere('grid',{diameter:.025,segments:4},scene);dot.position.set(x,-.061,z);gridDots.push(dot);}
+const grid=Mesh.MergeMeshes(gridDots,true,true)!;grid.name='grid';grid.parent=tableRoot;grid.material=ink;grid.isPickable=false;
 let nodes:TransformNode[]=[],wireMeshes:Mesh[]=[];const terminalMeshes=new Map<string,Mesh>();
 function label(text:string,parent:TransformNode,width=1.8,height=.44,y=.56,z=0,color='#18303c'){const texture=new DynamicTexture('label',{width:512,height:128},scene,true);texture.hasAlpha=true;texture.drawText(text,null,87,'bold 52px sans-serif',color,'transparent',true);const m=new StandardMaterial('text',scene);m.diffuseTexture=texture;m.emissiveTexture=texture;m.emissiveColor=Color3.White();m.disableLighting=true;m.specularColor=Color3.Black();m.useAlphaFromDiffuseTexture=true;m.backFaceCulling=false;const plane=MeshBuilder.CreatePlane('label',{width,height},scene);plane.parent=parent;plane.rotation.x=Math.PI/2;plane.position.set(0,y,z);plane.material=m;plane.isPickable=false;return plane;}
 // Shared matte materials keep the symbols legible from any camera angle.
@@ -296,7 +298,7 @@ function refreshGuidance(){
   let hint='';
   if(!goal){hint=lesson.goals.length===0?(lesson.hint??lesson.task):step===activeClass.steps.length-1?'Has terminado. Pulsa «Finalizar y explorar» para hacer tus propias pruebas.':'Lo has conseguido. Pulsa «Comprobar y continuar» para seguir.';cueElement('#next','Continuar');}
   else if(goal.kind==='diagnose'){
-    hint=goal.hint;
+    hint=diagnoseHint(goal,circuit);
   }else if(goal.kind==='action'){
     hint=goal.hint;if(goal.target)spatialControls.highlight(goal.target);
     if(goal.action==='move')cuePart(selected);
@@ -494,10 +496,11 @@ function openLab(targetMode:'class'|'free',classId=activeClass.id,startImmediate
   $('#launch-outcomes').textContent=mode==='class'?activeClass.steps.slice(0,3).map(item=>item.title).join(' · '):'Construye un montaje, cambia sus valores y compara las mediciones y las gráficas a tu ritmo.';
   $('#launch-description').textContent=mode==='class'?activeClass.description:'Crea y explora tus propios circuitos sin una actividad obligatoria.';
   $('#launch-meta').textContent=mode==='class'?`${activeClass.duration} · ${activeClass.steps.length} pasos${session?` · Retomarás el paso ${step+1}`:''}`:'Modo libre · A tu ritmo';
+  const canRestart=mode==='class'&&!!session;$('#launch-restart').hidden=!canRestart;
   $('#launch-error').hidden=true;$('#launch-window').hidden=true;updateLaunchButton();
   window.scrollTo({top:0,behavior:'auto'});
   if(startImmediately){activateSimulation();return;}
-  if(xrRuntime?.isImmersive()){$('#launch-view').hidden=true;$('#lab-view').hidden=false;xrRuntime.showLaunch(mode==='class'?activeClass.title:'Banco de electrónica',mode==='class');}
+  if(xrRuntime?.isImmersive()){$('#launch-view').hidden=true;$('#lab-view').hidden=false;xrRuntime.showLaunch(mode==='class'?activeClass.title:'Banco de electrónica',mode==='class',canRestart);}
   else{const heading=$('#launch-title');heading.tabIndex=-1;heading.focus({preventScroll:true});}
 }
 function updateLaunchButton(){
@@ -532,11 +535,13 @@ async function startSimulation(){
 }
 $('#start-simulation').onclick=()=>void startSimulation();
 $('#launch-window').onclick=()=>{if(currentView==='ready'&&!launchBusy)activateSimulation();};
+function restartClass(){if(currentView!=='ready'||mode!=='class'||launchBusy)return;sessions.delete(classSessionKey(activeClass.id));stepConfirmation.forgetClass(activeClass.id);openLab('class',activeClass.id);}
+$('#launch-restart').onclick=restartClass;
 $('#launch-back').onclick=()=>{if(mode==='class'&&readingId===activeClass.id)openReading(readingId);else showMenu();};
 $('#back-menu').onclick=()=>{catalogueFilter='all';$<HTMLInputElement>('#experience-search').value='';showMenu();};
 $('.brand').onclick=event=>{event.preventDefault();navigateCatalogue('all');};
 xrRuntime=new QuestRuntime(scene,camera,{
-  isLab:()=>currentView!=='menu',onStart:()=>{if(currentView==='ready')activateSimulation();},onStop:()=>{navigationKeys.clear();narrator.stop();},
+  isLab:()=>currentView!=='menu',onStart:()=>{if(currentView==='ready')activateSimulation();},onRestart:restartClass,onStop:()=>{navigationKeys.clear();narrator.stop();},
   onMode:active=>{
     navigationKeys.clear();labRoot.scaling.setAll(active?questLayout.scale:1);labRoot.position.y=active?questLayout.tableHeight:0;labRoot.computeWorldMatrix(true);
     spatialControls.setImmersive(active);spatialGuide.setImmersive(active);spatialControls.setVisible(active?true:preferredControlsVisible);

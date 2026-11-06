@@ -9,7 +9,7 @@ export class QuestInterface {
   private summary='Apunta con un mando y pulsa el gatillo para seleccionar.';
   private note='Palanca izquierda: teletransporte a las zonas marcadas.';
   private open=false;
-  private launch:{title:string;classMode:boolean}|null=null;
+  private launch:{title:string;classMode:boolean;canRestart:boolean}|null=null;
   private laboratoryId:string|null=null;
   constructor(scene:Scene,private action:(id:string)=>void){
     this.root=new TransformNode('quest interface',scene);
@@ -26,7 +26,7 @@ export class QuestInterface {
     this.draw();this.root.setEnabled(false);
   }
   setEnabled(value:boolean){this.root.setEnabled(value);if(!value)this.showCatalogue(false);}
-  showLaunch(title:string,classMode:boolean){this.launch={title,classMode};this.open=true;this.catalogue.mesh.setEnabled(true);this.draw();}
+  showLaunch(title:string,classMode:boolean,canRestart:boolean){this.launch={title,classMode,canRestart};this.open=true;this.catalogue.mesh.setEnabled(true);this.draw();}
   showCatalogue(value:boolean){this.launch=null;if(value&&!this.open)this.laboratoryId=null;this.open=value;this.catalogue.mesh.setEnabled(value);this.draw();}
   isCatalogueOpen(){return this.open;}
   setSummary(text:string){if(this.summary===text)return;this.summary=text;this.draw();}
@@ -45,6 +45,7 @@ export class QuestInterface {
         text('Ya estás en el entorno 3D. Acomódate antes de empezar.',40,285,28);
         button('start',this.launch.classMode?'Iniciar clase':'Iniciar simulación',40,350,1120,102);
         button('catalogue','← Volver al catálogo',40,480,1120,90);
+        if(this.launch.canRestart)button('restart','Empezar desde el principio',40,590,1120,90);
       }else{
         text(this.laboratoryId?getLaboratory(this.laboratoryId).title:'Bienvenida y laboratorios',40,73,45);
         text(this.laboratoryId?'Elige una clase o el modo libre.':'Empieza por la bienvenida o elige un laboratorio.',40,123,28);

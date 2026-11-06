@@ -4,6 +4,7 @@ export class StepConfirmation {
   private ready=false;
   private announced=new Set<string>();
   enter(){this.key=null;this.ready=false;}
+  forgetClass(classId:string){for(const key of this.announced)if(key.startsWith(`${classId}:`))this.announced.delete(key);}
   observe(key:string,ready:boolean,hasActivity:boolean){
     if(this.key!==key){this.key=key;this.ready=ready;return false;}
     const celebrate=hasActivity&&ready&&!this.ready&&!this.announced.has(key);

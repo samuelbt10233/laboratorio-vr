@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createStepCircuit, matchesCircuit, pendingGoal, SessionStore, classSessionKey } from './class-engine';
+import { createStepCircuit, diagnoseHint, matchesCircuit, pendingGoal, SessionStore, classSessionKey, type Goal } from './class-engine';
 import { getClass } from './lessons';
+import { ledCircuit } from './classes/led';
 import { connect, solve, validate, type Circuit } from './circuit';
+type DiagnoseGoal=Extract<Goal,{kind:'diagnose'}>;
 const lesson=getClass('encuentra-el-fallo');
 const ready=(index:number,circuit:Circuit)=>pendingGoal(lesson.steps[index],{circuit,selected:'V1',seen:new Set()})===null;
 function addWire(circuit:Circuit,a:string,b:string){const next=connect(circuit,a,b);assert.notEqual(typeof next,'string');return next as Circuit;}
@@ -24,6 +26,32 @@ test('diagnosis allows movement and reversed wires but rejects bypasses and alte
   assert.equal(solve(repaired).current,.06);assert.equal(ready(0,repaired),false);
   const extra=addWire(structuredClone(expected.expected),'R1:0','R1:1');assert.equal(ready(0,extra),false);
   const missing=structuredClone(expected.expected);missing.parts=missing.parts.filter(p=>p.id!=='R1');assert.equal(matchesCircuit(missing,expected.expected),false);
+});
+const repaired=()=>{const goal=lesson.steps[1].goals[0];assert.equal(goal.kind,'diagnose');return goal as DiagnoseGoal;};
+const flip=(part:string,circuit:Circuit)=>{const swap=(t:string)=>t.startsWith(`${part}:`)?`${part}:${t.endsWith('0')?1:0}`:t;circuit.wires.forEach(w=>{w.a=swap(w.a);w.b=swap(w.b);});return circuit;};
+test('diagnosis accepts resistors and switches mounted the other way round',()=>{
+  const goal=repaired();
+  assert.equal(matchesCircuit(flip('R1',structuredClone(goal.expected)),goal.expected),true);
+  assert.equal(matchesCircuit(flip('S1',structuredClone(goal.expected)),goal.expected),true);
+  assert.equal(matchesCircuit(flip('R1',flip('S1',structuredClone(goal.expected))),goal.expected),true);
+});
+test('diagnosis still rejects a reversed source and a reversed LED',()=>{
+  const goal=repaired();
+  assert.equal(matchesCircuit(flip('V1',structuredClone(goal.expected)),goal.expected),false);
+  const led=ledCircuit();
+  assert.equal(matchesCircuit(flip('L1',structuredClone(led)),led),false);
+});
+test('diagnosis rejects a repair that reaches 60 mA but bypasses the switch',()=>{
+  const goal=repaired();
+  const bypass=addWire(createStepCircuit(lesson,1),'R1:1','S1:1');
+  assert.equal(solve(bypass).current,.06);
+  assert.equal(matchesCircuit(bypass,goal.expected),false);
+});
+test('the hint explains a correct current on a mounting that does not match',()=>{
+  const goal=repaired();
+  assert.equal(diagnoseHint(goal,createStepCircuit(lesson,1)),goal.hint);
+  const bypass=addWire(createStepCircuit(lesson,1),'R1:1','S1:1');
+  assert.notEqual(diagnoseHint(goal,bypass),goal.hint);
 });
 test('challenge reset and navigation never mutate definitions or overwrite saved sessions',()=>{
   const circuit=createStepCircuit(lesson,0);circuit.parts.find(p=>p.id==='S1')!.closed=true;

@@ -97,3 +97,27 @@ Formato:
 - Qué: T3 incorporada a main local, sobre T4, sin cambios en archivos de T6 ni en la configuración de Claude.
 - Validación: 81 pruebas y compilación correctas en la revisión combinada.
 - Pendiente: publicación en GitHub y PR, bloqueados por revisión automática de permisos de envío externo. La integración local no equivale a despliegue. Quest real pendiente.
+
+## 2026-11-06 · Claude Code · T6 · inicio
+- Qué: laboratorio de capacitación industrial: bloqueo y etiquetado de una cinta transportadora (avisar, apagar, aislar, bloquear, liberar energía, verificar), con VR en vivo y una lectura previa.
+- Por qué: mostrar la oferta a empresas y el uso de gafas; es el primer laboratorio sobre la entrada de T2.
+- Archivos: `src/labs/industrial/`, `src/content/industrial.ts`, una línea en `src/labs/registry.ts`, una línea en `src/learning-content.ts` y la materia en `src/subjects.ts`.
+- Base: `abf294d`; rama `claude/t6-industrial`, carpeta `laboratorio-vr-claude-t6`.
+- Pendiente: el contenido de seguridad es didáctico y debe revisarlo una persona con criterio técnico antes de presentarse. No se tocan los archivos de T3, T5 ni T7.
+
+## 2026-11-06 · Claude Code · T6 · fin
+- Qué: nueva materia «Capacitación industrial» con la práctica de bloqueo y etiquetado de una cinta transportadora (avisar, apagar, aislar, bloquear, liberar energía, verificar) y su lectura previa. Incluye el concepto «Puesta en marcha segura de un torno». Funciona en pantalla y tiene entrada a VR en vivo.
+- Por qué: mostrar la oferta a empresas y el uso de gafas; es el primer laboratorio real sobre la entrada de T2.
+- Archivos: `src/labs/industrial/` (`procedure.ts` lógica pura, `scene.ts` escena, `xr.ts` VR, `index.ts` módulo, `industrial.css`), `src/content/industrial.ts`, `src/loto-procedure.test.ts`, una línea en `src/labs/registry.ts`, una en `src/learning-content.ts` y la materia en `src/subjects.ts`.
+- Cómo se hizo: el laboratorio usa su propio lienzo y motor dentro del `host`, y un único mecanismo de selección (`POINTERPICK`) para ratón y para el láser de las Quest. El tablero de pasos es una textura dentro de la escena, así que se lee igual en VR. La lógica del procedimiento (`attempt`, `nextStep`) es una función pura con 7 pruebas.
+- Pendiente:
+  - La VR no se probó en gafas (T10, requiere HTTPS). En escritorio la entrada a VR queda desactivada con un mensaje.
+  - El contenido de seguridad es didáctico: debe revisarlo una persona con criterio técnico antes de presentarse.
+  - Para T3: la tarjeta de la materia industrial usa la ilustración genérica de electrónica; hace falta una en `subject-art.ts` y `platform-art.ts`.
+  - Para T9: la lectura y los mensajes del laboratorio no tienen audio; son texto.
+
+## 2026-11-06 · Claude Code · T6 · integrada
+- Qué: PR #5 integrado en `main`; T6 queda hecha.
+- Por qué: la oferta a empresas ya se puede mostrar.
+- Archivos: `docs/plan-demo.md`.
+- Pendiente: probar la VR en gafas (T10); revisión técnica del contenido de seguridad; ilustración de la materia (T3); audios (T9).

@@ -92,3 +92,8 @@ Formato:
 - Archivos: `src/workspace-theme.css`, `src/template.ts`, `src/main.ts` (navegación del catálogo); capturas en `docs/evidencia-t3/`.
 - Validación: compilación correcta; 81 pruebas superadas; inicio, materia y lectura revisados en PC, sin errores de consola.
 - Pendiente: revisión e integración de T3. Quest real no probado. No se añadieron cuentas, métricas ni servicios ficticios.
+
+## 2026-11-06 · Codex · T3 · integrada localmente
+- Qué: T3 incorporada a main local, sobre T4, sin cambios en archivos de T6 ni en la configuración de Claude.
+- Validación: 81 pruebas y compilación correctas en la revisión combinada.
+- Pendiente: publicación en GitHub y PR, bloqueados por revisión automática de permisos de envío externo. La integración local no equivale a despliegue. Quest real pendiente.

@@ -67,3 +67,9 @@ Formato:
 - Archivos: `src/lab-environment.ts` (nuevo), `src/lab-art.ts` (llama al entorno y lo devuelve como `environment`), `src/main.ts` (una línea: apaga `environment` en VR).
 - Firma: `createLabEnvironment(scene,labRoot,tableRoot,material)` devuelve el nodo `room`. Los sólidos se fusionan por material para limitar las llamadas de dibujo.
 - Pendiente: en VR solo se conserva el marco de madera; la sala se apaga para cuidar el rendimiento de las Quest. No se probó en Quest (T10). Los letreros de seguridad y el rótulo del laboratorio quedan tapados por el monitor en la vista por defecto.
+
+## 2026-11-06 · Claude Code · T4 · integrada
+- Qué: PR #4 integrado en `main`; T4 queda hecha.
+- Por qué: cierra la mejora visual del laboratorio de circuitos.
+- Archivos: `docs/plan-demo.md`.
+- Pendiente: probar en Quest (T10). Para la proyección usar «Ocultar paneles», que deja ver toda la sala.

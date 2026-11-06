@@ -151,3 +151,17 @@ Formato:
 - Qué: ocho figuras SVG con pie explicativo y descripción accesible, sin servicios externos ni cambios al modelo. Revisión visual de Ohm y LED y navegación de las figuras de paralelo y cable ausente.
 - Validación: 88 pruebas superadas; compilación correcta. Revisada la correspondencia de polaridad de la fuente y del LED. Captura en docs/evidencia-t5/ilustraciones.png.
 - Pendiente: revisión e integración de T5, sin publicación externa.
+
+## 2026-11-06 · Claude Code · T8 · inicio
+- Qué: lecturas reales de los tres conceptos del catálogo: péndulo simple (mecánica), caudal y Bernoulli (fluidos) y puesta en marcha segura de un torno (industrial). Hoy son esqueletos con «Propuesta de contenido» y duración «Por definir».
+- Por qué: mostrar amplitud sin inventar laboratorios; cada concepto se enseña de verdad y se rotula como «Concepto».
+- Archivos: `src/content/mecanica.ts`, `src/content/industrial.ts` (solo la lectura del torno, que es mía de T6), `src/content/fluidos-conceptos.ts` (nuevo, para no tocar `fluidos.ts` de T7), una línea en `src/learning-content.ts`, el id de Bernoulli en `previewContentIds` de fluidos en `src/subjects.ts`, y `src/concept-content.test.ts`.
+- Base: `6ea6203`; rama `claude/t8-conceptos`, carpeta `laboratorio-vr-claude-t8`.
+- Pendiente: no se toca `src/content/fluidos.ts` ni `src/content/electronica.ts`. T7 (Codex) añadirá su propio id a la misma lista de fluidos en `src/subjects.ts`: el conflicto, si lo hay, es de una línea.
+
+## 2026-11-06 · Claude Code · T8 · fin
+- Qué: tres lecturas de concepto con contenido real, de unos 6 minutos, cinco secciones cada una y un cierre rotulado «Concepto: qué falta para un laboratorio». Péndulo simple (`T = 2π√(L/g)`), caudal y Bernoulli (`A₁ · v₁ = A₂ · v₂` y `p + ½ρv² + ρgh`) y puesta en marcha segura de un torno. Los ejemplos numéricos están calculados a mano (1 m en la Tierra ≈ 2.0 s, en la Luna ≈ 4.9 s; de 1 a 4 m/s en agua la presión baja 7.5 kPa).
+- Por qué: mostrar amplitud sin inventar laboratorios; cada tarjeta enseña algo de verdad y dice que es un concepto.
+- Archivos: `src/content/mecanica.ts`, `src/content/fluidos-conceptos.ts` (nuevo), la lectura del torno en `src/content/industrial.ts`, una línea en `src/learning-content.ts`, el id de Bernoulli en la lista de fluidos de `src/subjects.ts` y `src/concept-content.test.ts` (4 pruebas).
+- Para T7 (Codex): no se tocó `src/content/fluidos.ts`. La tarjeta «Presión en un depósito» (`fluidos-presion`) sigue como esqueleto con duración «Por definir»; T7 la sustituye por la lectura de la prensa hidráulica. Al añadir su id a `previewContentIds` de fluidos en `src/subjects.ts` puede haber un conflicto de una línea con el de Bernoulli.
+- Pendiente: el contenido del torno es didáctico y debe revisarlo una persona con criterio técnico. Los conceptos no tienen audio (T9 decide si los narra). Si sobra tiempo, el péndulo es el candidato a práctica corta.

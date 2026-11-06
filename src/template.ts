@@ -4,14 +4,14 @@ const switchIcon = '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M1 16h7
 export const layout = `
 <header class="atlas-header" aria-label="Navegación principal">
   <a class="brand" href="#" aria-label="Umbral Labs"><span class="brand-symbol">u</span><span class="sidebar-brand-name">umbral<span class="brand-tag">labs</span></span></a>
-  <nav aria-label="Experiencias de aprendizaje">
+  <nav aria-label="Experiencias de aprendizaje"><span class="portal-nav-label">PLATAFORMA</span>
     <button class="nav-item active" data-nav-filter="all" aria-current="page">Inicio</button>
-    <div id="laboratory-nav"></div>
+    <div id="laboratory-nav"></div><span class="portal-nav-label">COMIENZA AQUÍ</span>
     
     <button class="nav-item" id="welcome-nav">Bienvenida</button>
   </nav>
   <button id="quick-search" class="atlas-search" aria-label="Buscar experiencias" title="Buscar experiencias (Ctrl K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span>Buscar</span><kbd>Ctrl K</kbd></button>
-</header>
+<div class="portal-sidebar-footer"><span class="online-dot"></span> Aprendizaje en tu navegador<small>PC · Meta Quest</small></div></header>
 <div class="app-content">
 <header class="app-topbar"><div class="topbar-context">Umbral <span>/</span> <span id="header-context">Catálogo de experiencias</span></div><div class="header-right"><button id="back-menu" class="back-menu" hidden>← Clases del laboratorio</button><span class="demo">VERSIÓN DE DEMOSTRACIÓN</span></div></header>
 <main id="main-menu" class="menu-page">
@@ -20,9 +20,10 @@ export const layout = `
     <div class="menu-hero-copy"><div class="menu-kicker" id="menu-kicker">APRENDIZAJE QUE PUEDES EXPLORAR</div><h1 id="menu-title"><span id="menu-title-lead">El conocimiento se construye</span> <em id="menu-title-accent">explorando.</em></h1><p id="menu-subtitle">Del concepto al descubrimiento. Empieza con la bienvenida o elige un laboratorio para aprender haciendo.</p><div class="atlas-hero-actions"><button id="browse-labs" class="atlas-primary">Explorar laboratorios <span aria-hidden="true">↗</span></button><button id="hero-welcome" class="atlas-text-button">Primera vez por aquí →</button></div></div>
     <div class="atlas-art" id="catalogue-art"><span class="atlas-art-tag">LABORATORIO 01 / ELECTRÓNICA</span>${introArtwork('catalogue-hero')}<div class="atlas-art-caption"><span class="intro-captions" aria-hidden="true"><span>01 / CONECTA LOS ELEMENTOS</span><span>02 / CIERRA EL CIRCUITO</span><span>03 / OBSERVA LA CORRIENTE</span></span><span>UMBRAL LABS</span></div></div>
   </section>
+  <section class="learning-route" aria-labelledby="learning-route-title"><div><span class="welcome-eyebrow">UN RECORRIDO, MUCHAS POSIBILIDADES</span><h2 id="learning-route-title">Comprende. Experimenta. Descubre.</h2><p>Una propuesta para conectar la formación universitaria y la capacitación de empresas con la práctica en entornos virtuales.</p></div><ol><li><span>01</span><strong>Elige una materia</strong><p>Encuentra una clase y conoce qué vas a aprender.</p></li><li><span>02</span><strong>Comprende la idea</strong><p>Lee la explicación y los ejemplos a tu ritmo.</p></li><li><span>03</span><strong>Ponla a prueba</strong><p>Entra al laboratorio disponible y aprende experimentando.</p></li></ol></section>
   <section class="catalogue-band"><div class="catalogue-search-frame"><label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><input id="experience-search" type="search" aria-label="Buscar clases y laboratorios" placeholder="Buscar una clase o laboratorio…" autocomplete="off"/><span class="search-shortcut"><kbd>Ctrl</kbd><kbd>K</kbd></span></label></div>
   <section class="experience-catalogue" aria-labelledby="catalogue-title">
-    <div class="catalogue-heading"><div><div class="eyebrow">EXPLORA UMBRAL</div><h2 id="catalogue-title">Bienvenida y laboratorios</h2></div><span id="catalogue-result-count" class="catalogue-count" role="status" aria-live="polite">2 experiencias</span></div>
+    <div class="catalogue-heading"><div><div class="eyebrow">EXPLORA UMBRAL</div><h2 id="catalogue-title">Bienvenida y laboratorios</h2><p id="catalogue-description" class="catalogue-description">Elige una materia para descubrir sus clases.</p></div><span id="catalogue-result-count" class="catalogue-count" role="status" aria-live="polite">2 experiencias</span></div>
     <div id="class-filters" class="class-filters" role="group" aria-label="Filtrar experiencias" hidden><button data-entry-filter="all" aria-pressed="true">Todas</button><button data-entry-filter="class" aria-pressed="false">Clases con contenido</button><button data-entry-filter="free" aria-pressed="false">Modo libre</button></div>
     <ul class="experience-list"></ul>
     <div id="empty-catalogue" class="empty-catalogue" hidden><h3>No hay experiencias para mostrar</h3><p id="empty-catalogue-text">Prueba con otra búsqueda.</p><button id="reset-catalogue">Ver todas las experiencias</button></div>
@@ -49,7 +50,8 @@ export const layout = `
   <footer><span>UMBRAL LABS <i></i> Un espacio para aprender experimentando.</span><span>Versión de demostración</span></footer>
 </main>
 <main id="study-view" class="study-page" hidden>
-  <section class="study-hero"><div class="portal-wrap"><button id="study-back" class="atlas-text-button">← <span id="study-subject"></span></button><div class="study-intro"><div><span class="welcome-eyebrow">APRENDE ANTES DE EXPERIMENTAR</span><h1 id="study-title"></h1><p id="study-description"></p></div><aside class="study-facts"><span>EN ESTA CLASE</span><strong id="study-duration"></strong><p>3 ideas para comprender</p><p id="study-status"></p><a href="#study-practice">Ver la práctica ↓</a></aside></div></div></section>
+  <ol class="course-route portal-wrap" aria-label="Etapas de la experiencia"><li aria-current="step"><span>01</span> Comprende la idea</li><li><span>02</span> Prepara tu espacio</li><li><span>03</span> Experimenta en 3D</li></ol>
+  <section class="study-hero"><div class="portal-wrap"><button id="study-back" class="atlas-text-button">← <span id="study-subject"></span></button><div class="study-intro"><div><span class="welcome-eyebrow">APRENDE ANTES DE EXPERIMENTAR</span><h1 id="study-title"></h1><p id="study-description"></p></div><aside class="study-facts"><span>EN ESTA CLASE</span><strong id="study-duration"></strong><p id="study-section-count">Contenido introductorio</p><p id="study-status"></p><a href="#study-practice">Ver la práctica ↓</a></aside></div></div></section>
   <div class="reading-layout portal-wrap"><aside class="reading-index"><span class="welcome-eyebrow">TU RECORRIDO</span><nav id="study-outline" aria-label="Contenido de la clase"></nav><p>Lee a tu ritmo. Al final encontrarás el acceso a la práctica.</p></aside><div id="study-sections"></div></div>
   <section id="study-practice" class="practice-band"><div class="portal-wrap"><div><span class="welcome-eyebrow">DEL CONCEPTO A LA EXPERIENCIA</span><h2 id="study-lab-title"></h2><p id="study-practice-description"></p></div><button id="study-prepare" class="atlas-primary"></button></div></section>
   <footer class="portal-wrap"><span>UMBRAL LABS · Aprende experimentando.</span><span>Versión de demostración</span></footer>

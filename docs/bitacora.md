@@ -73,3 +73,22 @@ Formato:
 - Por qué: cierra la mejora visual del laboratorio de circuitos.
 - Archivos: `docs/plan-demo.md`.
 - Pendiente: probar en Quest (T10). Para la proyección usar «Ocultar paneles», que deja ver toda la sala.
+## 2026-11-06 · Codex · T3 · inicio
+- Qué: mejorar el portal académico y explicar el recorrido de aprendizaje para la presentación.
+- Por qué: mostrar una plataforma para universidad y empresa, con lectura antes de la práctica.
+- Archivos: `src/template.ts`, `src/subjects-theme.css`, renderizado del catálogo si es necesario.
+- Base: `f8dbe0a`; rama `codex/t3-portal`, carpeta `laboratorio-vr-codex`.
+- Pendiente: T5 y T7 después de esta entrega. No se modifican los archivos de T4 ni T6.
+
+## 2026-11-06 · Codex · T3 · fin
+- Qué: portal con recorrido de aprendizaje, contexto universidad/empresa, orientación del catálogo, propuestas rotuladas Concepto y etapas visibles en la lectura. El número de secciones se obtiene del contenido real.
+- Por qué: facilitar la primera visita y explicar el paso de teoría a práctica sin cambiar el diseño aprobado ni los simuladores.
+- Archivos: `src/template.ts`, `src/subjects-theme.css`, `src/main.ts` (presentación del catálogo y lectura). Evidencia en `docs/evidencia-t3/` de la rama `codex/t3-portal`.
+- Validación: npm test, 81 pruebas superadas; npm run build correcto, con advertencia existente de tamaño. Revisión PC de inicio → materia → lectura → preparación y regreso; sin errores de consola.
+- Pendiente: revisión e integración de la rama; no probado en Quest real. T5 y T7 siguen pendientes. No se modificaron audios, modelos ni archivos de T4/T6.
+
+## 2026-11-06 · Codex · T3 · ajuste visual solicitado
+- Qué: sustituir la estructura editorial por un portal inspirado en las capturas de Cloudflare: navegación lateral, barra superior, búsqueda amplia, tarjetas compactas y tipografía sans serif. Se conservan crema, terracota y los acentos cálidos.
+- Archivos: `src/workspace-theme.css`, `src/template.ts`, `src/main.ts` (navegación del catálogo); capturas en `docs/evidencia-t3/`.
+- Validación: compilación correcta; 81 pruebas superadas; inicio, materia y lectura revisados en PC, sin errores de consola.
+- Pendiente: revisión e integración de T3. Quest real no probado. No se añadieron cuentas, métricas ni servicios ficticios.

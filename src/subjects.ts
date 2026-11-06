@@ -13,6 +13,17 @@ export const subjects:readonly Subject[]=[
     "previewContentIds": []
   },
   {
+    "id": "industrial",
+    "title": "Capacitación industrial",
+    "description": "Prepara a las personas de una planta para trabajar con seguridad junto a la maquinaria.",
+    "status": "available",
+    "laboratoryIds": [],
+    "previewContentIds": [
+      "industrial-loto",
+      "industrial-torno"
+    ]
+  },
+  {
     "id": "fluids",
     "title": "Mecánica de fluidos",
     "description": "Explora cómo se comportan los fluidos y qué significa la presión.",
@@ -42,7 +53,7 @@ export function readingEntry(subjectId:string,c:LearningContent):SubjectEntry{
 }
 function practiceCount(s:Subject){return s.laboratoryIds.flatMap(l=>catalogueEntries(l)).filter(c=>c.kind==='class').length+s.previewContentIds.filter(id=>getLearningContent(id).labId).length;}
 export function subjectEntries(id:string|null):SubjectEntry[]{
-  if(id===null)return subjects.map(s=>({id:`subject:${s.id}`,kind:'subject',subjectId:s.id,laboratoryId:null,title:s.title,description:s.description,meta:[s.status==='planned'?'Contenido propuesto':`${practiceCount(s)} clases con laboratorio`,s.status==='planned'?'Materia en preparación':'Contenido de la demo'],planned:s.status==='planned'}));
+  if(id===null)return subjects.map(s=>({id:`subject:${s.id}`,kind:'subject',subjectId:s.id,laboratoryId:null,title:s.title,description:s.description,meta:[s.status==='planned'?'Contenido propuesto':`${practiceCount(s)} ${practiceCount(s)===1?'clase':'clases'} con laboratorio`,s.status==='planned'?'Materia en preparación':'Contenido de la demo'],planned:s.status==='planned'}));
   const s=getSubject(id);
   const readings=s.previewContentIds.map(id=>readingEntry(s.id,getLearningContent(id)));
   return [...s.laboratoryIds.flatMap(lab=>catalogueEntries(lab).filter(e=>e.kind==='class'||e.kind==='free').map(e=>({id:e.id,kind:e.kind as 'class'|'free',subjectId:s.id,laboratoryId:lab,classId:e.classId,title:e.title,description:e.description,meta:e.meta,planned:false}))),...readings];

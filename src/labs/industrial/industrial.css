@@ -1,0 +1,5 @@
+.industrial-controls{position:absolute;top:16px;right:16px;z-index:1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end;max-width:min(560px,calc(100% - 200px))}
+.industrial-controls button{padding:10px 16px;border:1px solid #c9d3cd;border-radius:6px;background:#f6f8f4;color:#203e34;font:600 14px sans-serif;cursor:pointer}
+.industrial-controls button:disabled{opacity:.55;cursor:default}
+.industrial-controls button:focus-visible,#industrial-canvas:focus-visible{outline:3px solid #edc76d;outline-offset:2px}
+.industrial-status{flex-basis:100%;text-align:right;color:#dfe9e5;font:13px sans-serif;text-shadow:0 1px 2px #000}

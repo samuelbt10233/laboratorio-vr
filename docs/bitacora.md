@@ -97,3 +97,9 @@ Formato:
 - Por qué: la oferta a empresas ya se puede mostrar.
 - Archivos: `docs/plan-demo.md`.
 - Pendiente: probar la VR en gafas (T10); revisión técnica del contenido de seguridad; ilustración de la materia (T3); audios (T9).
+
+## 2026-11-06 · Claude Code · T0 y T11 · borrador de diapositivas
+- Qué: presentación de 11 diapositivas en 4 secciones (visión, guion de la demo, resumen del proyecto, cierre), con notas del orador y dos capturas reales. Enlace (privado, solo el responsable): https://claude.ai/artifact/JCQPu4oHYaPqN2Jv34days
+- Por qué: fijar el esquema que orienta la demo (T0) y adelantar el material de T11.
+- Archivos: ninguno del repositorio; la presentación vive en el artefacto.
+- Pendiente (T11, tras T10): sustituir las capturas por otras en alta resolución y añadir el portal cuando T3 termine; rellenar los corchetes (nombre, fecha, contacto, laboratorios reales, piloto y resultado de la prueba en Quest); ajustar la tarjeta de fluidos cuando se integre T7; ajustar la decisión que se pide, que el plan deja abierta. Las cifras del problema no se inventaron: sustituir por datos del cliente si los hay.

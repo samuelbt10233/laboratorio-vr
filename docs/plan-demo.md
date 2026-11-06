@@ -87,7 +87,7 @@ Antes de empezar, cambia tu fila a «en curso». Estados: `pendiente`, `en curso
 
 | ID | Tarea | Motivo | Agente | Estado | Depende de |
 | --- | --- | --- | --- | --- | --- |
-| T0 | Guion y esquema de diapositivas | Fija el alcance | Responsable + Claude Code | en curso | — |
+| T0 | Guion y esquema de diapositivas | Fija el alcance | Responsable + Claude Code | en revisión | — |
 | T1 | Aprobar el catálogo | Define qué se construye | Responsable | hecha | — |
 | T2 | Preparar la división del código | Evita cruces en la fase 3 | Claude Code | hecha | T1 |
 | T3 | Nuevo diseño del portal | Primera impresión del cliente | Codex | pendiente | T2 |

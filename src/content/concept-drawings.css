@@ -1,0 +1,8 @@
+.concept-drawing{margin:26px 0;background:#f7f2e9;border:1px solid #e3d7c6;border-radius:10px;overflow:hidden}
+.concept-drawing svg{display:block;width:100%;height:auto;max-height:340px;padding:14px;box-sizing:border-box}
+.concept-drawing figcaption{border-top:1px solid #e3d7c6;padding:14px 20px;font:400 12px/1.7 Arial,sans-serif;color:#7a6754;background:#f1e8db}
+@keyframes cd-swing{from{transform:rotate(calc(var(--amp) * -1))}to{transform:rotate(var(--amp))}}
+@keyframes cd-flow{from{transform:translateX(calc(var(--from) * -1))}to{transform:translateX(calc(var(--run) - var(--from)))}}
+.cd-swing{animation:cd-swing var(--half) cubic-bezier(.37,0,.63,1) infinite alternate}
+.cd-flow{animation:cd-flow var(--dur) linear infinite}
+@media (prefers-reduced-motion: reduce){.cd-swing,.cd-flow{animation:none}}

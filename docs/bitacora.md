@@ -171,3 +171,18 @@ Formato:
 - Por qué: el catálogo ya muestra tres conceptos con contenido real.
 - Archivos: `docs/plan-demo.md`.
 - Pendiente: revisión técnica del contenido del torno; T7 (Codex) sustituye «Presión en un depósito»; T9 decide si narra los conceptos.
+
+## 2026-11-06 · Claude Code · Clase visual de fluidos y mecánica · inicio
+- Qué: ilustraciones animadas dentro de las lecturas de concepto de mecánica (péndulo) y fluidos (caudal y Bernoulli), para que el cliente vea algo en movimiento aunque todavía no haya laboratorio. No son un simulador y se rotulan como ilustración.
+- Por qué: petición del responsable: una clase de cada materia que se vea en la presentación, sin laboratorio por ahora. Reutiliza el mecanismo de dibujos de T5.
+- Archivos: `src/content/concept-drawings.ts` (SVG puro), `src/content/concept-figure.ts`, `src/content/concept-drawings.css`, `src/concept-drawings.test.ts` y una línea en `src/main.ts` junto a la de T5.
+- Base: `752b2bc`; rama `claude/clase-visual-conceptos`, carpeta `laboratorio-vr-claude-t8`.
+- Pendiente: no se toca `src/content/fluidos.ts` (T7) ni `src/content/electronics-drawings.ts` (T5).
+
+## 2026-11-06 · Claude Code · Clase visual de fluidos y mecánica · fin
+- Qué: siete ilustraciones animadas en las lecturas de concepto. Péndulo (4): una oscilación, largo 1 m frente a 4 m, masa 50 g frente a 500 g, y Tierra frente a Luna. Caudal y Bernoulli (3): caudal `Q = A · v`, continuidad con el agua cuatro veces más rápida en la parte estrecha, y tubo de Venturi con columnas de presión. Cada dibujo lleva el aviso «Ilustración animada: no es un simulador».
+- Por qué: que el cliente vea algo en movimiento en mecánica y en fluidos aunque todavía no haya laboratorio.
+- Cómo se hizo: los tiempos salen de la física, no de valores puestos a ojo (`period(L,g) = 2π√(L/g)`; velocidad en el tramo estrecho = 4 × la del ancho). Las pruebas comprueban esas proporciones. El movimiento se apaga con «reducir movimiento» del sistema.
+- Archivos: `src/content/concept-drawings.ts`, `src/content/concept-figure.ts`, `src/content/concept-drawings.css`, `src/concept-drawings.test.ts` (9 pruebas) y dos líneas en `src/main.ts`, junto a las de T5.
+- Para T7 (Codex): para añadir dibujos a su lectura basta una entrada en el mapa `drawings` de `concept-drawings.ts` o su propio módulo con el mismo patrón; `fluidos.ts` no se tocó.
+- Pendiente: no se probó en Quest; las lecturas se ven en el navegador de escritorio. El torno no tiene dibujos. Los conceptos siguen sin audio.

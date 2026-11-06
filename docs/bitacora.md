@@ -165,3 +165,9 @@ Formato:
 - Archivos: `src/content/mecanica.ts`, `src/content/fluidos-conceptos.ts` (nuevo), la lectura del torno en `src/content/industrial.ts`, una línea en `src/learning-content.ts`, el id de Bernoulli en la lista de fluidos de `src/subjects.ts` y `src/concept-content.test.ts` (4 pruebas).
 - Para T7 (Codex): no se tocó `src/content/fluidos.ts`. La tarjeta «Presión en un depósito» (`fluidos-presion`) sigue como esqueleto con duración «Por definir»; T7 la sustituye por la lectura de la prensa hidráulica. Al añadir su id a `previewContentIds` de fluidos en `src/subjects.ts` puede haber un conflicto de una línea con el de Bernoulli.
 - Pendiente: el contenido del torno es didáctico y debe revisarlo una persona con criterio técnico. Los conceptos no tienen audio (T9 decide si los narra). Si sobra tiempo, el péndulo es el candidato a práctica corta.
+
+## 2026-11-06 · Claude Code · T8 · integrada
+- Qué: PR #8 integrado en `main`; T8 queda hecha.
+- Por qué: el catálogo ya muestra tres conceptos con contenido real.
+- Archivos: `docs/plan-demo.md`.
+- Pendiente: revisión técnica del contenido del torno; T7 (Codex) sustituye «Presión en un depósito»; T9 decide si narra los conceptos.

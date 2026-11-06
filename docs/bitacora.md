@@ -47,3 +47,9 @@ Formato:
   - Materia nueva o con laboratorio: `status:'available'`, `laboratoryIds:[]` y `previewContentIds:[...]`. Sin `labId`, la lectura aparece como «En preparación».
   - Estética de circuitos: `createLabArt(scene,tableRoot)` devuelve `{material,label,decorate,partVisual,ledLenses,red,metal,teal}`.
 - Pendiente: T3 a T8 pueden empezar cuando se integre este PR. WebXR no forma parte de la entrada: cada laboratorio lo maneja por su cuenta. Una materia sin ilustración en `src/subject-art.ts` usa la ilustración genérica hasta que T3 la agregue. La prueba en navegador usó un laboratorio temporal, porque todavía no hay ninguno registrado.
+
+## 2026-11-06 · Claude Code · T2 · integrada
+- Qué: PR #3 integrado en `main`; T2 queda hecha.
+- Por qué: desbloquea T3 a T8.
+- Archivos: `docs/plan-demo.md`.
+- Pendiente: T3, T5 y T7 pueden empezar con Codex, cada una en su carpeta y rama. Claude Code sigue con T4 y T6.

@@ -30,7 +30,8 @@ export const subjects:readonly Subject[]=[
     "status": "planned",
     "laboratoryIds": [],
     "previewContentIds": [
-      "fluidos-presion"
+      "fluidos-presion",
+      "fluidos-bernoulli"
     ]
   },
   {

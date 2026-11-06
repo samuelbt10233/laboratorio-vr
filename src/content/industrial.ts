@@ -17,12 +17,14 @@ export const industrial:readonly LearningContent[]=[
   {
     id:'industrial-torno',runtimeClassId:null,subjectId:'industrial',
     title:'Puesta en marcha segura de un torno',
-    description:'Propuesta de contenido para una futura práctica sobre inspección y arranque de una máquina herramienta.',
-    duration:'Por definir',laboratoryTitle:'Inspección y arranque de un torno',
+    description:'Repasa la inspección, la protección personal y el arranque de una máquina herramienta antes de empezar a trabajar.',
+    duration:'6 min de lectura',laboratoryTitle:'Inspección y arranque de un torno',
     sections:[
-      {title:'Antes de encender',text:'Una puesta en marcha segura empieza con una inspección: la pieza bien sujeta, la llave del plato retirada, las guardas en su lugar y la zona despejada.',example:'Una llave olvidada en el plato puede salir despedida cuando el torno gira.'},
-      {title:'Equipo de protección y arranque',text:'Se usan gafas de seguridad, ropa ajustada y el pelo recogido. El arranque se hace a baja velocidad y con la mano lejos del giro, observando que la pieza gire sin vibrar.',example:'Mangas sueltas y cadenas pueden enredarse en una pieza que gira.'},
-      {title:'Concepto ilustrativo',text:'Este contenido muestra la estructura prevista de una futura práctica. Su alcance, las actividades y el simulador están por definir.',example:'Concepto propuesto: aún no hay laboratorio asociado.'},
+      {title:'Inspección antes de encender',text:'Una puesta en marcha segura empieza con la máquina apagada: se revisan las guardas, el área de trabajo, el estado de las herramientas y que no haya nada suelto sobre el torno. Si algo está dañado, la máquina no se usa y se avisa al responsable.',example:'Una guarda retirada o un cable pelado se reportan antes de arrancar; no se «arreglan» sobre la marcha.'},
+      {title:'Protección personal',text:'Se trabaja con gafas de seguridad, ropa ajustada, el pelo recogido y sin anillos, cadenas ni pulseras. Cerca de piezas que giran no se usan guantes holgados: pueden engancharse y arrastrar la mano.',example:'Una manga suelta o una cadena colgando pueden enredarse en una pieza que gira.'},
+      {title:'Sujeción de la pieza y de la herramienta',text:'La pieza se aprieta con firmeza en el plato y la herramienta de corte se fija bien y a la altura correcta. La llave del plato se retira siempre antes de arrancar: si queda puesta, saldrá despedida cuando el torno gire.',example:'Antes de pulsar el arranque, la pregunta es: ¿tengo todavía la llave en la mano?'},
+      {title:'Arranque y primeras pasadas',text:'El primer arranque se hace a baja velocidad y con las manos lejos de la pieza, observando que gire sin vibrar. Se sube la velocidad poco a poco y la persona se queda en su puesto, sin apartar la vista de la máquina.',example:'Una vibración al arrancar es una señal para parar y revisar la sujeción, no para seguir.'},
+      {title:'Concepto: qué falta para un laboratorio',text:'Medir, limpiar o ajustar se hace siempre con el torno completamente parado, y para un mantenimiento se aplica el bloqueo y etiquetado. Una práctica futura podría recorrer la inspección y el arranque en un torno virtual, con errores que expliquen el riesgo.',example:'Este contenido es un concepto: todavía no hay un laboratorio asociado. Es didáctico y debe revisarlo una persona con criterio técnico antes de usarse en una formación real.'},
     ],
   },
 ];

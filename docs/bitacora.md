@@ -53,3 +53,17 @@ Formato:
 - Por qué: desbloquea T3 a T8.
 - Archivos: `docs/plan-demo.md`.
 - Pendiente: T3, T5 y T7 pueden empezar con Codex, cada una en su carpeta y rama. Claude Code sigue con T4 y T6.
+
+## 2026-11-06 · Claude Code · T4 · inicio
+- Qué: dar a la mesa de circuitos el aspecto de un laboratorio real: entorno, banco de trabajo e instrumentos, sin cambiar la lógica ni la interacción.
+- Por qué: credibilidad ante el cliente; la funcionalidad ya está validada.
+- Archivos: `src/lab-art.ts`, `src/circuit-charts.ts`, entorno de la escena.
+- Base: `f8dbe0a`; rama `claude/t4-estetica`, carpeta `laboratorio-vr-claude-t4`.
+- Pendiente: no se tocan `template.ts`, el CSS del portal, `circuit.ts` ni `class-engine.ts`.
+
+## 2026-11-06 · Claude Code · T4 · fin
+- Qué: la mesa de circuitos ahora está en un laboratorio: banco de madera con patas y estante, sala con ventana, banco de instrumentos (osciloscopio, fuente, multímetro), pizarra con un circuito, estantería de componentes y pedestal para el monitor de gráficas.
+- Por qué: credibilidad ante el cliente; la funcionalidad no cambia.
+- Archivos: `src/lab-environment.ts` (nuevo), `src/lab-art.ts` (llama al entorno y lo devuelve como `environment`), `src/main.ts` (una línea: apaga `environment` en VR).
+- Firma: `createLabEnvironment(scene,labRoot,tableRoot,material)` devuelve el nodo `room`. Los sólidos se fusionan por material para limitar las llamadas de dibujo.
+- Pendiente: en VR solo se conserva el marco de madera; la sala se apaga para cuidar el rendimiento de las Quest. No se probó en Quest (T10). Los letreros de seguridad y el rótulo del laboratorio quedan tapados por el monitor en la vista por defecto.

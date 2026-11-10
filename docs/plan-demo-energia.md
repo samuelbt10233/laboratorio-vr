@@ -60,7 +60,7 @@ Estados: `pendiente`, `en curso`, `en revisión`, `hecha`.
 
 | ID | Tarea | Agente | Estado | Depende de |
 | --- | --- | --- | --- | --- |
-| D0 | Contrato: materia, contenido provisional y laboratorio vacío registrados | Sonnet | pendiente | — |
+| D0 | Contrato: materia, contenido provisional y laboratorio vacío registrados | Sonnet | en revisión | — |
 | D1 | Login de demostración y portal para ESSA: entrada por usuario, «Preparado para ESSA», ruta de distribución primero, electrónica como «Fundamentos eléctricos»; mecánica, fluidos y torno ocultos | Codex | pendiente | D0 |
 | D2 | Práctica de las cinco reglas de oro en un poste con transformador, con arco eléctrico al cometer el error y constancia al terminar | Sonnet | pendiente | D0 |
 | D3 | Lectura breve de las cinco reglas, con ilustración | Sonnet | pendiente | D0 |

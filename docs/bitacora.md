@@ -213,3 +213,10 @@ Formato:
 ## 2026-11-10 · Claude Code · Plan ESSA: ganchos y despliegue
 - Qué: el plan añade dos funciones que el responsable mencionará de viva voz como gancho, sin estar operativas: bloques de video breves dentro de las clases y un editor de clases por bloques (texto, imagen, video, animación) para un rol alto. Nueva tarea opcional D6 con un apoyo visual rotulado «Concepto» para cada una; es la primera en recortarse.
 - Despliegue: el responsable confirma que ya hay despliegue en Railway y que la VR funciona en Quest. Cada merge en `main` publica la versión de la demo, así que `main` debe estar siempre presentable. T10 queda cubierta; la práctica nueva (D2) se prueba en gafas en D5.
+
+## 2026-11-10 · Claude Code · D0 Contrato común
+- Qué: plan integrado (PR #11). D0 deja en `main` el contrato de la sección 3: materia `distribucion` primera en el catálogo, lectura `distribucion-cinco-reglas` con texto ya presentable (seis secciones, rotulada como didáctica y pendiente de validar con el RETIE y ESSA), y laboratorio `cinco-reglas` registrado que abre una tarjeta «Práctica en preparación».
+- Firmas para D1, D2 y D4: `src/labs/cinco-reglas/result.ts` exporta `PracticeResult {contentId, aprobado, errores, segundos, fecha}`, `RESULT_KEY = 'umbral-demo-resultado'`, `saveResult(result)` y `readResult(): PracticeResult | null` (devuelve null si no hay dato o está dañado). El panel de D4 importa `readResult`; D2 llama a `saveResult` al terminar.
+- Archivos: `src/subjects.ts` (entrada nueva), `src/learning-content.ts` (una línea), `src/content/distribucion.ts`, `src/labs/registry.ts` (una línea), `src/labs/cinco-reglas/{index.ts,result.ts,cinco-reglas.css}`, `src/distribucion-contract.test.ts` (2 pruebas).
+- Validación: 107 pruebas superadas, build correcto; en el navegador la ruta, la lectura y el laboratorio provisional abren sin errores en consola.
+- Pendiente para D1 (Codex): la tarjeta de la ruta usa la ilustración por defecto de electrónica; falta su entrada en `subject-art.ts`.

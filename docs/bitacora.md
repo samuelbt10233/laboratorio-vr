@@ -209,3 +209,7 @@ Formato:
 - Por qué: con un día no caben el kit de modelos, la segunda práctica, la evaluación ni la reorganización de `main.ts`. Un contrato común (sección 3 del plan) sustituye a esa reorganización para que los dos agentes no se esperen.
 - Decisiones: demo en pantalla; VR solo si se prueba esta noche en las Quest. Sin logo de ESSA salvo permiso. Contenido rotulado como didáctico, pendiente de validar con el RETIE y los procedimientos de ESSA. T5, T7, T9, T10 y T11 suspendidas.
 - Pendiente: aprobación del plan; D0 desbloquea D1–D4.
+
+## 2026-11-10 · Claude Code · Plan ESSA: ganchos y despliegue
+- Qué: el plan añade dos funciones que el responsable mencionará de viva voz como gancho, sin estar operativas: bloques de video breves dentro de las clases y un editor de clases por bloques (texto, imagen, video, animación) para un rol alto. Nueva tarea opcional D6 con un apoyo visual rotulado «Concepto» para cada una; es la primera en recortarse.
+- Despliegue: el responsable confirma que ya hay despliegue en Railway y que la VR funciona en Quest. Cada merge en `main` publica la versión de la demo, así que `main` debe estar siempre presentable. T10 queda cubierta; la práctica nueva (D2) se prueba en gafas en D5.

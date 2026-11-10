@@ -17,16 +17,28 @@ Límites que se mantienen:
 - **Marca:** se muestra el texto «Preparado para ESSA». No se usa su logo ni sus colores salvo que el responsable los aporte con permiso.
 - **Base estable:** `npm test` y `npm run build` pasan antes de integrar.
 
-## 2. Guion (5 minutos, en pantalla)
+## 2. Guion (5 minutos)
 
 | Min | Momento | Qué demuestra |
 | --- | --- | --- |
 | 0,5 | Entrar como técnico de redes (usuario de demostración) | Cada persona tiene su ruta |
-| 0,5 | Ruta «Trabajo seguro en redes de distribución» y lectura breve de las cinco reglas de oro | Teoría antes de la práctica |
+| 0,5 | Ruta «Trabajo seguro en redes de distribución» y lectura breve de las cinco reglas de oro. **Gancho:** bloques de video breves dentro de la clase | Teoría antes de la práctica |
 | 3 | Práctica en un poste con transformador: las cinco reglas en orden, luego un error a propósito (poner a tierra sin verificar ausencia de tensión → arco eléctrico y explicación) | Realismo y seguridad sin riesgo |
-| 1 | Entrar como supervisor: avance de la cuadrilla y constancias | Lo que compra la empresa |
+| 1 | Entrar como supervisor: avance de la cuadrilla y constancias. **Gancho:** ESSA crea sus propias clases desde la plataforma | Lo que compra la empresa |
 
-**VR:** no se ha probado en unas Quest reales. La demo se hace en pantalla. La VR solo se muestra si esta noche se prueba en las gafas con éxito; si no, se menciona como siguiente paso.
+**VR:** el despliegue en Railway y la VR ya funcionan en las Quest. La práctica nueva (D2) se muestra en gafas solo si pasa la prueba en Quest de D5; si no, se hace en pantalla.
+
+### Ganchos que se mencionan de viva voz
+
+La plataforma es un centro de clases y capacitaciones, y el responsable presentará dos funciones que **no estarán operativas en la demo**:
+
+1. **Bloques de video en las clases:** videos breves dentro de la explicación que complementan el texto.
+2. **Editor de clases por bloques:** una persona con rol alto (coordinación de capacitación o supervisión) crea la sección de texto de una clase desde la plataforma, añadiendo bloques de texto, imagen, video o animación, sin programar.
+
+Si sobra tiempo, cada gancho tiene un apoyo visual barato, rotulado «Concepto» (D6). Sin él, el gancho se cuenta igual: no bloquea nada.
+
+- En la lectura de D3, un bloque de video con portada y la etiqueta «Video breve · Concepto», sin reproducir nada.
+- En el panel de D4, un botón «Crear clase» que abre una maqueta fija del editor: una clase a medio armar con bloques de texto, imagen, video y animación, y una barra para añadir bloques. No guarda nada.
 
 ## 3. Contrato común
 
@@ -53,9 +65,10 @@ Estados: `pendiente`, `en curso`, `en revisión`, `hecha`.
 | D2 | Práctica de las cinco reglas de oro en un poste con transformador, con arco eléctrico al cometer el error y constancia al terminar | Sonnet | pendiente | D0 |
 | D3 | Lectura breve de las cinco reglas, con ilustración | Sonnet | pendiente | D0 |
 | D4 | Panel del supervisor con cuadrilla de ejemplo y el resultado real de la práctica | Codex | pendiente | D1 |
-| D5 | Ensayo completo, video de respaldo y equipo listo (portátil con `npm run build` y `node server.mjs`) | Responsable + Sonnet | pendiente | D1–D4 |
+| D5 | Ensayo completo sobre Railway, prueba de D2 en Quest y video de respaldo | Responsable + Sonnet | pendiente | D1–D4 |
+| D6 | Apoyos visuales de los ganchos: bloque de video en la lectura y maqueta del editor de clases | Quien termine antes | pendiente | D3, D4 |
 
-**Hora de congelar el código: esta noche.** Lo que no esté integrado y ensayado entonces no entra en la demo. Si falta tiempo, se recorta en este orden: D3, D4. Nunca D2.
+**Hora de congelar el código: esta noche.** Lo que no esté integrado y ensayado entonces no entra en la demo. Si falta tiempo, se recorta en este orden: D6, D3, D4. Nunca D2.
 
 ### Qué toca cada tarea
 
@@ -66,6 +79,7 @@ Estados: `pendiente`, `en curso`, `en revisión`, `hecha`.
 | D2 | `src/labs/cinco-reglas/`, `src/cinco-reglas*.test.ts` | Portal y `main.ts` |
 | D3 | `src/content/distribucion.ts`, dibujos en `src/content/` | Archivos de T5 |
 | D4 | `src/demo/supervisor*`, `src/demo/datos-ejemplo.ts` y una línea en `main.ts` | `src/labs/` |
+| D6 | Bloque de video: `src/content/` junto a la lectura de D3. Maqueta del editor: `src/demo/editor*` y el botón en el panel de D4 | Coordinar con el autor de D3 o D4 si sigue en curso |
 
 ### Alcance de D2
 
@@ -78,9 +92,11 @@ Estados: `pendiente`, `en curso`, `en revisión`, `hecha`.
 
 ## 5. Reglas de coordinación
 
-Siguen vigentes las de [plan-demo.md](plan-demo.md#5-reglas-de-coordinación): una carpeta y una rama por tarea desde `origin/main` (`claude/dN-nombre` o `codex/dN-nombre`), aviso en el tablero y en la [bitácora](bitacora.md), PR pequeños y no editar archivos ajenos. Con la demo mañana, el responsable integra cada PR en cuanto pase `npm test` y `npm run build`.
+Siguen vigentes las de [plan-demo.md](plan-demo.md#5-reglas-de-coordinación): una carpeta y una rama por tarea desde `origin/main` (`claude/dN-nombre` o `codex/dN-nombre`), aviso en el tablero y en la [bitácora](bitacora.md), PR pequeños y no editar archivos ajenos.
 
-Las tareas pendientes del plan anterior (T5, T7, T9, T10 y T11) quedan suspendidas hasta después de la demo.
+**Integrar es desplegar:** cada merge en `main` publica la versión en Railway, que es la que se presentará. Por eso `main` debe estar siempre presentable: no se integra trabajo a medias, el responsable hace cada merge, y tras cada uno se revisa la versión publicada.
+
+T10 del plan anterior queda cubierta: hay despliegue en Railway y la VR funciona en Quest. T5, T7, T9 y T11 quedan suspendidas hasta después de la demo.
 
 ### Para dar una tarea por terminada
 
@@ -88,4 +104,4 @@ Las tareas pendientes del plan anterior (T5, T7, T9, T10 y T11) quedan suspendid
 - Su tramo del guion funciona en el navegador, sin errores en consola, y hay captura en el PR.
 - La bitácora registra qué se hizo y qué quedó pendiente.
 
-Sin hardware real, indica «no probado en Quest».
+La VR en Quest ya está validada con lo existente; cada pieza nueva se marca «no probado en Quest» hasta que pase D5.

@@ -220,3 +220,12 @@ Formato:
 - Archivos: `src/subjects.ts` (entrada nueva), `src/learning-content.ts` (una línea), `src/content/distribucion.ts`, `src/labs/registry.ts` (una línea), `src/labs/cinco-reglas/{index.ts,result.ts,cinco-reglas.css}`, `src/distribucion-contract.test.ts` (2 pruebas).
 - Validación: 107 pruebas superadas, build correcto; en el navegador la ruta, la lectura y el laboratorio provisional abren sin errores en consola.
 - Pendiente para D1 (Codex): la tarjeta de la ruta usa la ilustración por defecto de electrónica; falta su entrada en `subject-art.ts`.
+
+## 2026-11-10 · Claude Code · D2 Práctica de las cinco reglas de oro
+- Qué: la práctica `cinco-reglas` sustituye a la tarjeta provisional. Calle con poste de concreto, cruceta, línea trifásica que cruza la calle, cortacircuitos, transformador, camión de la cuadrilla con baliza, casas y sombras. En una lona: EPP, pértiga, tarjeta, detector, equipo de puesta a tierra y conos. Pasos: EPP, cortar (los cortacircuitos se abren), bloquear (tarjeta en el poste), verificar (luz verde en el detector), puesta a tierra (cables en las tres fases) y señalizar (conos y cinta).
+- Error del guion: poner a tierra sin verificar dispara el arco (destello en pantalla, núcleo luminoso, chispas, luz, sonido sintetizado y marca en el conductor), detiene la práctica y explica el riesgo. Hay zumbido del transformador mientras la línea está energizada.
+- Al terminar: constancia «Datos de demostración» con errores, tiempo y fecha, y `saveResult` guarda el resultado para el panel de D4 (comprobado en `localStorage`).
+- Pantalla y VR: un panel HTML grande refleja los pasos porque el tablero 3D no se lee en un proyector; el tablero 3D queda a la izquierda para la VR. Volúmenes de selección invisibles facilitan tocar herramientas finas con ratón o láser.
+- Archivos: `src/labs/cinco-reglas/{procedure,scene,sound,index}.ts`, `cinco-reglas.css`, `src/cinco-reglas-procedure.test.ts` (8 pruebas). Reutiliza `enableXR` del laboratorio industrial sin modificarlo.
+- Validación: 115 pruebas superadas, build correcto; recorrido completo en el navegador (con error y sin él) sin errores en consola.
+- Pendiente: **no probado en Quest** (D5). Dos clics muy seguidos cuentan como doble toque y el segundo se ignora: en la demo, tocar con calma.

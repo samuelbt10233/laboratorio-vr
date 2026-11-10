@@ -62,7 +62,7 @@ Estados: `pendiente`, `en curso`, `en revisión`, `hecha`.
 | --- | --- | --- | --- | --- |
 | D0 | Contrato: materia, contenido provisional y laboratorio vacío registrados | Sonnet | en revisión | — |
 | D1 | Login de demostración y portal para ESSA: entrada por usuario, «Preparado para ESSA», ruta de distribución primero, electrónica como «Fundamentos eléctricos»; mecánica, fluidos y torno ocultos | Codex | pendiente | D0 |
-| D2 | Práctica de las cinco reglas de oro en un poste con transformador, con arco eléctrico al cometer el error y constancia al terminar | Sonnet | pendiente | D0 |
+| D2 | Práctica de las cinco reglas de oro en un poste con transformador, con arco eléctrico al cometer el error y constancia al terminar | Sonnet | en revisión | D0 |
 | D3 | Lectura breve de las cinco reglas, con ilustración | Sonnet | pendiente | D0 |
 | D4 | Panel del supervisor con cuadrilla de ejemplo y el resultado real de la práctica | Codex | pendiente | D1 |
 | D5 | Ensayo completo sobre Railway, prueba de D2 en Quest y video de respaldo | Responsable + Sonnet | pendiente | D1–D4 |

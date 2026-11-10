@@ -203,3 +203,9 @@ Formato:
 - Por qué: la demo universitaria se aprobó y ahora se prepara una demo para una empresa de distribución eléctrica (login, rediseño, realismo y prácticas del sector).
 - Cambio de regla propuesto: se permiten usuarios y avances de ejemplo rotulados como «Datos de demostración». Queda sujeto a la aprobación del plan (E0).
 - Pendiente: E0 (aprobar el plan y responder fecha, país y normativa, marca, formato, público y experto revisor). Del tablero anterior quedan sin cerrar T5, T7, T9, T10 y T11, y hay cambios sin confirmar de Codex en la carpeta principal; E0 decide qué se descarta.
+
+## 2026-11-10 · Claude Code · Plan reducido para ESSA, demo mañana
+- Qué: el plan se reescribe tras conocer los datos. Cliente: ESSA (Colombia). Fecha: mañana, como añadido de unos 5 minutos a una reunión ya programada. Tablero D0–D5: un solo recorrido (login de técnico → lectura de las cinco reglas → práctica en poste con arco al equivocarse → panel del supervisor).
+- Por qué: con un día no caben el kit de modelos, la segunda práctica, la evaluación ni la reorganización de `main.ts`. Un contrato común (sección 3 del plan) sustituye a esa reorganización para que los dos agentes no se esperen.
+- Decisiones: demo en pantalla; VR solo si se prueba esta noche en las Quest. Sin logo de ESSA salvo permiso. Contenido rotulado como didáctico, pendiente de validar con el RETIE y los procedimientos de ESSA. T5, T7, T9, T10 y T11 suspendidas.
+- Pendiente: aprobación del plan; D0 desbloquea D1–D4.

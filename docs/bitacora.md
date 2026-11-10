@@ -229,3 +229,7 @@ Formato:
 - Archivos: `src/labs/cinco-reglas/{procedure,scene,sound,index}.ts`, `cinco-reglas.css`, `src/cinco-reglas-procedure.test.ts` (8 pruebas). Reutiliza `enableXR` del laboratorio industrial sin modificarlo.
 - Validación: 115 pruebas superadas, build correcto; recorrido completo en el navegador (con error y sin él) sin errores en consola.
 - Pendiente: **no probado en Quest** (D5). Dos clics muy seguidos cuentan como doble toque y el segundo se ignora: en la demo, tocar con calma.
+
+## 2026-11-10 · Claude Code · Relevo a Codex
+- Qué: D2 integrada (PR #13); D0 y D2 hechas en el tablero. Claude Code se queda sin cuota y Codex continúa solo: [relevo-codex.md](relevo-codex.md) resume el estado, el contrato, lo que falta (D1, D4, D5; D3 y D6 opcionales) y los cuidados. D3 y D5 pasan a Codex. `AGENTS.md` enlaza el relevo.
+- Pendiente: D1, D4 y D5 antes de la demo de mañana; D2 sin probar en Quest.

@@ -3,4 +3,5 @@ import type { LabRegistry } from './types';
 // prensa:()=>import('./fluidos/prensa').then(m=>m.lab),
 export const labModules:LabRegistry={
   industrial:()=>import('./industrial').then(m=>m.lab),
+  'cinco-reglas':()=>import('./cinco-reglas').then(m=>m.lab),
 };

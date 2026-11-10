@@ -3,6 +3,16 @@ import { getLearningContent, type LearningContent } from './learning-content';
 export interface Subject {id:string;title:string;description:string;status:'available'|'planned';laboratoryIds:string[];previewContentIds:string[]}
 export const subjects:readonly Subject[]=[
   {
+    "id": "distribucion",
+    "title": "Trabajo seguro en redes de distribución",
+    "description": "Prepara a las cuadrillas para intervenir la red sin tensión y con los riesgos controlados.",
+    "status": "available",
+    "laboratoryIds": [],
+    "previewContentIds": [
+      "distribucion-cinco-reglas"
+    ]
+  },
+  {
     "id": "electronics",
     "title": "Electrónica",
     "description": "Comprende los circuitos y la relación entre voltaje, resistencia y corriente.",

@@ -1,5 +1,7 @@
 # Plan de la demo
 
+> **Cerrado.** La demo universitaria ya se presentó y se aprobó. El trabajo actual sigue [plan-demo-energia.md](plan-demo-energia.md); este documento queda como historial y por sus reglas de coordinación.
+
 Estado: **aprobado por el responsable del proyecto el 2026-11-06.** Este documento es la fuente común de Claude Code y Codex: define qué se hace, por qué y quién lo hace.
 
 ## 1. Objetivo

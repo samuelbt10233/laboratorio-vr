@@ -197,3 +197,19 @@ Formato:
 - Qué: caminar a 0,75 m/s como máximo con palanca izquierda, orientación horizontal de la mirada, zona muerta y límites de sala/mesa. Selector espacial Caminar/Teletransporte; pausa en catálogo, preparación y sesión no visible.
 - Validación: 105 pruebas superadas, incluidos rumbo, diagonal, límites, bloqueo de mesa y tiempo. Compilación correcta; selector visible en vista Quest en PC, sin errores de consola. Evidencia en docs/evidencia-vr/.
 - Pendiente: integración de codex/vr-walking. No validado con mandos físicos ni Quest real; la vista PC no emula el movimiento del joystick. Runtime de electrónica; los módulos independientes no se modificaron.
+
+## 2026-11-10 · Claude Code · Plan de la demo para distribución eléctrica
+- Qué: nuevo plan [plan-demo-energia.md](plan-demo-energia.md) con objetivo, supuestos, guion de 10 minutos y tablero E0 a E12 repartido entre Sonnet 5.5 y Codex. `plan-demo.md` queda cerrado como historial y `AGENTS.md` apunta al plan nuevo.
+- Por qué: la demo universitaria se aprobó y ahora se prepara una demo para una empresa de distribución eléctrica (login, rediseño, realismo y prácticas del sector).
+- Cambio de regla propuesto: se permiten usuarios y avances de ejemplo rotulados como «Datos de demostración». Queda sujeto a la aprobación del plan (E0).
+- Pendiente: E0 (aprobar el plan y responder fecha, país y normativa, marca, formato, público y experto revisor). Del tablero anterior quedan sin cerrar T5, T7, T9, T10 y T11, y hay cambios sin confirmar de Codex en la carpeta principal; E0 decide qué se descarta.
+
+## 2026-11-10 · Claude Code · Plan reducido para ESSA, demo mañana
+- Qué: el plan se reescribe tras conocer los datos. Cliente: ESSA (Colombia). Fecha: mañana, como añadido de unos 5 minutos a una reunión ya programada. Tablero D0–D5: un solo recorrido (login de técnico → lectura de las cinco reglas → práctica en poste con arco al equivocarse → panel del supervisor).
+- Por qué: con un día no caben el kit de modelos, la segunda práctica, la evaluación ni la reorganización de `main.ts`. Un contrato común (sección 3 del plan) sustituye a esa reorganización para que los dos agentes no se esperen.
+- Decisiones: demo en pantalla; VR solo si se prueba esta noche en las Quest. Sin logo de ESSA salvo permiso. Contenido rotulado como didáctico, pendiente de validar con el RETIE y los procedimientos de ESSA. T5, T7, T9, T10 y T11 suspendidas.
+- Pendiente: aprobación del plan; D0 desbloquea D1–D4.
+
+## 2026-11-10 · Claude Code · Plan ESSA: ganchos y despliegue
+- Qué: el plan añade dos funciones que el responsable mencionará de viva voz como gancho, sin estar operativas: bloques de video breves dentro de las clases y un editor de clases por bloques (texto, imagen, video, animación) para un rol alto. Nueva tarea opcional D6 con un apoyo visual rotulado «Concepto» para cada una; es la primera en recortarse.
+- Despliegue: el responsable confirma que ya hay despliegue en Railway y que la VR funciona en Quest. Cada merge en `main` publica la versión de la demo, así que `main` debe estar siempre presentable. T10 queda cubierta; la práctica nueva (D2) se prueba en gafas en D5.

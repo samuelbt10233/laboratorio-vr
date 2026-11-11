@@ -225,7 +225,7 @@ html body .home-col-title{display:flex;align-items:center;gap:10px;margin:0 0 16
 html body .home-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 8px;border-radius:999px;background:var(--m-accent);color:#fff;font-size:14px;font-weight:600}
 /* The page title is secondary to the modules and activities below. */
 html body #main-menu.home-on .menu-hero{padding-top:8px}
-html body #main-menu.home-on #menu-title{font-size:22px;font-weight:600;letter-spacing:0}
-html body #main-menu.home-on #menu-subtitle{margin-top:6px;font-size:14px}
+html body #main-menu.home-on #menu-title{font-size:30px;font-weight:600;letter-spacing:-.01em}
+html body #main-menu.home-on #menu-subtitle{margin-top:8px;font-size:15px}
 html body #main-menu.home-on .catalogue-search-frame{margin-top:16px}
-@media (max-width:900px){html body #main-menu.home-on #menu-title{font-size:20px}}
+@media (max-width:900px){html body #main-menu.home-on #menu-title{font-size:24px}}

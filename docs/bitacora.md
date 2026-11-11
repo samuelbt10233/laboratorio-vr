@@ -297,3 +297,4 @@ Formato:
 ## 2026-11-11 · Claude Code · «Tu capacitación» más discreto
 - Qué: el titular del inicio baja de 40 px a 22 px y el subtítulo a 14 px, con menos espacio alrededor, para que el foco recaiga en el panel, los módulos activos y las actividades pendientes, que ahora caben en la primera pantalla a 1440×900. Archivo: `src/essa-minimal.css`.
 - Validación: 119 pruebas y build correctos; revisado en escritorio.
+- Ajuste: a 22 px quedó demasiado pequeño; el titular pasa a 30 px (24 px en móvil) y el subtítulo a 15 px. Los módulos y las actividades siguen en la primera pantalla a 1440×900.

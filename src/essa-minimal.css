@@ -200,3 +200,24 @@ html body .home-banner-copy{padding-bottom:22px}
 html body .home-banner h2{font-size:28px}
 html body .home-banner-art{width:250px}
 @media (max-width:900px){html body #main-menu.home-on .home-banner{padding:20px}html body .home-banner-copy{padding-bottom:0}html body .home-banner h2{font-size:24px}}
+/* Start page: active modules with progress bars and pending activities with review dates. */
+html body .home-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+html body .home-col-title{font-size:16px;font-weight:600;color:var(--m-ink)}
+html body .home-modules{display:flex;flex-direction:column;gap:12px}
+html body .home-modules li+li{border-top:0}
+html body .home-module{display:flex;flex-direction:column;gap:10px;width:100%;padding:18px 20px;border:1px solid var(--m-line);border-radius:8px;background:var(--m-surface);text-align:left;font:inherit;color:inherit;cursor:pointer}
+html body .home-module:hover{border-color:#b9c6cd}
+html body .home-module:focus-visible,html body .home-activity:focus-visible{outline:2px solid var(--m-accent);outline-offset:2px}
+html body .home-module-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+html body .home-module-top strong{font-size:16px;font-weight:600;color:var(--m-ink)}
+html body .home-module-count{flex:none;font-size:14px;font-weight:500;color:var(--m-accent)}
+html body .home-module small{font-size:13px;color:var(--m-muted)}
+html body .home-bar{display:block;height:8px;border-radius:999px;background:var(--m-accent-soft);overflow:hidden}
+html body .home-bar span{display:block;height:100%;border-radius:inherit;background:var(--m-accent)}
+html body .home-activity{padding:14px 12px}
+html body .home-activity.is-next{border-left:3px solid var(--m-signal);padding-left:12px;background:#fffbea}
+html body .home-activity>span:first-child{flex:1}
+html body .home-due{flex:none;align-items:flex-end;text-align:right}
+html body .home-row .home-due strong{font-size:14px;font-weight:500}
+html body .home-empty{padding:14px 4px;font-size:14px;color:var(--m-muted)}
+@media (max-width:900px){html body .home-grid{grid-template-columns:1fr;gap:32px}}

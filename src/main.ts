@@ -36,6 +36,7 @@ import { QuestRuntime } from './quest-runtime';
 import { movePartOnTable, questLayout } from './quest-layout';
 import './essa-minimal.css';
 import { renderHome } from './demo/home';
+import { myModules, openModules } from './demo/asignaciones';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML=layout;
@@ -327,7 +328,7 @@ function renderCatalogue(){
     button.querySelector('.experience-description')!.textContent=entry.description;
     const meta=button.querySelector('.experience-meta')!;
     for(const text of entry.meta){const span=document.createElement('span');span.textContent=text;meta.append(span);}
-    button.querySelector('.experience-action span')!.textContent=entry.kind==='subject'?'Abrir ruta':entry.kind==='free'?'Entrar al modo libre':entry.planned?'Ver contenido propuesto':'Empezar';
+    button.querySelector('.experience-action span')!.textContent=entry.kind==='subject'?'Abrir módulo':entry.kind==='free'?'Entrar al modo libre':entry.planned?'Ver contenido propuesto':'Empezar';
     button.onclick=()=>{if(entry.kind==='subject')openSubject(entry.subjectId);else if(entry.kind==='free')openLab('free');else openReading(entry.classId!);};
     item.append(button);list.append(item);
   }
@@ -338,17 +339,17 @@ function renderCatalogue(){
   document.querySelectorAll<HTMLButtonElement>('[data-subject-nav]').forEach(button=>{const active=button.dataset.subjectNav===catalogueSubject;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
   $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Tu capacitación';
   $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'';
-  $('#menu-kicker').textContent=subject?'Ruta de capacitación':'Preparado para ESSA';
-  $('#browse-labs').firstChild!.textContent=subject?'Ver las clases ':'Ver las rutas ';
+  $('#menu-kicker').textContent=subject?'Módulo de capacitación':'Preparado para ESSA';
+  $('#browse-labs').firstChild!.textContent=subject?'Ver las clases ':'Ver los módulos ';
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
-  $('#menu-subtitle').textContent=subject?subject.description:'Elige una ruta. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
-  $('#catalogue-title').textContent=subject?'Clases':'Rutas de capacitación';
+  $('#menu-subtitle').textContent=subject?subject.description:'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
+  $('#catalogue-title').textContent=subject?'Clases':'Módulos de capacitación';
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
   $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
   const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading},app.dataset.demoRole);
-  const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar una ruta o una clase';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
+  const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar un módulo o una clase';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
   document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=!subject&&button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }
 function openSubject(id:string){getSubject(id);entryFilter='all';catalogueSubject=id;catalogueFilter='all';$<HTMLInputElement>('#experience-search').value='';showMenu();}
@@ -397,8 +398,10 @@ $('#browse-labs').onclick=()=>{const heading=$('#catalogue-title');heading.tabIn
 $('#quick-search').onclick=focusSearch;
 $('#reset-catalogue').onclick=()=>{catalogueFilter='all';entryFilter='all';$<HTMLInputElement>('#experience-search').value='';renderCatalogue();};
 $('#catalogue-home').onclick=()=>navigateCatalogue('all');
-const subjectsLabel=document.createElement('span');subjectsLabel.className='portal-nav-label';subjectsLabel.textContent='Rutas';$('#laboratory-nav').append(subjectsLabel);
-for(const subject of subjectEntries(null)){const button=document.createElement('button');button.className='nav-item subject-nav';button.textContent=subject.title;button.dataset.subjectNav=subject.subjectId;button.onclick=()=>openSubject(subject.subjectId);$('#laboratory-nav').append(button);}
+for(const [label,modules] of [['Mis módulos',myModules()],['Módulos abiertos',openModules()]] as const){
+  const heading=document.createElement('span');heading.className='portal-nav-label';heading.textContent=label;$('#laboratory-nav').append(heading);
+  for(const subject of modules){const button=document.createElement('button');button.className='nav-item subject-nav';button.textContent=subject.title;button.dataset.subjectNav=subject.subjectId;button.onclick=()=>openSubject(subject.subjectId);$('#laboratory-nav').append(button);}
+}
 document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>button.onclick=()=>navigateCatalogue(button.dataset.navFilter as CatalogueFilter));
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();focusSearch();}});
 
@@ -412,7 +415,7 @@ function showMenu(){
   saveSession();
   narrator.stop();pending=null;updateHint();currentView='menu';document.body.classList.remove('in-lab');
   $('#lab-view').hidden=true;$('#main-menu').hidden=false;$('#back-menu').hidden=true;
-  $('#header-context').textContent=catalogueSubject?getSubject(catalogueSubject).title:'Rutas de capacitación';document.title='Umbral Labs · Catálogo';
+  $('#header-context').textContent=catalogueSubject?getSubject(catalogueSubject).title:'Módulos de capacitación';document.title='Umbral Labs · Catálogo';
   renderCatalogue();window.scrollTo({top:0,behavior:'auto'});
   const heading=$('#main-menu h1');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }

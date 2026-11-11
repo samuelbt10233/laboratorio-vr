@@ -281,3 +281,11 @@ Formato:
 - Qué: a petición del responsable, se quita el botón «Abrir ruta» del panel y el panel baja de unos 250 px a unos 150 px en escritorio (dibujo de 250 px de ancho, titular de 28 px, menos relleno). La ruta se sigue abriendo desde la columna «Rutas» y la tarjeta de la práctica asignada.
 - Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
 - Validación: 115 pruebas y build correctos; revisado en escritorio y sin errores en consola.
+
+## 2026-11-11 · Claude Code · Inicio con módulos y actividades pendientes
+- Qué: a petición del responsable, el inicio muestra de un vistazo lo más relevante. «Módulos activos»: cada módulo asignado con barra de clases completadas («2 de 4 clases») y la siguiente clase con su fecha de revisión. «Actividades pendientes»: las clases asignadas sin terminar, ordenadas por fecha de revisión, con «En N días»; la más próxima va marcada en amarillo. El panel azul resume cuántas hay y la próxima revisión. «Tu avance» cuenta las clases completadas de los módulos asignados.
+- Lateral: «Mis módulos» (Trabajo seguro en redes de distribución, Fundamentos eléctricos) y «Módulos abiertos» (Capacitación industrial). En toda la interfaz «ruta» pasa a ser «módulo».
+- Datos: `src/demo/asignaciones.ts` (datos de demostración). Las fechas se calculan desde el día en que se abre la página. Las dos primeras clases de electrónica figuran como hechas; las cinco reglas cuentan como hechas solo si la práctica real se aprobó (`readResult`). Prueba en `src/demo-assignments.test.ts`.
+- Archivos: `src/demo/home.ts`, `src/demo/asignaciones.ts`, `src/main.ts`, `src/template.ts`, `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal), con y sin la práctica aprobada; el módulo abre su página y la actividad abre la lectura. Sin errores en consola.
+- Pendiente: D4 (el panel de la supervisora puede reutilizar `asignaciones.ts`) y D5.

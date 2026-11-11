@@ -281,3 +281,26 @@ Formato:
 - Qué: a petición del responsable, se quita el botón «Abrir ruta» del panel y el panel baja de unos 250 px a unos 150 px en escritorio (dibujo de 250 px de ancho, titular de 28 px, menos relleno). La ruta se sigue abriendo desde la columna «Rutas» y la tarjeta de la práctica asignada.
 - Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
 - Validación: 115 pruebas y build correctos; revisado en escritorio y sin errores en consola.
+
+## 2026-11-11 · Claude Code · Inicio con módulos y actividades pendientes
+- Qué: a petición del responsable, el inicio muestra de un vistazo lo más relevante. «Módulos activos»: cada módulo asignado con barra de clases completadas («2 de 4 clases») y la siguiente clase con su fecha de revisión. «Actividades pendientes»: las clases asignadas sin terminar, ordenadas por fecha de revisión, con «En N días»; la más próxima va marcada en amarillo. El panel azul resume cuántas hay y la próxima revisión. «Tu avance» cuenta las clases completadas de los módulos asignados.
+- Lateral: «Mis módulos» (Trabajo seguro en redes de distribución, Fundamentos eléctricos) y «Módulos abiertos» (Capacitación industrial). En toda la interfaz «ruta» pasa a ser «módulo».
+- Datos: `src/demo/asignaciones.ts` (datos de demostración). Las fechas se calculan desde el día en que se abre la página. Las dos primeras clases de electrónica figuran como hechas; las cinco reglas cuentan como hechas solo si la práctica real se aprobó (`readResult`). Prueba en `src/demo-assignments.test.ts`.
+- Archivos: `src/demo/home.ts`, `src/demo/asignaciones.ts`, `src/main.ts`, `src/template.ts`, `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal), con y sin la práctica aprobada; el módulo abre su página y la actividad abre la lectura. Sin errores en consola.
+- Pendiente: D4 (el panel de la supervisora puede reutilizar `asignaciones.ts`) y D5.
+
+## 2026-11-11 · Claude Code · Títulos del inicio más visibles
+- Qué: «Módulos activos» y «Actividades pendientes» pasan a 21 px en negrita, con una línea oscura debajo y un contador azul (2 y 3). Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos; revisado en escritorio y sin errores en consola.
+
+## 2026-11-11 · Claude Code · «Tu capacitación» más discreto
+- Qué: el titular del inicio baja de 40 px a 22 px y el subtítulo a 14 px, con menos espacio alrededor, para que el foco recaiga en el panel, los módulos activos y las actividades pendientes, que ahora caben en la primera pantalla a 1440×900. Archivo: `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos; revisado en escritorio.
+- Ajuste: a 22 px quedó demasiado pequeño; el titular pasa a 30 px (24 px en móvil) y el subtítulo a 15 px. Los módulos y las actividades siguen en la primera pantalla a 1440×900.
+
+## 2026-11-11 · Claude Code · Buscador en la sección «Módulos» y botón en el inicio
+- Qué: el inicio deja de mostrar el buscador y ofrece un botón «Ir a mis módulos». El buscador vive en la nueva sección general «Módulos» (filtro `modules` del catálogo), con todos los módulos y búsqueda de módulos y clases. El lateral añade «Módulos» bajo «Inicio», con icono de cuadrícula. El buscador del lateral y Ctrl+K llevan a esa sección.
+- Archivos: `src/template.ts`, `src/main.ts` y `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos. Revisado en escritorio: el botón abre «Módulos», «ohm» encuentra la clase y Ctrl+K enfoca el buscador. Sin errores en consola.
+- Ajuste: el botón «Ir a mis módulos» pasa al panel azul (blanco, bajo el resumen) y el inicio ya no muestra «Tu capacitación» ni «Elige un módulo…»; el titular queda solo para lectores de pantalla. Todo el inicio cabe en una pantalla a 1440×900. Revisado en escritorio, sin errores en consola.

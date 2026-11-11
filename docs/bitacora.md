@@ -233,3 +233,16 @@ Formato:
 ## 2026-11-10 · Claude Code · Relevo a Codex
 - Qué: D2 integrada (PR #13); D0 y D2 hechas en el tablero. Claude Code se queda sin cuota y Codex continúa solo: [relevo-codex.md](relevo-codex.md) resume el estado, el contrato, lo que falta (D1, D4, D5; D3 y D6 opcionales) y los cuidados. D3 y D5 pasan a Codex. `AGENTS.md` enlaza el relevo.
 - Pendiente: D1, D4 y D5 antes de la demo de mañana; D2 sin probar en Quest.
+
+## 2026-11-10 · Codex · D1 inicio
+- Entrada de demostración y portal ESSA, autorizados por el responsable. Rama codex/d1-login desde 5fd36a9, carpeta propia.
+- Avance D1: selector accesible de perfiles ficticios, cambiar perfil, rótulo ESSA, catálogo enfocado y dibujo de distribución. 115 pruebas pasan. Pendiente revisión visual en navegador y panel D4; no integrado ni desplegado.
+- Revisión en navegador PC: acceso técnico, ruta distribución, lectura, apertura de práctica, regreso y cambio a supervisora correctos. Sin errores de consola capturados. Captura en docs/evidencia-d1/entrada.png. D4 pendiente; ambos perfiles acceden por ahora al catálogo. Sin prueba Quest ni despliegue.
+
+## 2026-11-11 · Codex · D1 ajuste visual
+- Portal con composición de dashboard según referencias: lateral fija, encabezado compacto, búsqueda amplia, tarjetas de materias y botones azules. Tipografía compacta; blanco y azul claro. Verificado en navegador; compilación correcta antes del ajuste final de especificidad de colores. Sin cambios de lógica ni despliegue.
+
+## 2026-11-11 · Codex · D1 finalizada
+- Entrada por perfiles ficticios técnico/supervisora, cambio de perfil, portal ESSA y catálogo enfocado. Diseño final blanco y azul con lateral fija, búsqueda y tarjetas compactas.
+- Validación final: 115 pruebas superadas, compilación y git diff --check correctos; portal revisado en navegador, sin errores de consola. Evidencia docs/evidencia-d1/portal-final.png.
+- D1 hecha en rama codex/d1-login; integración y despliegue pendientes del responsable. D4 implementará el panel de supervisora; actualmente ambos perfiles acceden al catálogo. No probado en Quest.

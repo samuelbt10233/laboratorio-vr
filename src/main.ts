@@ -1,3 +1,4 @@
+import { mountDemoEntry } from './demo/entry';
 import { electronicsDrawing } from './content/electronics-drawings';
 import './content/electronics-drawings.css';
 import { conceptFigure } from './content/concept-figure';
@@ -308,7 +309,7 @@ function entryVisited(entry:SubjectEntry):boolean{
 function renderCatalogue(){
   const query=normalise($<HTMLInputElement>('#experience-search').value.trim());
   const subject=catalogueSubject?getSubject(catalogueSubject):null;
-  const entries=subjectEntries(catalogueSubject).filter(entry=>(!subject||entryFilter==='all'||entry.kind===entryFilter)&&(catalogueFilter!=='recent'||entryVisited(entry))&&(!query||normalise(`${entry.title} ${entry.description} ${entry.meta.join(' ')}`).includes(query)));
+  const entries=subjectEntries(catalogueSubject).filter(entry=>entry.classId!=='industrial-torno').filter(entry=>(!subject||entryFilter==='all'||entry.kind===entryFilter)&&(catalogueFilter!=='recent'||entryVisited(entry))&&(!query||normalise(`${entry.title} ${entry.description} ${entry.meta.join(' ')}`).includes(query)));
   const list=$('.experience-list');list.replaceChildren();
   list.classList.toggle('subject-grid',!subject);
   $('#class-filters').hidden=!subject;
@@ -332,9 +333,9 @@ function renderCatalogue(){
   $('#empty-catalogue-text').textContent=catalogueFilter==='recent'&&!query?'Todavía no has visitado estas experiencias.':'Prueba con otro término dentro de esta sección.';
   $('#main-menu').classList.toggle('subject-page',!!subject);
   document.querySelectorAll<HTMLButtonElement>('[data-subject-nav]').forEach(button=>{const active=button.dataset.subjectNav===catalogueSubject;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
-  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Aprende la idea.';
-  $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'Llévala al laboratorio.';
-  $('#menu-kicker').textContent=subject?'EXPLORA LA MATERIA':'APRENDIZAJE QUE PUEDES EXPLORAR';
+  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Prepárate para trabajar.';
+  $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'Practica con seguridad.';
+  $('#menu-kicker').textContent=subject?'EXPLORA LA MATERIA':'PREPARADO PARA ESSA';
   $('#browse-labs').firstChild!.textContent=subject?'Explorar las clases ':'Explorar materias ';
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
@@ -492,6 +493,7 @@ xrRuntime=new QuestRuntime(scene,camera,{
 });
 $('#quest-preview').onclick=()=>xrRuntime?.togglePreview();
 void xrRuntime.initialize($<HTMLButtonElement>('#enter-vr'),$('#xr-status')).finally(()=>{presentationReady=true;updateLaunchButton();});
+mountDemoEntry(app,()=>navigateCatalogue('all'));
 rebuild();showMenu();engine.runRenderLoop(()=>{
   if(currentView!=='lab'){if(currentView==='ready'&&xrRuntime?.isImmersive())scene.render();return;}
   if(document.activeElement!==canvas||spatialControls.isEditing())navigationKeys.clear();

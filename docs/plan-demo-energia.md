@@ -1,6 +1,6 @@
 # Plan de la demo para ESSA
 
-Estado: **pendiente de aprobación del responsable (2026-11-10). La demo es mañana, 2026-11-11.** Sustituye a [plan-demo.md](plan-demo.md), que queda como historial de la demo universitaria. Este documento es la fuente común de Claude Code (Sonnet 5.5) y Codex.
+Estado: **inicio autorizado por el responsable (2026-11-10). La demo es mañana, 2026-11-11.** Sustituye a [plan-demo.md](plan-demo.md), que queda como historial de la demo universitaria. Este documento es la fuente común de Claude Code (Sonnet 5.5) y Codex.
 
 ## 1. Contexto y objetivo
 
@@ -61,7 +61,7 @@ Estados: `pendiente`, `en curso`, `en revisión`, `hecha`.
 | ID | Tarea | Agente | Estado | Depende de |
 | --- | --- | --- | --- | --- |
 | D0 | Contrato: materia, contenido provisional y laboratorio vacío registrados | Sonnet | hecha | — |
-| D1 | Login de demostración y portal para ESSA: entrada por usuario, «Preparado para ESSA», ruta de distribución primero, electrónica como «Fundamentos eléctricos»; mecánica, fluidos y torno ocultos | Codex | pendiente | D0 |
+| D1 | Login de demostración y portal para ESSA: entrada por usuario, «Preparado para ESSA», ruta de distribución primero, electrónica como «Fundamentos eléctricos»; mecánica, fluidos y torno ocultos | Codex | hecha | D0 |
 | D2 | Práctica de las cinco reglas de oro en un poste con transformador, con arco eléctrico al cometer el error y constancia al terminar | Sonnet | hecha | D0 |
 | D3 | Lectura breve de las cinco reglas, con ilustración | Codex (relevo) | pendiente | D0 |
 | D4 | Panel del supervisor con cuadrilla de ejemplo y el resultado real de la práctica | Codex | pendiente | D1 |

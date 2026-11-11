@@ -304,3 +304,7 @@ Formato:
 - Archivos: `src/template.ts`, `src/main.ts` y `src/essa-minimal.css`.
 - Validación: 119 pruebas y build correctos. Revisado en escritorio: el botón abre «Módulos», «ohm» encuentra la clase y Ctrl+K enfoca el buscador. Sin errores en consola.
 - Ajuste: el botón «Ir a mis módulos» pasa al panel azul (blanco, bajo el resumen) y el inicio ya no muestra «Tu capacitación» ni «Elige un módulo…»; el titular queda solo para lectores de pantalla. Todo el inicio cabe en una pantalla a 1440×900. Revisado en escritorio, sin errores en consola.
+
+## 2026-11-11 · Claude Code · Panel azul con el ancho de los paneles
+- Qué: la cabecera del inicio tenía un ancho fijo de 1040 px heredado del diseño anterior, más corto que los paneles de abajo. Ahora usa el mismo ancho máximo (1200 px) y el mismo centrado que el resto. Archivo: `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos. Bordes idénticos a 1440 px (280→1392), 1920 px (504→1648) y 375 px (16→359), sin desplazamiento horizontal.

@@ -366,3 +366,11 @@ Formato:
 - Archivos: `src/content/{distribucion,operacion}.ts`, `src/demo/evaluaciones-{distribucion,operacion}.ts`, `src/demo/figuras-{distribucion,operacion}.ts`, `scripts/esquemas.py`, `public/esquemas/`, tablero de `docs/plan-clases.md`.
 - Validación: 131 pruebas y build correctos. En el navegador: Andrés ve 3 módulos activos y 10 actividades; «Puesta a tierra» muestra sus esquemas y, al aprobar la evaluación, el módulo de operación pasa a «1 de 4» con la clase completada.
 - Pendiente: los laboratorios 3D de las clases marcadas con ★ (equipo de protección, distancias, cortacircuitos); validación de contenidos con ESSA.
+
+## 2026-11-11 · Claude Code · Laboratorio de maniobra de cortacircuitos
+- Qué: el responsable aprobó hacer el laboratorio 3D de «Maniobra de cortacircuitos con pértiga». Diez pasos en tres grupos: preparación (orden de maniobra, equipo de protección, inspección de la pértiga, posición a un lado del eje), apertura L2 → L1 → L3 y cierre L3 → L1 → L2, igual que el esquema de la clase. Una veleta indica que el viento sopla hacia L1. Errores: situarse bajo el eje, operar un fusible sin terminar la preparación y operar la fase equivocada (arco con chispas y destello; la práctica sigue). Al terminar muestra la constancia y guarda el resultado por clase (`resultFor`); el panel de supervisión no cambia, porque sigue leyendo solo «Cinco reglas».
+- Diseño: se copió el patrón de `src/labs/cinco-reglas/` (procedimiento puro con pruebas, escena propia, panel lateral y constancia con los mismos estilos) sin generalizar código; se reutilizan el sonido, `saveResult` y la hoja de estilos de «Cinco reglas». Sin botón de VR: hoy no se usan gafas.
+- Texto: la clase explica el orden de las laterales según el viento («primero aquella hacia la que sopla el viento»).
+- Archivos: `src/labs/cortacircuitos/{procedure,scene,index}.ts`, `src/cortacircuitos-procedure.test.ts`, `src/labs/registry.ts` (una línea), `src/content/operacion.ts`.
+- Validación: 140 pruebas y build correctos. Recorrido completo en el navegador: errores de posición y de fase con arco, maniobra completa con constancia, resultado guardado y módulo de operación en «1 de 4».
+- Pendiente: laboratorios de equipo de protección y de distancias; modo VR de este laboratorio.

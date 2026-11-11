@@ -24,7 +24,7 @@ Reglas de contenido, iguales para los dos agentes:
 | | `distribucion-distancias` ★ | Distancias mínimas de seguridad | Claude | lectura y evaluación (C1) |
 | | `distribucion-ats` | Análisis de trabajo seguro y permiso de trabajo | Claude | lectura y evaluación (C1) |
 | | `distribucion-alturas` | Trabajo en alturas en poste | Claude | lectura y evaluación (C1) |
-| Operación y mantenimiento de la red (`operacion`) | `operacion-cortacircuitos` ★ | Maniobra de cortacircuitos con pértiga | Claude | lectura y evaluación (C1) |
+| Operación y mantenimiento de la red (`operacion`) | `operacion-cortacircuitos` ★ | Maniobra de cortacircuitos con pértiga | Claude | completa con laboratorio (C1) |
 | | `operacion-transformador` | Transformador de distribución | Claude | lectura y evaluación (C1) |
 | | `operacion-puesta-tierra` | Puesta a tierra y medición de su resistencia | Claude | lectura y evaluación (C1) |
 | | `operacion-inspeccion` | Inspección de redes y reporte de anomalías | Claude | lectura y evaluación (C1) |

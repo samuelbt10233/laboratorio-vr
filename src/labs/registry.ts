@@ -4,4 +4,5 @@ import type { LabRegistry } from './types';
 export const labModules:LabRegistry={
   industrial:()=>import('./industrial').then(m=>m.lab),
   'cinco-reglas':()=>import('./cinco-reglas').then(m=>m.lab),
+  cortacircuitos:()=>import('./cortacircuitos').then(m=>m.lab),
 };

@@ -344,7 +344,7 @@ function renderCatalogue(){
   $('#browse-labs').firstChild!.textContent=subject?'Ver las clases ':'Ver los módulos ';
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
-  $('#menu-subtitle').textContent=subject?subject.description:catalogueFilter==='modules'?'Todos los módulos de capacitación. Busca un módulo o una clase.':'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
+  $('#menu-subtitle').textContent=subject?subject.description:catalogueFilter==='modules'?'Tus módulos asignados y los abiertos a todo el personal, con su avance.':'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
   $('#catalogue-title').textContent=subject?'Clases':query?'Resultados':'Módulos de capacitación';
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';

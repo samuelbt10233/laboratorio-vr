@@ -20,14 +20,14 @@ Reglas de contenido, iguales para los dos agentes:
 | Módulo (`subjectId`) | Clase (`id`) | Título | Agente | Estado |
 | --- | --- | --- | --- | --- |
 | Trabajo seguro en redes de distribución (`distribucion`) | `distribucion-cinco-reglas` | Las cinco reglas de oro | — | hecha |
-| | `distribucion-epp` ★ | Equipo de protección personal y su inspección | Claude | pendiente |
-| | `distribucion-distancias` ★ | Distancias mínimas de seguridad | Claude | pendiente |
-| | `distribucion-ats` | Análisis de trabajo seguro y permiso de trabajo | Claude | pendiente |
-| | `distribucion-alturas` | Trabajo en alturas en poste | Claude | pendiente |
-| Operación y mantenimiento de la red (`operacion`) | `operacion-cortacircuitos` ★ | Maniobra de cortacircuitos con pértiga | Claude | pendiente |
-| | `operacion-transformador` | Transformador de distribución | Claude | pendiente |
-| | `operacion-puesta-tierra` | Puesta a tierra y medición de su resistencia | Claude | pendiente |
-| | `operacion-inspeccion` | Inspección de redes y reporte de anomalías | Claude | pendiente |
+| | `distribucion-epp` ★ | Equipo de protección personal y su inspección | Claude | lectura y evaluación (C1) |
+| | `distribucion-distancias` ★ | Distancias mínimas de seguridad | Claude | lectura y evaluación (C1) |
+| | `distribucion-ats` | Análisis de trabajo seguro y permiso de trabajo | Claude | lectura y evaluación (C1) |
+| | `distribucion-alturas` | Trabajo en alturas en poste | Claude | lectura y evaluación (C1) |
+| Operación y mantenimiento de la red (`operacion`) | `operacion-cortacircuitos` ★ | Maniobra de cortacircuitos con pértiga | Claude | lectura y evaluación (C1) |
+| | `operacion-transformador` | Transformador de distribución | Claude | lectura y evaluación (C1) |
+| | `operacion-puesta-tierra` | Puesta a tierra y medición de su resistencia | Claude | lectura y evaluación (C1) |
+| | `operacion-inspeccion` | Inspección de redes y reporte de anomalías | Claude | lectura y evaluación (C1) |
 | Atención al usuario y medida (`medida`) | `medida-acometida` | Instalación y revisión de una acometida | Codex | pendiente |
 | | `medida-medidores` | Medidores de energía: tipos, lectura y sellado | Codex | pendiente |
 | | `medida-irregulares` | Detección de conexiones irregulares | Codex | pendiente |

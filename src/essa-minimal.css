@@ -365,5 +365,5 @@ html body .class-eval-empty{background:var(--m-surface);border:1px dashed var(--
   html body .class-eval{padding:4px 18px 20px}
 }
 html body .class-reading-section figure{margin:18px 0;padding:16px;background:var(--m-page);border:1px solid var(--m-line);border-radius:8px}
-html body .class-reading-section figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+html body .class-reading-section figure svg,html body .class-reading-section figure img{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
 html body .class-reading-section figcaption{background:none;padding:0;border:0;font-size:13px;color:var(--m-muted);margin-top:8px;text-align:center}

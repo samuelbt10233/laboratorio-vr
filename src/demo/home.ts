@@ -28,11 +28,10 @@ const POLE=`<svg viewBox="0 0 340 170" fill="none" stroke-linecap="round" stroke
 <path d="M40 169H300" stroke="#5f86a3" stroke-width="1.5"/>
 </svg>`;
 /** Greeting for the demo profile and the route it is assigned. */
-function renderBanner(banner:HTMLElement,actions:HomeActions,role:string|undefined,routeTitle:string){
+function renderBanner(banner:HTMLElement,role:string|undefined,routeTitle:string){
   const supervisor=role==='supervisora';
   const copy=el('div','home-banner-copy');
   copy.append(el('span','home-banner-role',supervisor?'Supervisora, jefa de cuadrilla':'Técnico liniero'),el('h2','',supervisor?'Hola, Laura':'Hola, Andrés'),el('p','',`${supervisor?'Ruta de tu cuadrilla':'Tu ruta asignada'}: ${routeTitle}`));
-  const open=el('button','home-banner-action','Abrir ruta');open.type='button';open.onclick=()=>actions.openSubject(ASSIGNED_ROUTE);copy.append(open);
   const art=el('div','home-banner-art');art.setAttribute('aria-hidden','true');art.innerHTML=POLE;
   banner.replaceChildren(copy,art);
 }
@@ -40,7 +39,7 @@ export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
   host.replaceChildren();
   const subjects=subjectEntries(null);
   const banner=document.querySelector<HTMLElement>('.home-banner');
-  if(banner)renderBanner(banner,actions,role,subjects.find(s=>s.subjectId===ASSIGNED_ROUTE)?.title??'');
+  if(banner)renderBanner(banner,role,subjects.find(s=>s.subjectId===ASSIGNED_ROUTE)?.title??'');
   const routes=column('Rutas',()=>actions.openSubject(subjects[0].subjectId));
   for(const s of subjects)row(routes.list,s.title,s.meta[0],()=>actions.openSubject(s.subjectId));
   const classes=subjects.flatMap(s=>subjectEntries(s.subjectId)).filter(e=>e.kind==='class'&&!e.planned&&e.classId!=='industrial-torno');

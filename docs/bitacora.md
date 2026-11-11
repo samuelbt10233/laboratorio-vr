@@ -276,3 +276,8 @@ Formato:
 - Qué: a la derecha del saludo, un dibujo de líneas de un poste de distribución con cruceta, aisladores, cables, transformador y una señal de riesgo eléctrico en amarillo de seguridad. Tonos de azul claro sobre el panel; los cables se desvanecen hacia la izquierda. Es decorativo (`aria-hidden`) y se oculta en móvil. El botón «Abrir ruta» pasa debajo del texto.
 - Archivos: `src/demo/home.ts` (SVG en línea `POLE`) y `src/essa-minimal.css`.
 - Validación: 115 pruebas y build correctos; revisado en escritorio y móvil (sin desplazamiento horizontal) y sin errores en consola.
+
+## 2026-11-11 · Claude Code · Panel del inicio más bajo
+- Qué: a petición del responsable, se quita el botón «Abrir ruta» del panel y el panel baja de unos 250 px a unos 150 px en escritorio (dibujo de 250 px de ancho, titular de 28 px, menos relleno). La ruta se sigue abriendo desde la columna «Rutas» y la tarjeta de la práctica asignada.
+- Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
+- Validación: 115 pruebas y build correctos; revisado en escritorio y sin errores en consola.

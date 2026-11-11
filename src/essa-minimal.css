@@ -224,3 +224,29 @@ html body .home-banner .home-go-modules:focus-visible{outline:2px solid #fff;out
 html body .atlas-header .nav-item[data-nav-filter="modules"]{--icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='7' height='7' rx='1.5'/%3E%3Crect x='13' y='4' width='7' height='7' rx='1.5'/%3E%3Crect x='4' y='13' width='7' height='7' rx='1.5'/%3E%3Crect x='13' y='13' width='7' height='7' rx='1.5'/%3E%3C/svg%3E")}
 /* The banner spans the same width as the dashboard below it. */
 html body #main-menu.home-on .menu-hero{width:auto;max-width:1200px;margin-left:auto;margin-right:auto}
+/* Modules page: title and wide search on top, then my modules with progress and the open ones, in the start page's language. */
+html body .modules-dashboard,html body #main-menu.modules-on .experience-catalogue{display:none}
+html body #main-menu.modules-on .modules-dashboard{display:block}
+html body #main-menu.modules-view .menu-hero{width:auto;max-width:1200px;margin:0 auto;padding:24px 0 0}
+html body #main-menu.modules-view .menu-kicker,html body #main-menu.modules-view #menu-subtitle{display:none}
+html body #main-menu.modules-view #menu-title{margin:0;font-size:30px;font-weight:600;letter-spacing:-.01em}
+html body #main-menu.modules-view .catalogue-search-frame{max-width:1200px;margin:20px auto 0}
+html body #main-menu.modules-view .experience-catalogue{max-width:1200px;margin-left:auto;margin-right:auto}
+html body .modules-dashboard{max-width:1200px;margin:36px auto 0}
+html body .modules-section+.modules-section{margin-top:44px}
+html body .modules-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+html body .module-card{display:flex;flex-direction:column;gap:10px;width:100%;height:100%;padding:22px 24px;border:1px solid var(--m-line);border-radius:10px;background:var(--m-surface);color:var(--m-ink);text-align:left;font:inherit;cursor:pointer}
+html body .module-card:hover{border-color:#b9c6cd}
+html body .module-card:hover .module-card-top strong{color:var(--m-accent)}
+html body .module-card:focus-visible{outline:2px solid var(--m-accent);outline-offset:2px}
+html body .module-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+html body .module-card-top strong{font-size:18px;font-weight:600}
+html body .module-card-top svg{flex:none;width:16px;height:16px;fill:none;stroke:var(--m-muted);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html body .module-card-text{font-size:14px;line-height:1.5;color:var(--m-muted)}
+html body .module-card-count{margin-top:6px;font-size:14px;font-weight:500;color:var(--m-accent)}
+html body .module-card-next{font-size:13px;color:var(--m-muted)}
+@media (max-width:900px){html body .modules-grid{grid-template-columns:1fr}html body #main-menu.modules-view #menu-title{font-size:24px}}
+html body #main-menu.modules-view .experience-catalogue{margin-top:36px}
+html body #main-menu.modules-view #catalogue-title{margin:0 0 16px;padding:0 0 12px;border-bottom:2px solid var(--m-ink);font-size:21px;font-weight:600;letter-spacing:-.01em;color:var(--m-ink)}
+html body #main-menu.modules-view #catalogue-title{display:block;flex:1 1 100%;width:100%}
+html body #main-menu.modules-view .catalogue-heading>div:first-child{flex:1 1 auto}html body #main-menu.modules-view .experience-list{max-width:none}

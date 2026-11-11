@@ -36,6 +36,7 @@ import { QuestRuntime } from './quest-runtime';
 import { movePartOnTable, questLayout } from './quest-layout';
 import './essa-minimal.css';
 import { renderHome } from './demo/home';
+import { renderModules } from './demo/modules';
 import { myModules, openModules } from './demo/asignaciones';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
@@ -344,11 +345,12 @@ function renderCatalogue(){
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
   $('#menu-subtitle').textContent=subject?subject.description:catalogueFilter==='modules'?'Todos los módulos de capacitación. Busca un módulo o una clase.':'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
-  $('#catalogue-title').textContent=subject?'Clases':'Módulos de capacitación';
+  $('#catalogue-title').textContent=subject?'Clases':query?'Resultados':'Módulos de capacitación';
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
   $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
   const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading,openModules:()=>navigateCatalogue('modules')},app.dataset.demoRole);
+  $('#main-menu').classList.toggle('modules-view',!subject&&catalogueFilter==='modules');const modulesPage=!subject&&catalogueFilter==='modules'&&!query;$('#main-menu').classList.toggle('modules-on',modulesPage);if(modulesPage)renderModules($('#modules-dashboard'),openSubject);
   const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar un módulo o una clase';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
   document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=!subject&&button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }

@@ -293,3 +293,7 @@ Formato:
 ## 2026-11-11 · Claude Code · Títulos del inicio más visibles
 - Qué: «Módulos activos» y «Actividades pendientes» pasan a 21 px en negrita, con una línea oscura debajo y un contador azul (2 y 3). Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
 - Validación: 119 pruebas y build correctos; revisado en escritorio y sin errores en consola.
+
+## 2026-11-11 · Claude Code · «Tu capacitación» más discreto
+- Qué: el titular del inicio baja de 40 px a 22 px y el subtítulo a 14 px, con menos espacio alrededor, para que el foco recaiga en el panel, los módulos activos y las actividades pendientes, que ahora caben en la primera pantalla a 1440×900. Archivo: `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos; revisado en escritorio.

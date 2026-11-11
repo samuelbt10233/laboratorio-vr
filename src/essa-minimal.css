@@ -251,3 +251,45 @@ html body #main-menu.modules-view .experience-catalogue{margin-top:36px}
 html body #main-menu.modules-view #catalogue-title{margin:0 0 16px;padding:0 0 12px;border-bottom:2px solid var(--m-ink);font-size:21px;font-weight:600;letter-spacing:-.01em;color:var(--m-ink)}
 html body #main-menu.modules-view #catalogue-title{display:block;flex:1 1 100%;width:100%}
 html body #main-menu.modules-view .catalogue-heading>div:first-child{flex:1 1 auto}html body #main-menu.modules-view .experience-list{max-width:none}
+/* One module: breadcrumb, title and description, progress summary, then the classes in order. */
+html body .module-dashboard,html body #main-menu.module-on .experience-catalogue,html body #main-menu.module-view .catalogue-search-frame,html body #main-menu.module-view .menu-kicker{display:none}
+html body #main-menu.module-on .module-dashboard{display:block;max-width:1200px;margin:24px auto 0}
+html body #main-menu.module-view .menu-hero{width:auto;max-width:1200px;margin:0 auto;padding:16px 0 0}
+html body #main-menu.module-view #menu-title{margin:0;font-size:30px;font-weight:600;letter-spacing:-.01em}
+html body #main-menu.module-view #menu-subtitle{display:block;max-width:none;margin:6px 0 0;font-size:15px;color:var(--m-muted)}
+html body #main-menu.module-view .catalogue-path{display:flex;align-items:center;gap:8px;max-width:1200px;margin:16px auto 0;padding:0;font-size:14px;color:var(--m-muted)}
+html body #main-menu.module-view .catalogue-path[hidden]{display:none}
+html body #main-menu.module-view #catalogue-home{padding:0;border:0;background:none;font:500 14px var(--m-font);color:var(--m-accent);cursor:pointer}
+html body #main-menu.module-view #catalogue-home:hover{text-decoration:underline}
+html body .module-summary{display:grid;grid-template-columns:auto minmax(120px,320px) 1fr;align-items:center;gap:8px 20px;padding:18px 22px;border:1px solid var(--m-line);border-radius:10px;background:var(--m-surface)}
+html body .module-summary strong{font-size:15px;font-weight:600;color:var(--m-accent)}
+html body .module-summary>span:last-child{font-size:14px;color:var(--m-muted)}
+html body .module-classes{margin-top:36px}
+html body .class-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+html body .class-row{display:flex;align-items:center;gap:18px;width:100%;padding:18px 20px;border:1px solid var(--m-line);border-radius:10px;background:var(--m-surface);color:var(--m-ink);text-align:left;font:inherit;cursor:pointer}
+html body .class-row:hover{border-color:#b9c6cd}
+html body .class-row:hover .class-copy strong{color:var(--m-accent)}
+html body .class-row:focus-visible{outline:2px solid var(--m-accent);outline-offset:2px}
+html body .class-row.is-next{border-left:3px solid var(--m-signal);background:#fffbea}
+html body .class-step{display:inline-flex;align-items:center;justify-content:center;flex:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--m-line);font-size:14px;font-weight:600;color:var(--m-muted)}
+html body .class-row.is-next .class-step{border-color:var(--m-accent);background:var(--m-accent);color:#fff}
+html body .class-row.is-done .class-step{border-color:var(--m-accent-soft);background:var(--m-accent-soft)}
+html body .class-step svg{width:16px;height:16px;fill:none;stroke:var(--m-accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+html body .class-copy{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+html body .class-copy strong{font-size:16px;font-weight:600}
+html body .class-text{overflow:hidden;font-size:14px;color:var(--m-muted);white-space:nowrap;text-overflow:ellipsis}
+html body .class-copy small{font-size:13px;color:#7b878d}
+html body .class-status{display:flex;flex-direction:column;align-items:flex-end;flex:none;gap:2px;text-align:right}
+html body .class-status strong{font-size:14px;font-weight:500;color:var(--m-ink)}
+html body .class-status small{font-size:13px;color:var(--m-muted)}
+html body .class-row.is-done .class-status strong{color:var(--m-accent)}
+html body .class-row-chevron{flex:none;width:16px;height:16px;fill:none;stroke:var(--m-muted);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:900px){
+  html body .module-summary{grid-template-columns:1fr}
+  html body .class-row{flex-wrap:wrap;gap:12px 14px;padding:16px}
+  html body .class-copy{flex-basis:calc(100% - 90px)}
+  html body .class-text{white-space:normal}
+  html body .class-status{flex-direction:row;align-items:baseline;gap:8px;margin-left:48px}
+  html body #main-menu.module-view #menu-title{font-size:24px}
+}
+html body #main-menu.module-view .catalogue-path{width:auto;margin-left:0;margin-right:0}

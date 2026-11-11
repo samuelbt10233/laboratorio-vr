@@ -2,10 +2,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { evaluationFor, grade } from './demo/evaluaciones';
 import { getLearningContent } from './learning-content';
+import { subjectEntries } from './subjects';
 
-const demoClasses=['distribucion-cinco-reglas','ley-de-ohm','circuitos-en-paralelo','encuentra-el-fallo','enciende-un-led','industrial-loto'];
+const demoClasses=subjectEntries(null).filter(m=>!m.planned).flatMap(m=>subjectEntries(m.subjectId)).filter(e=>e.kind==='class'&&!e.planned).map(e=>e.classId!);
 
 test('every class shown in the demo has an evaluation of three questions', () => {
+  assert.ok(demoClasses.includes('distribucion-cinco-reglas')&&demoClasses.includes('industrial-loto'));
   for(const id of demoClasses){
     getLearningContent(id);
     const questions=evaluationFor(id);

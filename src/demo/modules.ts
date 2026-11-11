@@ -1,4 +1,3 @@
-import { readResult } from '../labs/cinco-reglas/result';
 import { subjectEntries } from '../subjects';
 import { moduleProgress, myModules, openModules } from './asignaciones';
 /** General modules page of the ESSA demo: the trainee's modules with progress, then the open ones. */
@@ -17,10 +16,9 @@ function card(grid:HTMLElement,title:string,description:string,onClick:()=>void)
 export function renderModules(host:HTMLElement,openSubject:(id:string)=>void){
   host.replaceChildren();
   const today=new Date();today.setHours(0,0,0,0);
-  const practiceDone=!!readResult()?.aprobado;
   const mine=section('Mis módulos',myModules().length);
   for(const m of myModules()){
-    const p=moduleProgress(m.subjectId,today,practiceDone),next=p.classes.find(c=>!c.done);
+    const p=moduleProgress(m.subjectId,today),next=p.classes.find(c=>!c.done);
     const b=card(mine.grid,m.title,m.description,()=>openSubject(m.subjectId));
     const count=el('span','module-card-count',`${p.done} de ${p.total} ${p.total===1?'clase completada':'clases completadas'}`);
     const bar=el('span','home-bar');bar.setAttribute('role','progressbar');bar.setAttribute('aria-label',`Clases completadas de ${m.title}`);bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',String(p.total));bar.setAttribute('aria-valuenow',String(p.done));
@@ -31,7 +29,7 @@ export function renderModules(host:HTMLElement,openSubject:(id:string)=>void){
   for(const m of openModules()){
     const classes=subjectEntries(m.subjectId).filter(e=>e.kind==='class'&&!e.planned).length;
     const b=card(open.grid,m.title,m.description,()=>openSubject(m.subjectId));
-    b.append(el('small','module-card-next',`${classes} ${classes===1?'clase':'clases'} con práctica en 3D · acceso libre`));
+    b.append(el('small','module-card-next',`${classes} ${classes===1?'clase':'clases'} · acceso libre`));
   }
   host.append(mine.box,open.box);
 }

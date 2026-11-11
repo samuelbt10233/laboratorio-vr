@@ -1,4 +1,4 @@
-import { evaluationFor, grade } from './evaluaciones';
+import { evaluationFor, grade, saveEvaluation } from './evaluaciones';
 /** Parts of a class page that the reading content does not provide: the video slot and the knowledge check. */
 const el=<K extends keyof HTMLElementTagNameMap>(tag:K,cls?:string,text?:string)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;};
 const PLAY='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/><path d="M26 21v22l18-11z"/></svg>';
@@ -7,10 +7,6 @@ export function renderVideo(host:HTMLElement,title:string){
   const frame=el('div','class-video-frame');frame.setAttribute('role','img');frame.setAttribute('aria-label',`Espacio reservado para el video de «${title}»`);
   frame.innerHTML=PLAY;frame.append(el('strong','',title),el('span','','Video del tema · en producción'));
   host.replaceChildren(frame);
-}
-const RESULT_KEY='umbral-demo-evaluaciones';
-function saveEvaluation(classId:string,correct:number,total:number){
-  try{const all=JSON.parse(localStorage.getItem(RESULT_KEY)??'{}');all[classId]={correct,total,fecha:new Date().toISOString()};localStorage.setItem(RESULT_KEY,JSON.stringify(all));}catch{/* storage is optional in the demo */}
 }
 /** Multiple-choice check: every answer must be right to pass; each question explains itself after checking. */
 export function renderEvaluation(host:HTMLElement,classId:string,note?:string){

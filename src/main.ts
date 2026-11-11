@@ -41,6 +41,9 @@ import { renderModules } from './demo/modules';
 import { renderModulePage } from './demo/module-page';
 import { renderEvaluation, renderVideo } from './demo/class-page';
 import { distributionFigure } from './demo/figuras-distribucion';
+import { operationFigure } from './demo/figuras-operacion';
+import { meteringFigure } from './demo/figuras-medida';
+import { fundamentalsFigure } from './demo/figuras-fundamentos';
 import { myModules, openModules } from './demo/asignaciones';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
@@ -390,14 +393,14 @@ function openReading(id:string){
     const title=document.createElement('h2');title.textContent=section.title;
     const text=document.createElement('p');text.textContent=section.text;
     const example=document.createElement('aside');example.textContent=section.example;
-    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index)??distributionFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
+    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index)??distributionFigure(content.id,index)??operationFigure(content.id,index)??meteringFigure(content.id,index)??fundamentalsFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
     const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=section.title;outline.append(link);
   });
   const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId&&!content.labId;
   button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio':'Laboratorio en preparación';
-  renderEvaluation($('#class-evaluation-slot'),content.id,content.subjectId==='distribucion'?'Preguntas didácticas de demostración. Deben validarse con el RETIE y los procedimientos de ESSA.':undefined);
+  renderEvaluation($('#class-evaluation-slot'),content.id,['distribucion','operacion','medida'].includes(content.subjectId)?'Preguntas didácticas de demostración. Deben validarse con el RETIE y los procedimientos de ESSA.':undefined);
   button.onclick=()=>{if(content.runtimeClassId)openLab('class',content.runtimeClassId);else if(content.labId)openExternalLab(content.labId,content.id);};
-  $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'Esta materia muestra la estructura prevista. Su simulación todavía está en preparación.';
+  $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'La práctica en 3D de esta clase está en preparación.';
   window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }
 $('#study-back').onclick=()=>{if(catalogueSubject)openSubject(catalogueSubject);else showMenu();};

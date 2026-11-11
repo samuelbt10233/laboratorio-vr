@@ -24,15 +24,15 @@ export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
   document.querySelector('.home-banner')?.classList.remove('supervisor-banner');
   host.replaceChildren();
   const today=new Date();today.setHours(0,0,0,0);
-  const result=readResult(),practiceDone=!!result?.aprobado;
-  const pending=pendingActivities(today,practiceDone);
+  const result=readResult();
+  const pending=pendingActivities(today);
   const banner=document.querySelector<HTMLElement>('.home-banner');
   if(banner)renderBanner(banner,actions,role,pending.length,pending[0]?.review);
 
   const modules=section('Módulos activos',myModules().length);const moduleList=el('ul','home-list home-modules');
   let done=0,total=0;
   for(const m of myModules()){
-    const p=moduleProgress(m.subjectId,today,practiceDone);done+=p.done;total+=p.total;
+    const p=moduleProgress(m.subjectId,today);done+=p.done;total+=p.total;
     const li=el('li'),b=el('button','home-module');b.type='button';b.onclick=()=>actions.openSubject(m.subjectId);
     const top=el('span','home-module-top');top.append(el('strong','',m.title),el('span','home-module-count',`${p.done} de ${p.total} ${p.total===1?'clase':'clases'}`));
     const bar=el('span','home-bar');bar.setAttribute('role','progressbar');bar.setAttribute('aria-label',`Clases completadas de ${m.title}`);bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',String(p.total));bar.setAttribute('aria-valuenow',String(p.done));

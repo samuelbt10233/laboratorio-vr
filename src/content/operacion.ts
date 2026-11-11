@@ -2,7 +2,7 @@ import type { LearningContent } from '../learning-content';
 // Claude's file (docs/plan-clases.md). Didactic content for the ESSA demo: it must be validated against RETIE and ESSA's own procedures.
 export const operacion:readonly LearningContent[]=[
   {
-    id:'operacion-cortacircuitos',runtimeClassId:null,subjectId:'operacion',
+    id:'operacion-cortacircuitos',runtimeClassId:null,labId:'cortacircuitos',subjectId:'operacion',
     title:'Maniobra de cortacircuitos con pértiga',
     description:'Apertura y cierre de cortacircuitos con pértiga, con el orden, la posición y las verificaciones correctas.',
     duration:'10 min',laboratoryTitle:'Maniobra de cortacircuitos',
@@ -10,8 +10,8 @@ export const operacion:readonly LearningContent[]=[
       {title:'Objetivo de la clase',text:'Al finalizar la clase, el participante abre y cierra los cortacircuitos de un transformador con pértiga, en el orden correcto y desde una posición segura. El cortacircuitos protege el transformador con un fusible y permite separarlo de la red; abrirlo con carga produce un arco que debe controlarse.',example:'Caso típico de accidente: el operador se sitúa justo debajo del cortacircuitos y recibe material fundido al abrirlo con carga.'},
       {title:'Partes del cortacircuitos',text:'El cortacircuitos tiene un aislador, una base con contactos superior e inferior y un portafusible que contiene el fusible. Al fundirse el fusible, el portafusible cae y queda colgando: el corte es visible desde el suelo. La pértiga se engancha en el ojal del portafusible para abrirlo o cerrarlo.',example:'Resultado esperado: el operador reconoce desde el suelo un portafusible caído y lo distingue de uno cerrado.'},
       {title:'Preparación de la maniobra',text:'Se verifica la orden de maniobra, se inspecciona la pértiga limpia y seca, se usan guantes dieléctricos y protección facial, y el operador se coloca a un lado del eje del cortacircuitos, nunca debajo. Si el equipo lo permite, se reduce la carga del transformador antes de abrir.',example:'Error frecuente: usar una pértiga húmeda o sucia. La humedad reduce su aislamiento.'},
-      {title:'Orden de apertura y cierre',text:'Se abre primero la fase central y después las laterales, comenzando por la más alejada del viento, para reducir el riesgo de que el arco alcance otra fase. El cierre se hace en orden inverso, con un movimiento firme y sin dudar a mitad de recorrido.',example:'Error frecuente: cerrar lentamente. Un cierre vacilante prolonga el arco entre contactos.'},
-      {title:'Alcance de la clase',text:'Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA. El orden de maniobra, el uso de dispositivos de apertura con carga y el equipo requerido los define el procedimiento de la empresa.',example:'La práctica en 3D de esta clase está en preparación: el participante abrirá y cerrará los cortacircuitos en el orden indicado.'},
+      {title:'Orden de apertura y cierre',text:'Se abre primero la fase central y después las laterales: primero aquella hacia la que sopla el viento y al final la otra, para que el viento no lleve un arco hacia una fase todavía cerrada. El cierre se hace en orden inverso, con un movimiento firme y sin dudar a mitad de recorrido.',example:'Error frecuente: cerrar lentamente. Un cierre vacilante prolonga el arco entre contactos.'},
+      {title:'Alcance de la clase',text:'Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA. El orden de maniobra, el uso de dispositivos de apertura con carga y el equipo requerido los define el procedimiento de la empresa.',example:'En la práctica: confirmar la orden, preparar el equipo, situarse a un lado del eje y abrir y cerrar los tres cortacircuitos en el orden indicado. Cada error registra el riesgo asociado.'},
     ],
   },
   {

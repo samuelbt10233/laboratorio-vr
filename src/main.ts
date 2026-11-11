@@ -1,3 +1,4 @@
+import { renderSupervisor } from './demo/supervisor';
 import { mountDemoEntry } from './demo/entry';
 import { electronicsDrawing } from './content/electronics-drawings';
 import './content/electronics-drawings.css';
@@ -304,7 +305,7 @@ $('#load').onclick=()=>{try{const raw=localStorage.getItem('umbral-circuit-v1');
 const sessions=new SessionStore();
 function sessionKey(){return mode==='class'?classSessionKey(activeClass.id):'free';}
 function saveSession(){if(currentView==='lab')sessions.save(sessionKey(),{circuit,selected,step,seen:[...inspectedParts],completed});}
-type CatalogueFilter='all'|'recent'|'modules';
+type CatalogueFilter='all'|'recent'|'modules'|'crew';
 let catalogueFilter:CatalogueFilter='all';
 let entryFilter:'all'|'class'|'free'='all';
 let catalogueSubject:string|null=null;
@@ -352,6 +353,8 @@ function renderCatalogue(){
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
   $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
+  const crew=!subject&&catalogueFilter==='crew'&&app.dataset.demoRole==='supervisora';
+  $('#main-menu').classList.toggle('crew-on',crew);$('#crew-dashboard').hidden=!crew;$('#crew-nav').hidden=app.dataset.demoRole!=='supervisora';if(crew){renderSupervisor($('#crew-dashboard'));$('#header-context').textContent='Mi cuadrilla';}
   const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading,openModules:()=>navigateCatalogue('modules')},app.dataset.demoRole);
   $('#main-menu').classList.toggle('modules-view',!subject&&catalogueFilter==='modules');const modulesPage=!subject&&catalogueFilter==='modules'&&!query;$('#main-menu').classList.toggle('modules-on',modulesPage);if(modulesPage)renderModules($('#modules-dashboard'),openSubject);
   $('#main-menu').classList.toggle('module-view',!!subject);const modulePage=!!subject&&!query;$('#main-menu').classList.toggle('module-on',modulePage);if(modulePage)renderModulePage($('#module-dashboard'),subject!.id,{openReading,openFree:()=>openLab('free')});

@@ -340,3 +340,13 @@ Formato:
 - No se cambió: los pasos y títulos de la guía de electrónica, porque tienen narración grabada y dejarían de coincidir con el audio.
 - Archivos: `src/labs/cinco-reglas/{procedure,index}.ts`, `src/labs/industrial/{procedure,index,scene}.ts`, `src/classes/*.ts`, `src/laboratories.ts`, `src/main.ts`, `src/template.ts`.
 - Validación: 122 pruebas y build correctos. Bloqueo y etiquetado recorrido completo en el navegador (6 pasos, válvula por el centro, constancia con 0 errores); descripciones y pantalla previa revisadas.
+
+## 2026-11-11 · Codex · D4 inicio
+- Panel de supervisión desde origin/main 513958a, rama codex/d4-supervisor. Cuadrilla ficticia y último resultado local de Andrés, sin inventar historial ni vigencia real.
+
+## 2026-11-11 · Codex · D4 entrega
+- Panel de supervisora con cinco integrantes, avance, intentos de ejemplo, errores y constancias rotuladas. Andrés usa readResult y muestra último resultado local, sin inventar historial. Resumen y botón actualizar.
+- Validación: 124 pruebas; build correcto; revisión de entrada supervisora sin resultado en navegador, sin errores de consola. Pruebas puras cubren resultado aprobado y datos inválidos. Evidencia docs/evidencia-d4/.
+- Pendiente: ensayo completo práctica → supervisora (D5), Quest y despliegue. Rama codex/d4-supervisor sin integrar.
+- Ajuste solicitado: seguimiento trasladado a «Mi cuadrilla», sección lateral visible para supervisora. Inicio conserva resumen y módulos. Revisadas ambas vistas en navegador. Compilación correcta.
+- Integración preparada: 124 pruebas superadas tras separar Mi cuadrilla; compilación y revisión visual correctas. Publicación por PR; fusión y despliegue pendientes de confirmación explícita del responsable.

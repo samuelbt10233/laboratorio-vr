@@ -21,6 +21,7 @@ function renderBanner(banner:HTMLElement,actions:HomeActions,role:string|undefin
 }
 function section(title:string,count:number){const col=el('section','home-col'),head=el('h2','home-col-title',title);head.append(el('span','home-count',String(count)));col.append(head);return col;}
 export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
+  document.querySelector('.home-banner')?.classList.remove('supervisor-banner');
   host.replaceChildren();
   const today=new Date();today.setHours(0,0,0,0);
   const result=readResult(),practiceDone=!!result?.aprobado;

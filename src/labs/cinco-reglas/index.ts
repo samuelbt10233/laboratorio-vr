@@ -6,7 +6,7 @@ import { saveResult } from './result';
 import { buildPoleScene, type Target } from './scene';
 import { createSound } from './sound';
 import './cinco-reglas.css';
-const START_MESSAGE='Toca cada elemento en el orden correcto. Usa «Pista» si no sabes por dónde seguir.';
+const START_MESSAGE='Seleccionar cada elemento en el orden del procedimiento. «Pista» muestra el paso siguiente.';
 const clockText=(seconds:number)=>`${Math.floor(seconds/60)} min ${String(Math.round(seconds%60)).padStart(2,'0')} s`;
 let session:{dispose:()=>void}|null=null;
 /** Five golden rules on a pole-mounted transformer: its own canvas and engine inside the host, optional WebXR. */

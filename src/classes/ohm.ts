@@ -1,7 +1,7 @@
 import type { LabClass } from '../class-engine';
 export const ohmClass:LabClass={
   laboratoryId:'electronics',id:'ley-de-ohm',title:'Ley de Ohm y circuitos básicos',
-  description:'Descubre para qué sirve cada elemento y observa qué hace que circule corriente. No necesitas conocimientos previos.',
+  description:'Identificación de los elementos de un circuito y de las condiciones para que circule corriente. No requiere conocimientos previos.',
   duration:'8–12 min',level:'Nivel introductorio',initialPreset:'simple',initialSelection:'S1',
   steps:[
     {id:'cerrar',title:'Enciende tu primer circuito.',text:'La fuente funciona como una pila: aporta energía. Los cables deben formar un camino cerrado para que circule corriente, es decir, un movimiento de cargas eléctricas. El interruptor S1 abre o cierra ese camino.',task:'Selecciona S1 en la lista de elementos. Pulsa «Abierto · cerrar» y observa las esferas amarillas que recorren los cables.',audio:'/audio/salome-intro-clase-1.mp3',success:{text:'¡Muy bien! Cerraste el camino y la corriente ya circula. Has completado este paso. Puedes continuar.',audio:'/audio/salome-logro-clase-1.mp3'},repairPreset:'simple',goals:[{kind:'closed',part:'S1'},{kind:'measurement',quantity:'current',value:.06}]},

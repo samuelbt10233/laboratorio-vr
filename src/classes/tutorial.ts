@@ -2,7 +2,7 @@ import type { LabClass, LessonStep } from '../class-engine';
 const step=(id:string,title:string,text:string,task:string,success:string,goals:LessonStep['goals']):LessonStep=>({id,title,text,task,goals,repairPreset:'simple',audio:`/audio/salome-tutorial-${id}.mp3`,success:{text:success,audio:`/audio/salome-tutorial-logro-${id}.mp3`}});
 export const tutorialClass:LabClass={
   laboratoryId:null,id:'primeros-pasos',title:'Primeros pasos en Umbral Labs',
-  description:'Aprende a usar los controles, mover elementos, conectar cables y guardar un montaje. Empieza aquí si es tu primera visita.',
+  description:'Uso de los controles del banco: mover elementos, conectar cables y guardar un montaje. Recomendado para el primer ingreso.',
   duration:'5–8 min',level:'Tutorial de la app',initialPreset:'simple',initialSelection:'V1',
   steps:[
     {...step('bienvenida','Este es tu laboratorio.','La mesa del centro es tu zona de trabajo. A la izquierda puedes añadir elementos o cargar ejemplos. A la derecha aparecen los controles del elemento seleccionado. Yo te acompañaré desde esta tarjeta. «Ver explicación» amplía el texto; «Escuchar» lo lee y «Silenciar» desactiva la voz.','En PC, pulsa la escena y usa WASD para desplazarte, el botón derecho para girar y la rueda para acercarte. En Quest, mira alrededor y usa la palanca izquierda para ir a las zonas marcadas. Cuando estés listo, pulsa «Continuar».','¡Bienvenido! Ya puedes practicar con los controles.',[]),hint:'Explora la mesa. Pulsa «Ver explicación» para conocer los controles de PC y Quest. Cuando estés listo, pulsa «Continuar».'},

@@ -270,7 +270,7 @@ const narrator=new Narrator(state=>{
   $('.guide-avatar').classList.toggle('is-speaking',speaking);
   $('#dialogue').classList.toggle('is-speaking',speaking);
   $('#stop-lesson').hidden=!['loading','speaking'].includes(state);
-  const statuses:Record<NarrationState,string>={ready:'Pulsa Escuchar para oír a tu guía.',loading:'Preparando la voz…',speaking:'Tu guía está hablando…',finished:'Tu turno: realiza la actividad.',muted:'Voz silenciada. Puedes seguir leyendo.',unavailable:'No se pudo cargar la narración. Puedes seguir leyendo.',error:'No se pudo reproducir la voz. Pulsa Escuchar para reintentar.'};
+  const statuses:Record<NarrationState,string>={ready:'Pulsar «Escuchar» para oír al guía.',loading:'Preparando la voz…',speaking:'El guía está hablando…',finished:'Realizar la actividad indicada.',muted:'Voz silenciada. Las instrucciones siguen disponibles en texto.',unavailable:'No se pudo cargar la narración. Puedes seguir leyendo.',error:'No se pudo reproducir la voz. Pulsa Escuchar para reintentar.'};
   $('#voice-status').textContent=statuses[state];
   $<HTMLButtonElement>('#speak-lesson').disabled=state==='muted';
   $('#speak-lesson').textContent=state==='finished'?'↻ Repetir':'▶ Escuchar';syncSpatialGuide();
@@ -448,9 +448,9 @@ function openLab(targetMode:'class'|'free',classId=activeClass.id,startImmediate
   $('#launch-back').textContent=mode==='class'&&readingId===activeClass.id?'← Volver al contenido':'← Volver al catálogo';
   $('#launch-title').textContent=mode==='class'?activeClass.title:'Banco de electrónica';
   $('#launch-category').textContent=mode==='free'?'EXPLORACIÓN LIBRE':activeClass.laboratoryId?'CLASE GUIADA · NIVEL INTRODUCTORIO':'BIENVENIDA · CONOCE LA PLATAFORMA';
-  $('#launch-outcomes').textContent=mode==='class'?activeClass.steps.slice(0,3).map(item=>item.title).join(' · '):'Construye un montaje, cambia sus valores y compara las mediciones y las gráficas a tu ritmo.';
-  $('#launch-description').textContent=mode==='class'?activeClass.description:'Crea y explora tus propios circuitos sin una actividad obligatoria.';
-  $('#launch-meta').textContent=mode==='class'?`${activeClass.duration} · ${activeClass.steps.length} pasos${session?` · Retomarás el paso ${step+1}`:''}`:'Modo libre · A tu ritmo';
+  $('#launch-outcomes').textContent=mode==='class'?activeClass.steps.slice(0,3).map(item=>item.title).join(' · '):'Montaje de circuitos, cambio de valores y comparación de mediciones y gráficas.';
+  $('#launch-description').textContent=mode==='class'?activeClass.description:'Montajes libres con mediciones y gráficas, sin actividad evaluada.';
+  $('#launch-meta').textContent=mode==='class'?`${activeClass.duration} · ${activeClass.steps.length} pasos${session?` · Retomarás el paso ${step+1}`:''}`:'Modo libre';
   const canRestart=mode==='class'&&!!session;$('#launch-restart').hidden=!canRestart;
   $('#launch-error').hidden=true;$('#launch-window').hidden=true;updateLaunchButton();
   window.scrollTo({top:0,behavior:'auto'});
@@ -461,7 +461,7 @@ function openLab(targetMode:'class'|'free',classId=activeClass.id,startImmediate
 function updateLaunchButton(){
   const button=$<HTMLButtonElement>('#start-simulation');button.disabled=!presentationReady||launchBusy;
   button.textContent=launchBusy?'Abriendo el entorno…':mode==='class'?'Iniciar clase':'Iniciar simulación';
-  $('#launch-device').textContent=!presentationReady?'Comprobando el modo de inicio…':xrRuntime?.canEnterVR()?'VR disponible: al iniciar solicitaremos acceso a las gafas.':'Modo PC: al iniciar abriremos la simulación a pantalla completa.';
+  $('#launch-device').textContent=!presentationReady?'Comprobando el modo de inicio…':xrRuntime?.canEnterVR()?'VR disponible: al iniciar se solicitará acceso a las gafas.':'Modo PC: la simulación se abrirá a pantalla completa.';
 }
 function activateSimulation(){
   currentView='lab';document.body.classList.add('in-lab');$('#launch-view').hidden=true;$('#lab-view').hidden=false;$('#back-menu').hidden=false;

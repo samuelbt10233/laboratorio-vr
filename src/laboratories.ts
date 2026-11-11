@@ -23,5 +23,5 @@ export function catalogueEntries(laboratoryId:string|null):CatalogueEntry[]{
   }
   const lab=getLaboratory(laboratoryId);
   return [...laboratoryClasses(lab.id).map(c=>({id:`class:${c.id}`,kind:'class' as const,title:c.title,description:c.description,meta:[`${c.steps.length} pasos`,c.duration,c.level],laboratoryId:lab.id,classId:c.id})),
-    {id:`free:${lab.id}`,kind:'free',title:lab.freeTitle,description:'Diseña tus propios montajes y explora las mediciones y gráficas a tu ritmo.',meta:['Exploración abierta','A tu ritmo'],laboratoryId:lab.id}];
+    {id:`free:${lab.id}`,kind:'free',title:lab.freeTitle,description:'Montajes libres con mediciones y gráficas, sin actividad evaluada.',meta:['Exploración abierta','A tu ritmo'],laboratoryId:lab.id}];
 }

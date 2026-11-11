@@ -103,6 +103,8 @@ export function buildIndustrialScene(scene:Scene):IndustrialScene{
   const wheel=new TransformNode('valve wheel',scene);wheel.parent=valve;wheel.position.z=-.04;
   const ring=target('liberar',MeshBuilder.CreateTorus('valve ring',{diameter:.2,thickness:.025,tessellation:20},scene),'#c4473a');ring.parent=wheel;ring.rotation.x=Math.PI/2;
   for(const a of [0,Math.PI/2]){const spoke=box('valve spoke',m.dark,.2,.02,.02,0,0,0,wheel);spoke.rotation.z=a;}
+  // The ring alone is a thin, hollow target: an invisible disc in front of it takes the click anywhere on the wheel.
+  const valveHit=MeshBuilder.CreateCylinder('valve hit',{diameter:.3,height:.02,tessellation:20},scene);valveHit.parent=wheel;valveHit.rotation.x=Math.PI/2;valveHit.position.z=-.03;valveHit.visibility=0;valveHit.isPickable=true;valveHit.metadata={loto:'liberar'};
   text('tank label','TANQUE DE AIRE',.75,2.9,1.5,3.27);
 
   // Wall details: protection poster and extinguisher.
@@ -124,7 +126,7 @@ export function buildIndustrialScene(scene:Scene):IndustrialScene{
     const ctx=boardTexture.getContext() as CanvasRenderingContext2D,next=nextStep(state);
     ctx.fillStyle='#10252d';ctx.fillRect(0,0,BOARD.pxW,BOARD.pxH);ctx.textAlign='left';
     ctx.fillStyle='#edc76d';ctx.font='bold 34px sans-serif';ctx.fillText('BLOQUEO Y ETIQUETADO · CINTA TRANSPORTADORA',40,56);
-    ctx.fillStyle='#8fb5a8';ctx.font='22px sans-serif';ctx.fillText('Práctica didáctica: no sustituye el procedimiento de tu planta.',40,90);
+    ctx.fillStyle='#8fb5a8';ctx.font='22px sans-serif';ctx.fillText('Práctica didáctica: no sustituye el procedimiento aprobado de la planta.',40,90);
     lotoSteps.forEach((step,i)=>{
       const y=150+i*58,done=state.done.includes(step.id),current=next?.id===step.id;
       if(current){ctx.fillStyle='#1f4a52';ctx.fillRect(30,y-34,520,52);}

@@ -374,3 +374,11 @@ Formato:
 - Archivos: `src/labs/cortacircuitos/{procedure,scene,index}.ts`, `src/cortacircuitos-procedure.test.ts`, `src/labs/registry.ts` (una línea), `src/content/operacion.ts`.
 - Validación: 140 pruebas y build correctos. Recorrido completo en el navegador: errores de posición y de fase con arco, maniobra completa con constancia, resultado guardado y módulo de operación en «1 de 4».
 - Pendiente: laboratorios de equipo de protección y de distancias; modo VR de este laboratorio.
+
+## 2026-11-11 · Claude Code · Laboratorio de inspección del equipo de protección
+- Qué: el responsable aprobó el laboratorio 3D de «Equipo de protección personal y su inspección». En un banco de la base de la cuadrilla hay seis elementos: tres pares de guantes dieléctricos, guantes protectores de cuero, casco y careta. Cada uno se selecciona en la escena o en el panel, muestra sus hallazgos de la revisión visual y se declara «Apto» o «Retirar». Los guantes se inflan antes de decidir (la animación muestra si conservan el aire). Tres están defectuosos: un poro que solo revela el inflado, un ensayo vencido en la marcación y un casco con fisura.
+- Errores: decidir sin inspeccionar, declarar apto un guante sin inflarlo, dejar en servicio un elemento defectuoso y retirar uno en buen estado; cada mensaje explica el riesgo. Constancia al terminar y resultado guardado por clase.
+- Diseño: mismo patrón que «Cinco reglas» y cortacircuitos (procedimiento puro con pruebas, escena propia, panel lateral y constancia); estilos propios del panel en `src/labs/epp/epp.css`.
+- Archivos: `src/labs/epp/{procedure,scene,index}.ts`, `src/labs/epp/epp.css`, `src/epp-procedure.test.ts`, `src/labs/registry.ts` (una línea), `src/content/distribucion.ts`.
+- Validación: 148 pruebas y build correctos. Recorrido completo en el navegador con dos errores; constancia y resultado guardado.
+- Pendiente: laboratorio de distancias mínimas de seguridad.

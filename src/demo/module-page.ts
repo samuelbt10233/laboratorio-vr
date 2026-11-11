@@ -1,4 +1,3 @@
-import { readResult } from '../labs/cinco-reglas/result';
 import { subjectEntries } from '../subjects';
 import { isMyModule, moduleProgress } from './asignaciones';
 /** One module of the ESSA demo: its progress and its classes in order, with what is done and when each is reviewed. */
@@ -21,14 +20,14 @@ export function renderModulePage(host:HTMLElement,subjectId:string,actions:Modul
   const today=new Date();today.setHours(0,0,0,0);
   const mine=isMyModule(subjectId),entries=subjectEntries(subjectId).filter(e=>!e.planned);
   const classes=entries.filter(e=>e.kind==='class'),free=entries.filter(e=>e.kind==='free');
-  const progress=moduleProgress(subjectId,today,!!readResult()?.aprobado);
+  const progress=moduleProgress(subjectId,today);
   const summary=el('div','module-summary');
   if(mine){
     const next=progress.classes.find(c=>!c.done);
     const bar=el('span','home-bar');bar.setAttribute('role','progressbar');bar.setAttribute('aria-label','Clases completadas del módulo');bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',String(progress.total));bar.setAttribute('aria-valuenow',String(progress.done));
     const fill=el('span');fill.style.width=`${progress.total?Math.round(progress.done/progress.total*100):0}%`;bar.append(fill);
     summary.append(el('strong','',`${progress.done} de ${progress.total} ${progress.total===1?'clase completada':'clases completadas'}`),bar,el('span','',next?`Próxima revisión: ${shortDate(next.review)} · ${next.title}`:'Módulo completado'));
-  }else summary.append(el('strong','',`${classes.length} ${classes.length===1?'clase':'clases'} con práctica en 3D`),el('span','','Módulo abierto: puedes tomarlo cuando quieras'));
+  }else summary.append(el('strong','',`${classes.length} ${classes.length===1?'clase':'clases'}`),el('span','','Módulo abierto: puedes tomarlo cuando quieras'));
   const section=el('section','module-classes');const list=el('ol','class-list');
   const nextId=progress.classes.find(c=>!c.done)?.classId;
   classes.forEach((c,i)=>{

@@ -15,4 +15,32 @@ export const distribucion:readonly LearningContent[]=[
       {title:'Alcance de la práctica',text:'Contenido didáctico de demostración. Simplifica el procedimiento y debe validarse con el RETIE y los procedimientos de ESSA antes de usarse en una formación real.',example:'Cada error registrado en la práctica indica el riesgo que tendría en una red real.'},
     ],
   },
+  {
+    id:'distribucion-epp',runtimeClassId:null,subjectId:'distribucion',
+    title:'Equipo de protección personal y su inspección',
+    description:'Selección, inspección y uso del equipo de protección para trabajos en la red.',
+    duration:'10 min',laboratoryTitle:'Inspección del equipo de protección',
+    sections:[{title:'En preparación',text:'Ficha provisional del contrato C0: la clase permanece oculta hasta tener evaluación o laboratorio.',example:'Sin ejemplo todavía.'}],
+  },
+  {
+    id:'distribucion-distancias',runtimeClassId:null,subjectId:'distribucion',
+    title:'Distancias mínimas de seguridad',
+    description:'Distancias de aproximación a partes energizadas y cómo se controlan en campo.',
+    duration:'10 min',laboratoryTitle:'Control de distancias de seguridad',
+    sections:[{title:'En preparación',text:'Ficha provisional del contrato C0: la clase permanece oculta hasta tener evaluación o laboratorio.',example:'Sin ejemplo todavía.'}],
+  },
+  {
+    id:'distribucion-ats',runtimeClassId:null,subjectId:'distribucion',
+    title:'Análisis de trabajo seguro y permiso de trabajo',
+    description:'Identificación de peligros y controles antes de iniciar una intervención.',
+    duration:'10 min',laboratoryTitle:'Elaboración de un análisis de trabajo seguro',
+    sections:[{title:'En preparación',text:'Ficha provisional del contrato C0: la clase permanece oculta hasta tener evaluación o laboratorio.',example:'Sin ejemplo todavía.'}],
+  },
+  {
+    id:'distribucion-alturas',runtimeClassId:null,subjectId:'distribucion',
+    title:'Trabajo en alturas en poste',
+    description:'Ascenso, posicionamiento y rescate en postes de distribución.',
+    duration:'10 min',laboratoryTitle:'Ascenso seguro a un poste',
+    sections:[{title:'En preparación',text:'Ficha provisional del contrato C0: la clase permanece oculta hasta tener evaluación o laboratorio.',example:'Sin ejemplo todavía.'}],
+  },
 ];

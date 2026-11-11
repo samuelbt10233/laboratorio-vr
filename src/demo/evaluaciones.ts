@@ -1,11 +1,11 @@
+import { evaluacionesDistribucion } from './evaluaciones-distribucion';
+import { evaluacionesFundamentos } from './evaluaciones-fundamentos';
+import { evaluacionesMedida } from './evaluaciones-medida';
+import { evaluacionesOperacion } from './evaluaciones-operacion';
 /** Demo knowledge checks, one per class shown to ESSA. Questions come from each class's own reading; distribution content still needs validation against the RETIE and ESSA's procedures. */
 export interface Question {prompt:string;options:string[];answer:number;why:string}
 const EVALUATIONS:Record<string,Question[]>={
-  'distribucion-cinco-reglas':[
-    {prompt:'¿Por qué no basta con abrir un tramo de red para trabajar en él?',options:['Puede volver a tener tensión por una maniobra, un generador, inducción o una descarga','Porque abrirlo daña el transformador','Porque la cuadrilla necesita más tiempo para subir al poste'],answer:0,why:'Un tramo abierto puede reenergizarse por varias causas; las cinco reglas mantienen el trabajo sin tensión mientras dure.'},
-    {prompt:'¿Qué se hace justo antes de poner a tierra y en cortocircuito?',options:['Señalizar la zona de trabajo','Verificar la ausencia de tensión en cada fase','Retirar el bloqueo del punto de corte'],answer:1,why:'Poner a tierra sin verificar es el error que provoca el arco en la práctica: primero se comprueba que no hay tensión.'},
-    {prompt:'Un detector que no se probó no indica tensión. ¿Qué significa?',options:['Que la red está sin tensión','Nada: el detector puede estar dañado y debe probarse antes y después','Que ya se puede poner a tierra'],answer:1,why:'El detector se prueba antes y después de la medida; si no, su lectura no demuestra nada.'},
-  ],
+  ...evaluacionesDistribucion,...evaluacionesOperacion,...evaluacionesMedida,...evaluacionesFundamentos,
   'ley-de-ohm':[
     {prompt:'Con 6 V y una resistencia de 100 Ω, ¿cuánta corriente circula?',options:['6 mA','60 mA','600 mA'],answer:1,why:'I = V / R = 6 / 100 = 0,06 A, es decir, 60 mA.'},
     {prompt:'Si se duplica la resistencia y se mantiene el voltaje, la corriente…',options:['se duplica','se reduce a la mitad','no cambia'],answer:1,why:'Con el mismo voltaje, el doble de resistencia deja pasar la mitad de corriente: de 60 a 30 mA.'},
@@ -38,3 +38,12 @@ export function grade(questions:Question[],answers:(number|null)[]){
   const correct=results.filter(Boolean).length;
   return {correct,total:questions.length,passed:correct===questions.length,results};
 }
+const EVALUATION_KEY='umbral-demo-evaluaciones';
+type Storage={getItem(key:string):string|null;setItem(key:string,value:string):void};
+const browser=():Storage|null=>{try{return globalThis.localStorage??null;}catch{return null;}};
+function savedEvaluations(storage:Storage|null):Record<string,{correct:number;total:number;fecha?:string}>{try{return JSON.parse(storage?.getItem(EVALUATION_KEY)??'{}')??{};}catch{return {};}}
+export function saveEvaluation(classId:string,correct:number,total:number,storage=browser()){
+  try{const all=savedEvaluations(storage);all[classId]={correct,total,fecha:new Date().toISOString()};storage?.setItem(EVALUATION_KEY,JSON.stringify(all));}catch{/* storage is optional in the demo */}
+}
+/** Whether the last attempt at this class's evaluation had every answer right. */
+export function evaluationPassed(classId:string,storage=browser()){const last=savedEvaluations(storage)[classId];return !!last&&last.total>0&&last.correct===last.total;}

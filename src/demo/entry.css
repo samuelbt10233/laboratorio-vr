@@ -1,3 +1,33 @@
-.demo-entry{position:fixed;inset:0;z-index:10000;overflow:auto;display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:8vw;padding:7vw;background:#f5f9fd;color:#24384b;font-family:Arial,sans-serif}.demo-entry[hidden]{display:none}.demo-entry-brand{font-size:25px;font-weight:700}.demo-entry-kicker{margin-top:75px;font-size:12px;letter-spacing:.18em;color:#52687c;font-weight:700}.demo-entry h1{font-size:clamp(36px,4.4vw,68px);line-height:1.08;letter-spacing:-.045em;margin:22px 0}.demo-entry-intro>p:not(.demo-entry-kicker){font-size:18px;line-height:1.7;max-width:480px;color:#52687c}.demo-entry-route{border-top:1px solid #d5e3f0;margin-top:40px;padding-top:25px;line-height:2.3;color:#3977aa;font-size:14px}.demo-entry-card{padding:38px;background:#ffffff;border:1px solid #e8f2fc;border-radius:18px;box-shadow:0 18px 60px #49321c09}.demo-entry-badge{display:inline-block;background:#f5f9fd;color:#52687c;padding:8px 12px;border-radius:30px;font-size:12px}.demo-entry h2{font-size:30px;margin:25px 0 12px}.demo-entry-card p{color:#3977aa;line-height:1.6}.demo-entry-card button{display:flex;align-items:center;gap:15px;width:100%;text-align:left;margin-top:16px;padding:20px;border:1px solid #d5e3f0;background:#ffffff;border-radius:10px;color:#24384b;cursor:pointer}.demo-entry-card button:hover{background:#f5f9fd;border-color:#52687c}.demo-entry-card button:focus-visible,.demo-profile:focus-visible{outline:3px solid #3977aa;outline-offset:3px}.demo-entry-card button>span:last-child{margin-left:auto}.demo-avatar{background:#e8f2fc;padding:13px;border-radius:50%;font-weight:700}.demo-entry-card strong,.demo-entry-card small{display:block}.demo-entry-card small{margin-top:6px;color:#3977aa}.demo-entry-note{font-size:12px;margin-top:25px}.demo-profile{border:1px solid #d5e3f0;border-radius:6px;background:#ffffff;padding:8px 12px;color:#52687c;cursor:pointer}@media(max-width:760px){.demo-entry{grid-template-columns:1fr;padding:28px;gap:26px}.demo-entry-kicker{margin-top:30px}.demo-entry-route{display:none}.demo-entry-card{padding:24px}.demo-profile{font-size:11px}}
-
-.demo-entry{background:#f7fbff;gap:6vw}.demo-entry h1{font-size:clamp(30px,3.7vw,54px);letter-spacing:-.035em}.demo-entry-intro>p:not(.demo-entry-kicker){font-size:15px}.demo-entry h2{font-size:25px}.demo-entry-card{box-shadow:none;border-radius:12px}.demo-entry-card p{font-size:13px}.demo-entry-card button{font-size:13px;padding:17px}.demo-entry-card .demo-entry-note{font-size:11px}.demo-entry-brand{font-size:22px}.demo-entry-kicker{font-size:11px}.demo-entry-route{font-size:12px}
+/* Sign-in: one centred card with the start page's dark band on top and the profiles as the way in. */
+html body .demo-entry{position:fixed;inset:0;z-index:10000;overflow:auto;display:grid;place-items:center;padding:24px 16px;background:var(--m-page);color:var(--m-ink);font-family:var(--m-font)}
+html body .demo-entry[hidden]{display:none}
+html body .demo-entry-card{width:100%;max-width:480px;border:1px solid var(--m-line);border-radius:16px;background:var(--m-surface);overflow:hidden;box-shadow:0 12px 32px rgba(23,36,43,.06)}
+html body .demo-entry-head{position:relative;display:flex;align-items:center;gap:28px;min-height:112px;padding:0 28px;background:#123a56;color:#fff}
+html body .demo-entry-brand{display:flex;flex-direction:column;font-size:20px;font-weight:600;line-height:1.1;color:#fff}
+html body .demo-entry-brand span{font-size:14px;font-weight:400;color:#b7cad8}
+html body .demo-entry-client{display:flex;flex-direction:column;padding-left:28px;border-left:1px solid #3d6481;font-size:13px;line-height:1.2;color:#b7cad8}
+html body .demo-entry-client strong{font-size:20px;font-weight:600;letter-spacing:.02em;color:#fff}
+html body .demo-entry-art{position:absolute;right:0;bottom:0;width:200px;line-height:0;-webkit-mask-image:linear-gradient(to right,transparent,#000 40%);mask-image:linear-gradient(to right,transparent,#000 40%)}
+html body .demo-entry-art svg{display:block;width:100%;height:auto}
+html body .demo-entry-body{padding:36px 36px 28px}
+html body .demo-entry-body h1{margin:0;padding:0 0 10px;border-bottom:3px solid var(--m-accent);font-size:34px;font-weight:600;letter-spacing:-.02em;color:var(--m-ink)}
+html body .demo-entry-body>p{margin:12px 0 28px;font-size:15px;color:var(--m-muted)}
+html body .demo-entry-body button{display:flex;align-items:center;gap:14px;width:100%;margin-top:14px;padding:14px 18px;border:1.5px solid var(--m-accent);border-radius:10px;background:var(--m-surface);color:var(--m-ink);text-align:left;font:inherit;cursor:pointer}
+html body .demo-entry-body button:hover{background:var(--m-accent-soft)}
+html body .demo-entry-body button:focus-visible,html body .demo-profile:focus-visible{outline:2px solid var(--m-accent);outline-offset:3px}
+html body .demo-entry-body button>span:nth-child(2){flex:1;min-width:0}
+html body .demo-entry-body strong,html body .demo-entry-body small{display:block}
+html body .demo-entry-body button strong{font-size:16px;font-weight:600}
+html body .demo-entry-body small{margin-top:3px;font-size:13px;color:var(--m-muted)}
+html body .demo-avatar{display:inline-flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:50%;background:var(--m-accent);color:#fff;font-size:14px;font-weight:600}
+html body .demo-entry-chevron{flex:none;width:18px;height:18px;fill:none;stroke:var(--m-ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+html body .demo-entry-badge{display:inline-block;margin-top:28px;padding:5px 10px;border-radius:4px;background:#fdf3d0;color:#6b5310;font-size:12px;font-weight:500}
+html body .demo-profile{border:1px solid var(--m-line);border-radius:6px;background:var(--m-surface);padding:8px 12px;color:var(--m-muted);cursor:pointer}
+@media (max-width:520px){
+  html body .demo-entry{place-items:start center}
+  html body .demo-entry-head{gap:18px;min-height:96px;padding:0 20px}
+  html body .demo-entry-client{padding-left:18px}
+  html body .demo-entry-art{width:130px;opacity:.7}
+  html body .demo-entry-body{padding:28px 20px 22px}
+  html body .demo-entry-body h1{font-size:28px}
+}

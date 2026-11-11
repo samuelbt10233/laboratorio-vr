@@ -28,13 +28,13 @@ Reglas de contenido, iguales para los dos agentes:
 | | `operacion-transformador` | Transformador de distribución | Claude | pendiente |
 | | `operacion-puesta-tierra` | Puesta a tierra y medición de su resistencia | Claude | pendiente |
 | | `operacion-inspeccion` | Inspección de redes y reporte de anomalías | Claude | pendiente |
-| Atención al usuario y medida (`medida`) | `medida-acometida` | Instalación y revisión de una acometida | Codex | pendiente |
-| | `medida-medidores` | Medidores de energía: tipos, lectura y sellado | Codex | pendiente |
-| | `medida-irregulares` | Detección de conexiones irregulares | Codex | pendiente |
-| | `medida-suspension` | Suspensión y reconexión del servicio | Codex | pendiente |
-| Fundamentos eléctricos (`electronics`) | `fundamentos-potencia` ★ | Potencia y energía eléctrica | Codex | pendiente |
-| | `fundamentos-alterna` | Corriente alterna y sistema trifásico | Codex | pendiente |
-| | `fundamentos-multimetro` | Uso seguro del multímetro y la pinza amperimétrica | Codex | pendiente |
+| Atención al usuario y medida (`medida`) | `medida-acometida` | Instalación y revisión de una acometida | Codex | en revisión |
+| | `medida-medidores` | Medidores de energía: tipos, lectura y sellado | Codex | en revisión |
+| | `medida-irregulares` | Detección de conexiones irregulares | Codex | en revisión |
+| | `medida-suspension` | Suspensión y reconexión del servicio | Codex | en revisión |
+| Fundamentos eléctricos (`electronics`) | `fundamentos-potencia` ★ | Potencia y energía eléctrica | Codex | en revisión |
+| | `fundamentos-alterna` | Corriente alterna y sistema trifásico | Codex | en revisión |
+| | `fundamentos-multimetro` | Uso seguro del multímetro y la pinza amperimétrica | Codex | en revisión |
 
 Las cuatro clases de electrónica existentes y bloqueo y etiquetado no cambian.
 

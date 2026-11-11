@@ -358,3 +358,11 @@ Formato:
 - Textos: los módulos cuentan «N clases» en vez de «clases con práctica en 3D»; las clases sin laboratorio muestran «Lectura y evaluación» y «La práctica en 3D de esta clase está en preparación.»; la nota RETIE de la evaluación se extiende a operación y medida.
 - Validación: 131 pruebas y build correctos. En el navegador el inicio de Andrés queda igual (2 módulos, 3 pendientes) y un resultado antiguo de «Cinco reglas» sigue contando.
 - Pendiente: merge del responsable; después, contenido de cada agente según el plan.
+
+## 2026-11-11 · Codex · C2 inicio
+- Siete clases de medida y fundamentos en carpeta propia laboratorio-vr-codex-c2, rama codex/c2-medida-fundamentos desde C0. Contenido profesional, evaluaciones y esquemas generados con Schemdraw. Sin laboratorio nuevo en esta entrega.
+
+## 2026-11-11 · Codex · C2 entrega de contenidos
+- Siete clases completas: cuatro de medida y tres de fundamentos, seis apartados por clase, 21 preguntas y 14 SVG generados con Schemdraw. Script scripts/esquemas-codex.py; sin dependencia nueva del navegador.
+- Validación: 131 pruebas y build correctos. Siete clases abiertas y evaluaciones aprobadas en navegador; evaluación de acometida probada también con 0/3 y reinicio. Laboratorios rotulados en preparación; sin VR ni laboratorio de potencia nuevo.
+- Pendiente: revisión técnica del contenido y PR por módulo. Sin integrar.

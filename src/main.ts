@@ -300,7 +300,7 @@ $('#load').onclick=()=>{try{const raw=localStorage.getItem('umbral-circuit-v1');
 const sessions=new SessionStore();
 function sessionKey(){return mode==='class'?classSessionKey(activeClass.id):'free';}
 function saveSession(){if(currentView==='lab')sessions.save(sessionKey(),{circuit,selected,step,seen:[...inspectedParts],completed});}
-type CatalogueFilter='all'|'recent';
+type CatalogueFilter='all'|'recent'|'modules';
 let catalogueFilter:CatalogueFilter='all';
 let entryFilter:'all'|'class'|'free'='all';
 let catalogueSubject:string|null=null;
@@ -337,13 +337,13 @@ function renderCatalogue(){
   $('#empty-catalogue-text').textContent=catalogueFilter==='recent'&&!query?'Todavía no has visitado estas experiencias.':'Prueba con otro término dentro de esta sección.';
   $('#main-menu').classList.toggle('subject-page',!!subject);
   document.querySelectorAll<HTMLButtonElement>('[data-subject-nav]').forEach(button=>{const active=button.dataset.subjectNav===catalogueSubject;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
-  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Tu capacitación';
+  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':catalogueFilter==='modules'?'Módulos':'Tu capacitación';
   $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'';
   $('#menu-kicker').textContent=subject?'Módulo de capacitación':'Preparado para ESSA';
   $('#browse-labs').firstChild!.textContent=subject?'Ver las clases ':'Ver los módulos ';
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
-  $('#menu-subtitle').textContent=subject?subject.description:'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
+  $('#menu-subtitle').textContent=subject?subject.description:catalogueFilter==='modules'?'Todos los módulos de capacitación. Busca un módulo o una clase.':'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
   $('#catalogue-title').textContent=subject?'Clases':'Módulos de capacitación';
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
@@ -390,7 +390,7 @@ function openReading(id:string){
   window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }
 $('#study-back').onclick=()=>{if(catalogueSubject)openSubject(catalogueSubject);else showMenu();};
-function focusSearch(){showMenu();$<HTMLInputElement>('#experience-search').focus();}
+function focusSearch(){if(!catalogueSubject&&catalogueFilter==='all')catalogueFilter='modules';showMenu();$<HTMLInputElement>('#experience-search').focus();}
 $('#start-tutorial').onclick=$('#hero-welcome').onclick=$('#welcome-nav').onclick=()=>{saveSession();openLab('class',welcomeClassId);};
 $('#experience-search').oninput=renderCatalogue;
 document.querySelectorAll<HTMLButtonElement>('[data-entry-filter]').forEach(button=>button.onclick=()=>{entryFilter=button.dataset.entryFilter as typeof entryFilter;renderCatalogue();});
@@ -398,6 +398,7 @@ $('#browse-labs').onclick=()=>{const heading=$('#catalogue-title');heading.tabIn
 $('#quick-search').onclick=focusSearch;
 $('#reset-catalogue').onclick=()=>{catalogueFilter='all';entryFilter='all';$<HTMLInputElement>('#experience-search').value='';renderCatalogue();};
 $('#catalogue-home').onclick=()=>navigateCatalogue('all');
+$('#go-modules').onclick=()=>navigateCatalogue('modules');
 for(const [label,modules] of [['Mis módulos',myModules()],['Módulos abiertos',openModules()]] as const){
   const heading=document.createElement('span');heading.className='portal-nav-label';heading.textContent=label;$('#laboratory-nav').append(heading);
   for(const subject of modules){const button=document.createElement('button');button.className='nav-item subject-nav';button.textContent=subject.title;button.dataset.subjectNav=subject.subjectId;button.onclick=()=>openSubject(subject.subjectId);$('#laboratory-nav').append(button);}

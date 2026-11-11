@@ -34,6 +34,8 @@ import { SpatialGuide } from './spatial-guide';
 import { StepConfirmation } from './step-confirmation';
 import { QuestRuntime } from './quest-runtime';
 import { movePartOnTable, questLayout } from './quest-layout';
+import './essa-minimal.css';
+import { renderHome } from './demo/home';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
 app.innerHTML=layout;
@@ -309,7 +311,8 @@ function entryVisited(entry:SubjectEntry):boolean{
 function renderCatalogue(){
   const query=normalise($<HTMLInputElement>('#experience-search').value.trim());
   const subject=catalogueSubject?getSubject(catalogueSubject):null;
-  const entries=subjectEntries(catalogueSubject).filter(entry=>entry.classId!=='industrial-torno').filter(entry=>(!subject||entryFilter==='all'||entry.kind===entryFilter)&&(catalogueFilter!=='recent'||entryVisited(entry))&&(!query||normalise(`${entry.title} ${entry.description} ${entry.meta.join(' ')}`).includes(query)));
+  const searchable=catalogueSubject||!query?subjectEntries(catalogueSubject):[...subjectEntries(null),...subjectEntries(null).flatMap(s=>subjectEntries(s.subjectId))];
+  const entries=searchable.filter(entry=>entry.classId!=='industrial-torno').filter(entry=>(!subject||entryFilter==='all'||entry.kind===entryFilter)&&(catalogueFilter!=='recent'||entryVisited(entry))&&(!query||normalise(`${entry.title} ${entry.description} ${entry.meta.join(' ')}`).includes(query)));
   const list=$('.experience-list');list.replaceChildren();
   list.classList.toggle('subject-grid',!subject);
   $('#class-filters').hidden=!subject;
@@ -324,7 +327,7 @@ function renderCatalogue(){
     button.querySelector('.experience-description')!.textContent=entry.description;
     const meta=button.querySelector('.experience-meta')!;
     for(const text of entry.meta){const span=document.createElement('span');span.textContent=text;meta.append(span);}
-    button.querySelector('.experience-action span')!.textContent=entry.kind==='subject'?'Explorar materia':entry.kind==='free'?'Entrar al modo libre':entry.planned?'Ver contenido propuesto':'Comenzar por el contenido';
+    button.querySelector('.experience-action span')!.textContent=entry.kind==='subject'?'Abrir ruta':entry.kind==='free'?'Entrar al modo libre':entry.planned?'Ver contenido propuesto':'Empezar';
     button.onclick=()=>{if(entry.kind==='subject')openSubject(entry.subjectId);else if(entry.kind==='free')openLab('free');else openReading(entry.classId!);};
     item.append(button);list.append(item);
   }
@@ -333,18 +336,19 @@ function renderCatalogue(){
   $('#empty-catalogue-text').textContent=catalogueFilter==='recent'&&!query?'Todavía no has visitado estas experiencias.':'Prueba con otro término dentro de esta sección.';
   $('#main-menu').classList.toggle('subject-page',!!subject);
   document.querySelectorAll<HTMLButtonElement>('[data-subject-nav]').forEach(button=>{const active=button.dataset.subjectNav===catalogueSubject;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
-  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Prepárate para trabajar.';
-  $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'Practica con seguridad.';
-  $('#menu-kicker').textContent=subject?'EXPLORA LA MATERIA':'PREPARADO PARA ESSA';
-  $('#browse-labs').firstChild!.textContent=subject?'Explorar las clases ':'Explorar materias ';
+  $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':'Tu capacitación';
+  $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'';
+  $('#menu-kicker').textContent=subject?'Ruta de capacitación':'Preparado para ESSA';
+  $('#browse-labs').firstChild!.textContent=subject?'Ver las clases ':'Ver las rutas ';
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
-  $('#menu-subtitle').textContent=subject?subject.description:'Comprende los conceptos, descubre cómo se relacionan y ponlos a prueba en un laboratorio virtual. A tu ritmo, desde tu navegador.';
-  $('#catalogue-title').textContent=subject?'Clases y laboratorios':'Encuentra tu próxima materia';
-  $('#catalogue-description').textContent=subject?'Empieza por el contenido de una clase. Las propuestas sin simulación se identifican como Concepto.':'Explora las clases disponibles. Las materias en preparación muestran una propuesta del futuro catálogo.';
+  $('#menu-subtitle').textContent=subject?subject.description:'Elige una ruta. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
+  $('#catalogue-title').textContent=subject?'Clases':'Rutas de capacitación';
+  $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
   $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
-  const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar una materia…';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
+  const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading},app.dataset.demoRole);
+  const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar una ruta o una clase';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
   document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=!subject&&button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }
 function openSubject(id:string){getSubject(id);entryFilter='all';catalogueSubject=id;catalogueFilter='all';$<HTMLInputElement>('#experience-search').value='';showMenu();}
@@ -376,7 +380,7 @@ function openReading(id:string){
     const text=document.createElement('p');text.textContent=section.text;
     const example=document.createElement('aside');example.textContent=section.example;
     article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
-    const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=`0${index+1}  ${section.title}`;outline.append(link);
+    const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=section.title;outline.append(link);
   });
   const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId&&!content.labId;
   button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio →':'Laboratorio en preparación';
@@ -393,7 +397,7 @@ $('#browse-labs').onclick=()=>{const heading=$('#catalogue-title');heading.tabIn
 $('#quick-search').onclick=focusSearch;
 $('#reset-catalogue').onclick=()=>{catalogueFilter='all';entryFilter='all';$<HTMLInputElement>('#experience-search').value='';renderCatalogue();};
 $('#catalogue-home').onclick=()=>navigateCatalogue('all');
-const subjectsButton=document.createElement('button');subjectsButton.className='nav-item';subjectsButton.textContent='Materias';subjectsButton.onclick=()=>{navigateCatalogue('all');$('#browse-labs').click();};$('#laboratory-nav').append(subjectsButton);
+const subjectsLabel=document.createElement('span');subjectsLabel.className='portal-nav-label';subjectsLabel.textContent='Rutas';$('#laboratory-nav').append(subjectsLabel);
 for(const subject of subjectEntries(null)){const button=document.createElement('button');button.className='nav-item subject-nav';button.textContent=subject.title;button.dataset.subjectNav=subject.subjectId;button.onclick=()=>openSubject(subject.subjectId);$('#laboratory-nav').append(button);}
 document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>button.onclick=()=>navigateCatalogue(button.dataset.navFilter as CatalogueFilter));
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();focusSearch();}});
@@ -408,7 +412,7 @@ function showMenu(){
   saveSession();
   narrator.stop();pending=null;updateHint();currentView='menu';document.body.classList.remove('in-lab');
   $('#lab-view').hidden=true;$('#main-menu').hidden=false;$('#back-menu').hidden=true;
-  $('#header-context').textContent=catalogueSubject?getSubject(catalogueSubject).title:'Materias y laboratorios';document.title='Umbral Labs · Catálogo';
+  $('#header-context').textContent=catalogueSubject?getSubject(catalogueSubject).title:'Rutas de capacitación';document.title='Umbral Labs · Catálogo';
   renderCatalogue();window.scrollTo({top:0,behavior:'auto'});
   const heading=$('#main-menu h1');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }

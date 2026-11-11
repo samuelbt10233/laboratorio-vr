@@ -246,3 +246,38 @@ Formato:
 - Entrada por perfiles ficticios técnico/supervisora, cambio de perfil, portal ESSA y catálogo enfocado. Diseño final blanco y azul con lateral fija, búsqueda y tarjetas compactas.
 - Validación final: 115 pruebas superadas, compilación y git diff --check correctos; portal revisado en navegador, sin errores de consola. Evidencia docs/evidencia-d1/portal-final.png.
 - D1 hecha en rama codex/d1-login; integración y despliegue pendientes del responsable. D4 implementará el panel de supervisora; actualmente ambos perfiles acceden al catálogo. No probado en Quest.
+
+## 2026-11-11 · Claude Code · Portal minimalista
+- Qué: a petición del responsable, el portal pasa a un diseño sobrio y fácil de usar. Una tipografía (IBM Plex Sans), fondo gris claro, superficies blancas, un solo azul para acciones y lugar actual, y un amarillo de seguridad que solo marca la ruta asignada. Se quitan la búsqueda doble, el titular a dos colores, la ilustración, el bloque «Comprende. Experimenta. Descubre.», la nota de PC, la bienvenida y los consejos de la portada, las etiquetas en mayúsculas y los números duplicados de la lectura. Las rutas son filas con título, descripción, datos y un botón con la acción («Abrir ruta», «Empezar»).
+- Textos: «Tu capacitación», «Rutas de capacitación», menú «Capacitación / Rutas / Ayuda · Primeros pasos». En la entrada, sin mayúsculas ni flechas; el botón de perfil muestra el nombre y anuncia «cambiar perfil».
+- Archivos: `src/essa-minimal.css` (nuevo, se carga al final), textos en `src/main.ts`, `src/template.ts` y `src/demo/entry.ts` (D1 de Codex, ya integrada), fuente en `index.html`.
+- Validación: 115 pruebas, build correcto; revisado en escritorio (1440) y móvil (375, sin desplazamiento horizontal): entrada, portal, ruta y lectura, sin errores en consola. La práctica 3D y el laboratorio de electrónica no cambian.
+- Pendiente: D4 y D5. La página «Prepara tu espacio» de electrónica conserva su estilo anterior salvo botones y etiquetas.
+
+## 2026-11-11 · Claude Code · Inicio tipo panel
+- Qué: sobre el portal minimalista, el inicio adopta la distribución de referencia que pidió el responsable (panel de administración). Lateral con buscador arriba, iconos de línea y texto más grande. Inicio centrado con píldora «Preparado para ESSA», titular grande y buscador ancho. Debajo, tres columnas con chevrones: «Rutas», «Práctica asignada» (tarjeta de las cinco reglas, marcada en amarillo, con «Empezar» o «Completada · repetir») y «Clases». Al final, «Tu avance» con tres cifras: prácticas completadas, errores y tiempo del último intento.
+- «Tu avance» lee el resultado real de la práctica (`readResult` de `src/labs/cinco-reglas/result.ts`) y lleva el rótulo «Datos de esta sesión de demostración». Sin intento, muestra «—».
+- El buscador del inicio ahora también encuentra clases, no solo rutas («ohm», «reglas»). El torno sigue oculto.
+- Archivos: `src/demo/home.ts` (nuevo), `src/essa-minimal.css`, `src/main.ts` (render del inicio y búsqueda), `src/template.ts` (contenedor `#home-dashboard`, menú).
+- Validación: 115 pruebas, build correcto; revisado en escritorio (1440) y móvil (375, sin desplazamiento horizontal). La tarjeta asignada abre la lectura, las filas abren la ruta e «Inicio» vuelve al panel.
+- Pendiente: D4 (panel de supervisora, puede reutilizar `.home-stat` y `.home-col`) y D5.
+
+## 2026-11-11 · Claude Code · Panel de cabecera del inicio
+- Qué: a petición del responsable, el inicio pierde la píldora «Preparado para ESSA» y gana un panel azul oscuro (#123a56) sin texto encima de «Tu capacitación». Es la base sobre la que se añadirán, poco a poco, elementos que den personalidad a la página. Solo se ve en el inicio; las páginas de ruta conservan su encabezado.
+- Archivos: `src/template.ts` (elemento `.home-banner`) y `src/essa-minimal.css`.
+- Validación: 115 pruebas, build correcto, revisado en escritorio y sin errores en consola.
+
+## 2026-11-11 · Claude Code · Saludo y ruta en el panel del inicio
+- Qué: el panel azul del inicio muestra el perfil («Técnico liniero» o «Supervisora, jefa de cuadrilla»), el saludo («Hola, Andrés» o «Hola, Laura»), la ruta («Tu ruta asignada» o «Ruta de tu cuadrilla: Trabajo seguro en redes de distribución») y un botón blanco «Abrir ruta». Cambia al cambiar de perfil.
+- Archivos: `src/demo/home.ts` (`renderBanner`, `renderHome` recibe el rol), `src/main.ts` (pasa `app.dataset.demoRole`), `src/template.ts` y `src/essa-minimal.css`.
+- Validación: 115 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal), con los dos perfiles; el botón abre la ruta. Sin errores en consola.
+
+## 2026-11-11 · Claude Code · Ilustración del poste en el panel
+- Qué: a la derecha del saludo, un dibujo de líneas de un poste de distribución con cruceta, aisladores, cables, transformador y una señal de riesgo eléctrico en amarillo de seguridad. Tonos de azul claro sobre el panel; los cables se desvanecen hacia la izquierda. Es decorativo (`aria-hidden`) y se oculta en móvil. El botón «Abrir ruta» pasa debajo del texto.
+- Archivos: `src/demo/home.ts` (SVG en línea `POLE`) y `src/essa-minimal.css`.
+- Validación: 115 pruebas y build correctos; revisado en escritorio y móvil (sin desplazamiento horizontal) y sin errores en consola.
+
+## 2026-11-11 · Claude Code · Panel del inicio más bajo
+- Qué: a petición del responsable, se quita el botón «Abrir ruta» del panel y el panel baja de unos 250 px a unos 150 px en escritorio (dibujo de 250 px de ancho, titular de 28 px, menos relleno). La ruta se sigue abriendo desde la columna «Rutas» y la tarjeta de la práctica asignada.
+- Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
+- Validación: 115 pruebas y build correctos; revisado en escritorio y sin errores en consola.

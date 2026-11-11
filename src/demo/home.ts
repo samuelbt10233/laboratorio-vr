@@ -2,7 +2,7 @@ import { readResult } from '../labs/cinco-reglas/result';
 import { subjectEntries } from '../subjects';
 /** Start page of the ESSA demo: routes, the assigned practice, classes and the trainee's progress. */
 export interface HomeActions {openSubject(id:string):void;openReading(id:string):void}
-const ASSIGNED='distribucion-cinco-reglas';
+const ASSIGNED='distribucion-cinco-reglas',ASSIGNED_ROUTE='distribucion';
 const chevron='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>';
 const el=<K extends keyof HTMLElementTagNameMap>(tag:K,cls?:string,text?:string)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;};
 function column(title:string,onTitle?:()=>void){
@@ -15,9 +15,19 @@ function row(list:HTMLElement,title:string,detail:string,onClick:()=>void){
   b.querySelector('strong')!.textContent=title;b.querySelector('small')!.textContent=detail;b.onclick=onClick;li.append(b);list.append(li);
 }
 const minutes=(s:number)=>`${Math.floor(s/60)} min ${String(s%60).padStart(2,'0')} s`;
-export function renderHome(host:HTMLElement,actions:HomeActions){
+/** Greeting for the demo profile and the route it is assigned. */
+function renderBanner(banner:HTMLElement,actions:HomeActions,role:string|undefined,routeTitle:string){
+  const supervisor=role==='supervisora';
+  const copy=el('div','home-banner-copy');
+  copy.append(el('span','home-banner-role',supervisor?'Supervisora, jefa de cuadrilla':'Técnico liniero'),el('h2','',supervisor?'Hola, Laura':'Hola, Andrés'),el('p','',`${supervisor?'Ruta de tu cuadrilla':'Tu ruta asignada'}: ${routeTitle}`));
+  const open=el('button','home-banner-action','Abrir ruta');open.type='button';open.onclick=()=>actions.openSubject(ASSIGNED_ROUTE);
+  banner.replaceChildren(copy,open);
+}
+export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
   host.replaceChildren();
   const subjects=subjectEntries(null);
+  const banner=document.querySelector<HTMLElement>('.home-banner');
+  if(banner)renderBanner(banner,actions,role,subjects.find(s=>s.subjectId===ASSIGNED_ROUTE)?.title??'');
   const routes=column('Rutas',()=>actions.openSubject(subjects[0].subjectId));
   for(const s of subjects)row(routes.list,s.title,s.meta[0],()=>actions.openSubject(s.subjectId));
   const classes=subjects.flatMap(s=>subjectEntries(s.subjectId)).filter(e=>e.kind==='class'&&!e.planned&&e.classId!=='industrial-torno');

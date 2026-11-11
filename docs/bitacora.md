@@ -266,3 +266,8 @@ Formato:
 - Qué: a petición del responsable, el inicio pierde la píldora «Preparado para ESSA» y gana un panel azul oscuro (#123a56) sin texto encima de «Tu capacitación». Es la base sobre la que se añadirán, poco a poco, elementos que den personalidad a la página. Solo se ve en el inicio; las páginas de ruta conservan su encabezado.
 - Archivos: `src/template.ts` (elemento `.home-banner`) y `src/essa-minimal.css`.
 - Validación: 115 pruebas, build correcto, revisado en escritorio y sin errores en consola.
+
+## 2026-11-11 · Claude Code · Saludo y ruta en el panel del inicio
+- Qué: el panel azul del inicio muestra el perfil («Técnico liniero» o «Supervisora, jefa de cuadrilla»), el saludo («Hola, Andrés» o «Hola, Laura»), la ruta («Tu ruta asignada» o «Ruta de tu cuadrilla: Trabajo seguro en redes de distribución») y un botón blanco «Abrir ruta». Cambia al cambiar de perfil.
+- Archivos: `src/demo/home.ts` (`renderBanner`, `renderHome` recibe el rol), `src/main.ts` (pasa `app.dataset.demoRole`), `src/template.ts` y `src/essa-minimal.css`.
+- Validación: 115 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal), con los dos perfiles; el botón abre la ruta. Sin errores en consola.

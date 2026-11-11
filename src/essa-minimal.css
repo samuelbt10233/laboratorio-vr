@@ -184,3 +184,11 @@ html body #main-menu.home-on .home-banner{display:block;height:200px;margin:0 0 
 html body #main-menu.home-on .menu-hero{padding-top:24px}
 html body #main-menu.home-on .menu-kicker{display:none}
 @media (max-width:900px){html body #main-menu.home-on .home-banner{height:140px;margin-bottom:28px}}
+html body #main-menu.home-on .home-banner{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;height:auto;min-height:200px;padding:32px 40px;box-sizing:border-box;color:#fff;text-align:left}
+html body .home-banner-role{display:block;font-size:14px;color:#b7cad8}
+html body .home-banner h2{margin:6px 0 0;font-size:32px;font-weight:600;letter-spacing:-.01em;color:#fff}
+html body .home-banner p{margin:8px 0 0;font-size:16px;color:#dbe6ee}
+html body .home-banner-action{flex:none;padding:10px 18px;border:0;border-radius:8px;background:#fff;color:#123a56;font:600 15px var(--m-font);cursor:pointer}
+html body .home-banner-action:hover{background:#e8eff4}
+html body .home-banner-action:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (max-width:900px){html body #main-menu.home-on .home-banner{flex-direction:column;align-items:flex-start;min-height:0;height:auto;padding:24px}html body .home-banner h2{font-size:26px}}

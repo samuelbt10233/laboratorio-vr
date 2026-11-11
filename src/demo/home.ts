@@ -1,22 +1,11 @@
 import { readResult } from '../labs/cinco-reglas/result';
 import { moduleProgress, myModules, pendingActivities } from './asignaciones';
+import { POLE } from './pole';
 /** Start page of the ESSA demo: active modules, pending activities with review dates, and the trainee's progress. */
 export interface HomeActions {openSubject(id:string):void;openReading(id:string):void;openModules():void}
 const chevron='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>';
 const el=<K extends keyof HTMLElementTagNameMap>(tag:K,cls?:string,text?:string)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;};
 const minutes=(s:number)=>`${Math.floor(s/60)} min ${String(s%60).padStart(2,'0')} s`;
-/** Line drawing of a distribution pole with a transformer; decoration only. */
-const POLE=`<svg viewBox="0 0 340 170" fill="none" stroke-linecap="round" stroke-linejoin="round">
-<path d="M0 26 Q60 44 130 30M210 30Q280 44 340 26M0 16Q85 34 170 18Q255 34 340 16" stroke="#5f86a3" stroke-width="1.5"/>
-<path d="M170 34V170M120 40H220M130 40V30M210 40V30M170 34V18" stroke="#9db8cc" stroke-width="3"/>
-<circle cx="130" cy="29" r="3" fill="#123a56" stroke="#cfdde8" stroke-width="2"/><circle cx="210" cy="29" r="3" fill="#123a56" stroke="#cfdde8" stroke-width="2"/><circle cx="170" cy="17" r="3" fill="#123a56" stroke="#cfdde8" stroke-width="2"/>
-<path d="M170 78H184M170 112H184" stroke="#9db8cc" stroke-width="2.5"/>
-<rect x="184" y="68" width="40" height="54" rx="5" stroke="#cfdde8" stroke-width="2.5"/>
-<path d="M194 76V114M204 76V114M214 76V114" stroke="#7fa3bf" stroke-width="1.5"/>
-<path d="M196 68V58M212 68V58M212 58Q226 44 210 30" stroke="#cfdde8" stroke-width="2"/>
-<path d="M170 128L180 145H160Z" stroke="#f2c230" stroke-width="2"/><path d="M170 134V139" stroke="#f2c230" stroke-width="2"/>
-<path d="M40 169H300" stroke="#5f86a3" stroke-width="1.5"/>
-</svg>`;
 const longDate=(d:Date)=>d.toLocaleDateString('es-CO',{day:'numeric',month:'long'});
 const shortDate=(d:Date)=>d.toLocaleDateString('es-CO',{day:'numeric',month:'short'}).replace('.','');
 function dueIn(review:Date,today:Date){const days=Math.round((review.getTime()-today.getTime())/864e5);return days<=0?'Hoy':days===1?'Mañana':`En ${days} días`;}

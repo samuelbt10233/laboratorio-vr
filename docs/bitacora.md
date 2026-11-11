@@ -308,3 +308,8 @@ Formato:
 ## 2026-11-11 · Claude Code · Panel azul con el ancho de los paneles
 - Qué: la cabecera del inicio tenía un ancho fijo de 1040 px heredado del diseño anterior, más corto que los paneles de abajo. Ahora usa el mismo ancho máximo (1200 px) y el mismo centrado que el resto. Archivo: `src/essa-minimal.css`.
 - Validación: 119 pruebas y build correctos. Bordes idénticos a 1440 px (280→1392), 1920 px (504→1648) y 375 px (16→359), sin desplazamiento horizontal.
+
+## 2026-11-11 · Claude Code · Login con el diseño del inicio
+- Qué: a petición del responsable, la entrada adopta el lenguaje del inicio. A la izquierda, un panel azul oscuro (#123a56) con la marca, «Preparado para ESSA», el titular, los tres pasos numerados y el dibujo del poste. A la derecha, una tarjeta blanca con «Datos de demostración», el título con la misma línea que las secciones del inicio y los dos perfiles como filas con avatar, nombre, cargo y chevrón. En móvil se apilan; el panel pierde los pasos y el dibujo.
+- Archivos: `src/demo/entry.ts` y `src/demo/entry.css` (reescrita; ahora concentra todos los estilos del login), `src/demo/pole.ts` (el dibujo, compartido con `home.ts`) y `src/essa-minimal.css` (se quitan las reglas de login que antes lo sobrescribían).
+- Validación: 119 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal); entrar como técnico, reabrir la entrada y cambiar a supervisora funciona. Sin errores en consola.

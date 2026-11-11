@@ -66,23 +66,7 @@ html body .atlas-primary,html body .start-tutorial{background:var(--m-accent);bo
 html body .atlas-primary:hover,html body .start-tutorial:hover{background:#163e5b}
 html body .study-facts>span{display:none}
 
-/* Sign-in: the same quiet system. */
-html body .demo-entry{background:var(--m-page);color:var(--m-ink);font-family:var(--m-font);gap:6vw}
-html body .demo-entry-brand{font-size:18px;font-weight:600}
-html body .demo-entry-kicker{margin-top:56px;font-size:13px;font-weight:500;letter-spacing:0;color:var(--m-muted)}
-html body .demo-entry h1{font-size:clamp(30px,3.4vw,46px);font-weight:600;letter-spacing:-.02em;line-height:1.12}
-html body .demo-entry-intro>p:not(.demo-entry-kicker){font-size:16px;color:var(--m-muted)}
-html body .demo-entry-route{margin:28px 0 0;padding:0 0 0 20px;font-size:14px;line-height:2;color:var(--m-muted)}
-html body .demo-entry-card{border:1px solid var(--m-line);border-radius:10px;background:var(--m-surface);box-shadow:none}
-html body .demo-entry-badge{background:#fdf3d0;color:#6b5310;border:0;border-radius:4px}
-html body .demo-entry-card button{border:1px solid var(--m-line);border-radius:8px;background:var(--m-surface);box-shadow:none}
-html body .demo-entry-card button:hover{border-color:var(--m-accent);background:var(--m-accent-soft)}
-html body .demo-avatar{background:var(--m-accent-soft);color:var(--m-accent);font-weight:600}
 html body h1,html body h2,html body h3{font-family:var(--m-font)}
-html body .demo-entry-card button{display:grid;grid-template-columns:auto 1fr;gap:14px;text-align:left;justify-items:start}
-html body .demo-entry-card p,html body .demo-entry-card small,html body .demo-entry-card .demo-entry-note{color:var(--m-muted)}
-html body .demo-entry-card h2{font-size:22px;font-weight:600}
-html body .demo-entry-card button>span:nth-child(2){justify-self:start;margin:0;text-align:left}
 html body .atlas-header .nav-item:before,html body .atlas-header .nav-item[data-nav-filter]:before,html body .atlas-header #welcome-nav:before,html body .atlas-header .subject-nav:before{content:none;display:none}
 html body #main-menu.menu-page{max-width:960px;margin:0;padding:8px 48px 64px}
 html body .app-content{background:var(--m-page);min-height:100dvh}

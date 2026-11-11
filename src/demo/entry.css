@@ -29,6 +29,7 @@ html body .demo-profile{border:1px solid var(--m-line);border-radius:6px;backgro
   html body .demo-entry{grid-template-columns:1fr;align-content:start}
   html body .demo-entry-panel{min-height:0;gap:20px;padding:24px}
   html body .demo-entry h1{font-size:28px}
+  html body .demo-entry-art{display:none}
   html body .demo-entry-side{padding:0}
   html body .demo-entry-card{max-width:none;padding:24px}
 }

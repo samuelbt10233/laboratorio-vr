@@ -37,6 +37,7 @@ import { movePartOnTable, questLayout } from './quest-layout';
 import './essa-minimal.css';
 import { renderHome } from './demo/home';
 import { renderModules } from './demo/modules';
+import { renderModulePage } from './demo/module-page';
 import { myModules, openModules } from './demo/asignaciones';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
@@ -351,6 +352,7 @@ function renderCatalogue(){
   $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
   const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading,openModules:()=>navigateCatalogue('modules')},app.dataset.demoRole);
   $('#main-menu').classList.toggle('modules-view',!subject&&catalogueFilter==='modules');const modulesPage=!subject&&catalogueFilter==='modules'&&!query;$('#main-menu').classList.toggle('modules-on',modulesPage);if(modulesPage)renderModules($('#modules-dashboard'),openSubject);
+  $('#main-menu').classList.toggle('module-view',!!subject);const modulePage=!!subject&&!query;$('#main-menu').classList.toggle('module-on',modulePage);if(modulePage)renderModulePage($('#module-dashboard'),subject!.id,{openReading,openFree:()=>openLab('free')});
   const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar un módulo o una clase';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
   document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=!subject&&button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }
@@ -399,7 +401,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-entry-filter]').forEach(butt
 $('#browse-labs').onclick=()=>{const heading=$('#catalogue-title');heading.tabIndex=-1;heading.focus({preventScroll:true});heading.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});};
 $('#quick-search').onclick=focusSearch;
 $('#reset-catalogue').onclick=()=>{catalogueFilter='all';entryFilter='all';$<HTMLInputElement>('#experience-search').value='';renderCatalogue();};
-$('#catalogue-home').onclick=()=>navigateCatalogue('all');
+$('#catalogue-home').onclick=()=>navigateCatalogue('modules');
 for(const [label,modules] of [['Mis módulos',myModules()],['Módulos abiertos',openModules()]] as const){
   const heading=document.createElement('span');heading.className='portal-nav-label';heading.textContent=label;$('#laboratory-nav').append(heading);
   for(const subject of modules){const button=document.createElement('button');button.className='nav-item subject-nav';button.textContent=subject.title;button.dataset.subjectNav=subject.subjectId;button.onclick=()=>openSubject(subject.subjectId);$('#laboratory-nav').append(button);}

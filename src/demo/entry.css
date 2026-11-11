@@ -7,10 +7,6 @@ html body .demo-entry-brand{font-size:18px;font-weight:600;color:#fff}
 html body .demo-entry-kicker{font-size:14px;color:#b7cad8}
 html body .demo-entry-intro{max-width:520px}
 html body .demo-entry h1{margin:0;font-size:clamp(32px,3.4vw,46px);font-weight:600;line-height:1.12;letter-spacing:-.02em;color:#fff}
-html body .demo-entry-intro>p{margin:16px 0 0;font-size:17px;line-height:1.6;color:#dbe6ee}
-html body .demo-entry-route{display:flex;flex-direction:column;gap:12px;margin:32px 0 0;padding:0;list-style:none;counter-reset:step}
-html body .demo-entry-route li{display:flex;align-items:center;gap:12px;font-size:15px;color:#dbe6ee;counter-increment:step}
-html body .demo-entry-route li::before{content:counter(step);display:inline-flex;align-items:center;justify-content:center;flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid #7fa3bf;font-size:13px;font-weight:600;color:#fff}
 html body .demo-entry-art{align-self:flex-end;width:min(420px,80%);line-height:0;-webkit-mask-image:linear-gradient(to right,transparent,#000 30%);mask-image:linear-gradient(to right,transparent,#000 30%)}
 html body .demo-entry-art svg{display:block;width:100%;height:auto}
 html body .demo-entry-side{display:flex;align-items:center;justify-content:center;padding:32px 24px}
@@ -28,14 +24,11 @@ html body .demo-entry-card strong{font-size:16px;font-weight:600}
 html body .demo-entry-card small{margin-top:3px;font-size:13px;color:var(--m-muted)}
 html body .demo-avatar{display:inline-flex;align-items:center;justify-content:center;flex:none;width:44px;height:44px;border-radius:50%;background:var(--m-accent-soft);color:var(--m-accent);font-size:14px;font-weight:600}
 html body .demo-entry-chevron{flex:none;width:16px;height:16px;fill:none;stroke:var(--m-muted);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-html body .demo-entry-card .demo-entry-note{margin:20px 0 0;font-size:13px;color:var(--m-muted)}
 html body .demo-profile{border:1px solid var(--m-line);border-radius:6px;background:var(--m-surface);padding:8px 12px;color:var(--m-muted);cursor:pointer}
 @media (max-width:860px){
   html body .demo-entry{grid-template-columns:1fr;align-content:start}
   html body .demo-entry-panel{min-height:0;gap:20px;padding:24px}
   html body .demo-entry h1{font-size:28px}
-  html body .demo-entry-intro>p{font-size:15px}
-  html body .demo-entry-route,html body .demo-entry-art{display:none}
   html body .demo-entry-side{padding:0}
   html body .demo-entry-card{max-width:none;padding:24px}
 }

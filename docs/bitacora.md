@@ -246,3 +246,10 @@ Formato:
 - Entrada por perfiles ficticios técnico/supervisora, cambio de perfil, portal ESSA y catálogo enfocado. Diseño final blanco y azul con lateral fija, búsqueda y tarjetas compactas.
 - Validación final: 115 pruebas superadas, compilación y git diff --check correctos; portal revisado en navegador, sin errores de consola. Evidencia docs/evidencia-d1/portal-final.png.
 - D1 hecha en rama codex/d1-login; integración y despliegue pendientes del responsable. D4 implementará el panel de supervisora; actualmente ambos perfiles acceden al catálogo. No probado en Quest.
+
+## 2026-11-11 · Claude Code · Portal minimalista
+- Qué: a petición del responsable, el portal pasa a un diseño sobrio y fácil de usar. Una tipografía (IBM Plex Sans), fondo gris claro, superficies blancas, un solo azul para acciones y lugar actual, y un amarillo de seguridad que solo marca la ruta asignada. Se quitan la búsqueda doble, el titular a dos colores, la ilustración, el bloque «Comprende. Experimenta. Descubre.», la nota de PC, la bienvenida y los consejos de la portada, las etiquetas en mayúsculas y los números duplicados de la lectura. Las rutas son filas con título, descripción, datos y un botón con la acción («Abrir ruta», «Empezar»).
+- Textos: «Tu capacitación», «Rutas de capacitación», menú «Capacitación / Rutas / Ayuda · Primeros pasos». En la entrada, sin mayúsculas ni flechas; el botón de perfil muestra el nombre y anuncia «cambiar perfil».
+- Archivos: `src/essa-minimal.css` (nuevo, se carga al final), textos en `src/main.ts`, `src/template.ts` y `src/demo/entry.ts` (D1 de Codex, ya integrada), fuente en `index.html`.
+- Validación: 115 pruebas, build correcto; revisado en escritorio (1440) y móvil (375, sin desplazamiento horizontal): entrada, portal, ruta y lectura, sin errores en consola. La práctica 3D y el laboratorio de electrónica no cambian.
+- Pendiente: D4 y D5. La página «Prepara tu espacio» de electrónica conserva su estilo anterior salvo botones y etiquetas.

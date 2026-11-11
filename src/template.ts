@@ -4,11 +4,11 @@ const switchIcon = '<svg viewBox="0 0 32 24" aria-hidden="true"><path d="M1 16h7
 export const layout = `
 <header class="atlas-header" aria-label="Navegación principal">
   <a class="brand" href="#" aria-label="Umbral Labs"><span class="brand-symbol">u</span><span class="sidebar-brand-name">umbral<span class="brand-tag">labs</span></span></a>
-  <nav aria-label="Experiencias de aprendizaje"><span class="portal-nav-label">PLATAFORMA</span>
+  <nav aria-label="Experiencias de aprendizaje"><span class="portal-nav-label">Capacitación</span>
     <button class="nav-item active" data-nav-filter="all" aria-current="page">Inicio</button>
-    <div id="laboratory-nav"></div><span class="portal-nav-label">COMIENZA AQUÍ</span>
+    <div id="laboratory-nav"></div><span class="portal-nav-label">Ayuda</span>
     
-    <button class="nav-item" id="welcome-nav">Bienvenida</button>
+    <button class="nav-item" id="welcome-nav">Primeros pasos</button>
   </nav>
   <button id="quick-search" class="atlas-search" aria-label="Buscar experiencias" title="Buscar experiencias (Ctrl K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg><span>Buscar</span><kbd>Ctrl K</kbd></button>
 <div class="portal-sidebar-footer"><span class="online-dot"></span> Aprendizaje en tu navegador<small>PC · Meta Quest</small></div></header>

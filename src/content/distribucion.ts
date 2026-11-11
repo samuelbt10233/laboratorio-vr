@@ -16,7 +16,7 @@ export const distribucion:readonly LearningContent[]=[
     ],
   },
   {
-    id:'distribucion-epp',runtimeClassId:null,subjectId:'distribucion',
+    id:'distribucion-epp',runtimeClassId:null,labId:'epp',subjectId:'distribucion',
     title:'Equipo de protección personal y su inspección',
     description:'Selección, inspección y uso del equipo de protección personal y de los elementos dieléctricos antes de intervenir la red.',
     duration:'8 min',laboratoryTitle:'Inspección del equipo de protección antes de una maniobra',
@@ -25,7 +25,7 @@ export const distribucion:readonly LearningContent[]=[
       {title:'Equipo básico y equipo dieléctrico',text:'El equipo básico incluye casco con barbuquejo, gafas o careta, ropa ignífuga, botas dieléctricas y protección auditiva cuando corresponde. Para trabajos cerca de partes energizadas se suman guantes dieléctricos de la clase adecuada a la tensión, con su guante protector de cuero, mangas y elementos aislantes.',example:'Error frecuente: usar guantes dieléctricos sin el guante protector exterior. El cuero evita cortes y abrasiones que dañan el aislamiento.'},
       {title:'Inspección antes de cada uso',text:'Cada guante se revisa visualmente y se infla para detectar poros, cortes o zonas resecas. Se comprueba la fecha del último ensayo dieléctrico en su marcación. El casco, el arnés y la pértiga se revisan en busca de fisuras, deformaciones o suciedad conductora.',example:'Resultado esperado: el guante inflado conserva el aire, la marcación indica un ensayo vigente y no presenta daños visibles.'},
       {title:'Retiro de servicio y almacenamiento',text:'Un elemento con daños, sin marcación legible o con el ensayo vencido se retira de servicio de inmediato y se reporta. El equipo dieléctrico se guarda limpio, seco y en su bolsa, lejos del sol, de aceites y de herramientas con filo.',example:'Error frecuente: guardar los guantes doblados dentro de la caja de herramientas. Los pliegues y los objetos cortantes deterioran el aislamiento.'},
-      {title:'Alcance de la clase',text:'Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA. Las clases de guantes, los intervalos de ensayo y el equipo exigido para cada tarea los define el procedimiento de la empresa.',example:'La práctica en 3D de esta clase está en preparación: el participante inspeccionará un juego de equipo y separará los elementos defectuosos.'},
+      {title:'Alcance de la clase',text:'Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA. Las clases de guantes, los intervalos de ensayo y el equipo exigido para cada tarea los define el procedimiento de la empresa.',example:'En la práctica: inspeccionar seis elementos en el banco, inflar los guantes dieléctricos y retirar los defectuosos. Cada error registra el riesgo asociado.'},
     ],
   },
   {

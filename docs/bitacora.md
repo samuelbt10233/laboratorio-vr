@@ -358,3 +358,11 @@ Formato:
 - Textos: los módulos cuentan «N clases» en vez de «clases con práctica en 3D»; las clases sin laboratorio muestran «Lectura y evaluación» y «La práctica en 3D de esta clase está en preparación.»; la nota RETIE de la evaluación se extiende a operación y medida.
 - Validación: 131 pruebas y build correctos. En el navegador el inicio de Andrés queda igual (2 módulos, 3 pendientes) y un resultado antiguo de «Cinco reglas» sigue contando.
 - Pendiente: merge del responsable; después, contenido de cada agente según el plan.
+
+## 2026-11-11 · Claude Code · C1 clases de distribución y operación
+- Qué: las 8 clases de Claude según `docs/plan-clases.md`, con lectura de 5 secciones en tono profesional, 2 esquemas por clase y evaluación de 3 preguntas. Distribución: equipo de protección personal, distancias mínimas de seguridad, análisis de trabajo seguro y permiso de trabajo, trabajo en alturas. Operación (módulo nuevo): maniobra de cortacircuitos, transformador de distribución, puesta a tierra y su medición, inspección de redes. Las respuestas correctas se reparten entre las opciones para que no sean predecibles.
+- Criterio: contenido didáctico, sin valores normativos (distancias, resistencias, clases de guantes); cada clase cierra con «Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA.»
+- Esquemas: 16 SVG nuevos con Schemdraw en `scripts/esquemas.py` → `public/esquemas/`, enlazados en `src/demo/figuras-{distribucion,operacion}.ts`.
+- Archivos: `src/content/{distribucion,operacion}.ts`, `src/demo/evaluaciones-{distribucion,operacion}.ts`, `src/demo/figuras-{distribucion,operacion}.ts`, `scripts/esquemas.py`, `public/esquemas/`, tablero de `docs/plan-clases.md`.
+- Validación: 131 pruebas y build correctos. En el navegador: Andrés ve 3 módulos activos y 10 actividades; «Puesta a tierra» muestra sus esquemas y, al aprobar la evaluación, el módulo de operación pasa a «1 de 4» con la clase completada.
+- Pendiente: los laboratorios 3D de las clases marcadas con ★ (equipo de protección, distancias, cortacircuitos); validación de contenidos con ESSA.

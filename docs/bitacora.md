@@ -253,3 +253,11 @@ Formato:
 - Archivos: `src/essa-minimal.css` (nuevo, se carga al final), textos en `src/main.ts`, `src/template.ts` y `src/demo/entry.ts` (D1 de Codex, ya integrada), fuente en `index.html`.
 - Validación: 115 pruebas, build correcto; revisado en escritorio (1440) y móvil (375, sin desplazamiento horizontal): entrada, portal, ruta y lectura, sin errores en consola. La práctica 3D y el laboratorio de electrónica no cambian.
 - Pendiente: D4 y D5. La página «Prepara tu espacio» de electrónica conserva su estilo anterior salvo botones y etiquetas.
+
+## 2026-11-11 · Claude Code · Inicio tipo panel
+- Qué: sobre el portal minimalista, el inicio adopta la distribución de referencia que pidió el responsable (panel de administración). Lateral con buscador arriba, iconos de línea y texto más grande. Inicio centrado con píldora «Preparado para ESSA», titular grande y buscador ancho. Debajo, tres columnas con chevrones: «Rutas», «Práctica asignada» (tarjeta de las cinco reglas, marcada en amarillo, con «Empezar» o «Completada · repetir») y «Clases». Al final, «Tu avance» con tres cifras: prácticas completadas, errores y tiempo del último intento.
+- «Tu avance» lee el resultado real de la práctica (`readResult` de `src/labs/cinco-reglas/result.ts`) y lleva el rótulo «Datos de esta sesión de demostración». Sin intento, muestra «—».
+- El buscador del inicio ahora también encuentra clases, no solo rutas («ohm», «reglas»). El torno sigue oculto.
+- Archivos: `src/demo/home.ts` (nuevo), `src/essa-minimal.css`, `src/main.ts` (render del inicio y búsqueda), `src/template.ts` (contenedor `#home-dashboard`, menú).
+- Validación: 115 pruebas, build correcto; revisado en escritorio (1440) y móvil (375, sin desplazamiento horizontal). La tarjeta asignada abre la lectura, las filas abren la ruta e «Inicio» vuelve al panel.
+- Pendiente: D4 (panel de supervisora, puede reutilizar `.home-stat` y `.home-col`) y D5.

@@ -29,7 +29,7 @@ function renderBanner(banner:HTMLElement,role:string|undefined,pending:number,ne
   const art=el('div','home-banner-art');art.setAttribute('aria-hidden','true');art.innerHTML=POLE;
   banner.replaceChildren(copy,art);
 }
-function section(title:string){const col=el('section','home-col');col.append(el('h2','home-col-title',title));return col;}
+function section(title:string,count:number){const col=el('section','home-col'),head=el('h2','home-col-title',title);head.append(el('span','home-count',String(count)));col.append(head);return col;}
 export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
   host.replaceChildren();
   const today=new Date();today.setHours(0,0,0,0);
@@ -38,7 +38,7 @@ export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
   const banner=document.querySelector<HTMLElement>('.home-banner');
   if(banner)renderBanner(banner,role,pending.length,pending[0]?.review);
 
-  const modules=section('Módulos activos');const moduleList=el('ul','home-list home-modules');
+  const modules=section('Módulos activos',myModules().length);const moduleList=el('ul','home-list home-modules');
   let done=0,total=0;
   for(const m of myModules()){
     const p=moduleProgress(m.subjectId,today,practiceDone);done+=p.done;total+=p.total;
@@ -52,7 +52,7 @@ export function renderHome(host:HTMLElement,actions:HomeActions,role?:string){
   }
   modules.append(moduleList);
 
-  const activities=section('Actividades pendientes');const list=el('ul','home-list');
+  const activities=section('Actividades pendientes',pending.length);const list=el('ul','home-list');
   pending.forEach((a,i)=>{
     const li=el('li'),b=el('button','home-row home-activity');b.type='button';if(i===0)b.classList.add('is-next');b.onclick=()=>actions.openReading(a.classId);
     const text=el('span');text.append(el('strong','',a.title),el('small','',a.moduleTitle));

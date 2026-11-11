@@ -221,3 +221,5 @@ html body .home-due{flex:none;align-items:flex-end;text-align:right}
 html body .home-row .home-due strong{font-size:14px;font-weight:500}
 html body .home-empty{padding:14px 4px;font-size:14px;color:var(--m-muted)}
 @media (max-width:900px){html body .home-grid{grid-template-columns:1fr;gap:32px}}
+html body .home-col-title{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding:0 0 12px;border-bottom:2px solid var(--m-ink);font-size:21px;font-weight:600;letter-spacing:-.01em;color:var(--m-ink)}
+html body .home-count{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 8px;border-radius:999px;background:var(--m-accent);color:#fff;font-size:14px;font-weight:600}

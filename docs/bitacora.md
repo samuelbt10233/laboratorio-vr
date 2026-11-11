@@ -289,3 +289,7 @@ Formato:
 - Archivos: `src/demo/home.ts`, `src/demo/asignaciones.ts`, `src/main.ts`, `src/template.ts`, `src/essa-minimal.css`.
 - Validación: 119 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal), con y sin la práctica aprobada; el módulo abre su página y la actividad abre la lectura. Sin errores en consola.
 - Pendiente: D4 (el panel de la supervisora puede reutilizar `asignaciones.ts`) y D5.
+
+## 2026-11-11 · Claude Code · Títulos del inicio más visibles
+- Qué: «Módulos activos» y «Actividades pendientes» pasan a 21 px en negrita, con una línea oscura debajo y un contador azul (2 y 3). Archivos: `src/demo/home.ts` y `src/essa-minimal.css`.
+- Validación: 119 pruebas y build correctos; revisado en escritorio y sin errores en consola.

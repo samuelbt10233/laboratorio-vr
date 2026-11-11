@@ -63,23 +63,23 @@ export const layout = `
 <main id="launch-view" class="menu-page launch-page" hidden>
   <div class="atlas-launch-path"><button id="launch-back" class="atlas-text-button">← Volver al catálogo</button><span>Antes de empezar</span></div>
   <div class="atlas-launch-layout">
-    <section class="atlas-class-intro" aria-labelledby="launch-title"><span class="welcome-eyebrow" id="launch-category">CLASE GUIADA</span><h1 id="launch-title"></h1><p id="launch-description"></p><div class="launch-meta" id="launch-meta"></div><div class="atlas-class-preview">${platformArtwork('class-preview')}<span>ILUSTRACIÓN DEL LABORATORIO</span></div><div class="atlas-outcomes"><h2>Lo que vas a descubrir</h2><p id="launch-outcomes"></p></div></section>
+    <section class="atlas-class-intro" aria-labelledby="launch-title"><span class="welcome-eyebrow" id="launch-category">CLASE GUIADA</span><h1 id="launch-title"></h1><p id="launch-description"></p><div class="launch-meta" id="launch-meta"></div><div class="atlas-class-preview">${platformArtwork('class-preview')}<span>ILUSTRACIÓN DEL LABORATORIO</span></div><div class="atlas-outcomes"><h2>Contenido de la práctica</h2><p id="launch-outcomes"></p></div></section>
     <aside class="launch-card" aria-labelledby="launch-card-title">
-      <span class="welcome-eyebrow">A TU RITMO, DESDE EL PRINCIPIO</span><h2 id="launch-card-title">Prepara tu espacio.</h2><p>Tu guía esperará hasta que estés listo. Acomódate antes de comenzar.</p>
+      <span class="welcome-eyebrow">ANTES DE INICIAR</span><h2 id="launch-card-title">Preparación del espacio</h2><p>La práctica inicia cuando el participante lo indique. Se recomienda disponer el espacio antes de comenzar.</p>
       <div class="atlas-device" id="launch-device" role="status">Comprobando el modo de inicio…</div>
       <button id="start-simulation" class="start-tutorial" disabled>Iniciar clase</button>
       <button id="launch-restart" class="atlas-text-button" hidden>Empezar desde el principio</button>
       <p id="launch-error" role="alert" hidden></p><button id="launch-window" hidden>Continuar en esta ventana</button>
-      <p class="launch-note"><span aria-hidden="true">◌</span> La simulación y el audio esperan hasta que pulses iniciar.</p>
-      <div class="atlas-launch-steps"><span class="welcome-eyebrow">ASÍ SERÁ TU EXPERIENCIA</span><ol class="launch-steps"><li>Entra al entorno 3D en tu PC o tus gafas.</li><li>Escucha al guía y realiza la actividad.</li><li>Recibe confirmación y continúa.</li></ol></div>
+      <p class="launch-note"><span aria-hidden="true">◌</span> La simulación y el audio comienzan al pulsar «Iniciar».</p>
+      <div class="atlas-launch-steps"><span class="welcome-eyebrow">DESARROLLO DE LA PRÁCTICA</span><ol class="launch-steps"><li>Ingreso al entorno 3D en computador o gafas de realidad virtual.</li><li>Instrucciones del guía y ejecución de la actividad.</li><li>Confirmación de cada paso antes de continuar.</li></ol></div>
     </aside>
   </div>
   <footer><span>UMBRAL LABS <i></i> Aprender haciendo, desde cualquier lugar.</span><span>Versión de demostración</span></footer>
 </main>
 <main id="lab-view" hidden>
-  <div class="breadcrumb">Laboratorios <span>›</span> Física e ingeniería <span>›</span><strong>Electrónica básica</strong></div>
+  <div class="breadcrumb">Módulos <span>›</span> Fundamentos eléctricos <span>›</span><strong>Laboratorio de circuitos</strong></div>
   <section class="heading">
-    <div class="heading-copy"><div class="eyebrow"><span></span> LABORATORIO 01</div><h1>Circuitos eléctricos<span>.</span></h1><p>Conecta ideas. Construye, experimenta y descubre cómo fluye la corriente.</p></div>
+    <div class="heading-copy"><div class="eyebrow"><span></span> LABORATORIO DE CIRCUITOS</div><h1>Circuitos eléctricos<span>.</span></h1><p>Práctica en 3D con circuitos de corriente continua.</p></div>
     <div class="heading-actions"><div class="session-meta"><span>Corriente continua</span><i></i><span>Nivel introductorio</span></div><div class="mode" aria-label="Modo de práctica"><button id="class-mode" class="active" aria-pressed="true"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m3 5 7-3 7 3-7 3-7-3Zm2 2v6l5 3 5-3V7M17 6v6"/></svg>Clase guiada</button><button id="free-mode" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 7 4v8l-7 4-7-4V6l7-4Zm-7 4 7 4 7-4m-7 4v8"/></svg>Modo libre</button></div></div>
   </section>
   <p id="xr-status" class="xr-status" role="status">Comprobando compatibilidad con VR…</p>

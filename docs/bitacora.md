@@ -382,3 +382,11 @@ Formato:
 - Archivos: `src/labs/epp/{procedure,scene,index}.ts`, `src/labs/epp/epp.css`, `src/epp-procedure.test.ts`, `src/labs/registry.ts` (una línea), `src/content/distribucion.ts`.
 - Validación: 148 pruebas y build correctos. Recorrido completo en el navegador con dos errores; constancia y resultado guardado.
 - Pendiente: laboratorio de distancias mínimas de seguridad.
+
+## 2026-11-11 · Claude Code · Laboratorio de distancias mínimas de seguridad
+- Qué: el responsable aprobó el laboratorio 3D de «Distancias mínimas de seguridad». Instalación de una luminaria desde la canasta de un camión bajo una red energizada, en cinco pasos: identificar las partes energizadas (aparecen las zonas de peligro y de proximidad alrededor de los conductores), designar al auxiliar como observador, llevar la canasta a la posición correcta (hay tres), cubrir la fase más próxima e instalar la luminaria.
+- Errores: actuar antes de identificar la red, mover la canasta sin observador, la posición que invade la zona de peligro (la canasta sube, destello y arco; la práctica sigue), la posición que no alcanza el punto de trabajo y trabajar sin cubierta. Constancia al terminar y resultado guardado por clase.
+- Criterio: zonas a escala ilustrativa, sin valores de distancia; así lo indican la escena y la clase.
+- Archivos: `src/labs/distancias/{procedure,scene,index}.ts`, `src/distancias-procedure.test.ts`, `src/labs/registry.ts` (una línea), `src/content/distribucion.ts`, tablero de `docs/plan-clases.md`.
+- Validación: 156 pruebas y build correctos. Recorrido completo en el navegador con tres errores (invasión, posición lejana, sin cubierta); constancia y resultado guardado.
+- Pendiente: modo VR de los laboratorios nuevos; validación de contenidos con ESSA.

@@ -21,7 +21,7 @@ Reglas de contenido, iguales para los dos agentes:
 | --- | --- | --- | --- | --- |
 | Trabajo seguro en redes de distribución (`distribucion`) | `distribucion-cinco-reglas` | Las cinco reglas de oro | — | hecha |
 | | `distribucion-epp` ★ | Equipo de protección personal y su inspección | Claude | completa con laboratorio (C1) |
-| | `distribucion-distancias` ★ | Distancias mínimas de seguridad | Claude | lectura y evaluación (C1) |
+| | `distribucion-distancias` ★ | Distancias mínimas de seguridad | Claude | completa con laboratorio (C1) |
 | | `distribucion-ats` | Análisis de trabajo seguro y permiso de trabajo | Claude | lectura y evaluación (C1) |
 | | `distribucion-alturas` | Trabajo en alturas en poste | Claude | lectura y evaluación (C1) |
 | Operación y mantenimiento de la red (`operacion`) | `operacion-cortacircuitos` ★ | Maniobra de cortacircuitos con pértiga | Claude | completa con laboratorio (C1) |

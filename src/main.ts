@@ -348,7 +348,7 @@ function renderCatalogue(){
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
   $('#getting-started').hidden=!!subject||catalogueFilter!=='all'||!!query;
-  const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading},app.dataset.demoRole);
+  const home=!subject&&catalogueFilter==='all'&&!query;$('#main-menu').classList.toggle('home-on',home);if(home)renderHome($('#home-dashboard'),{openSubject,openReading,openModules:()=>navigateCatalogue('modules')},app.dataset.demoRole);
   const search=$<HTMLInputElement>('#experience-search');search.placeholder=subject?'Buscar una clase…':'Buscar un módulo o una clase';search.setAttribute('aria-label',subject?'Buscar clases de la materia':'Buscar materias');
   document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>{const active=!subject&&button.dataset.navFilter===catalogueFilter;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
 }
@@ -398,7 +398,6 @@ $('#browse-labs').onclick=()=>{const heading=$('#catalogue-title');heading.tabIn
 $('#quick-search').onclick=focusSearch;
 $('#reset-catalogue').onclick=()=>{catalogueFilter='all';entryFilter='all';$<HTMLInputElement>('#experience-search').value='';renderCatalogue();};
 $('#catalogue-home').onclick=()=>navigateCatalogue('all');
-$('#go-modules').onclick=()=>navigateCatalogue('modules');
 for(const [label,modules] of [['Mis módulos',myModules()],['Módulos abiertos',openModules()]] as const){
   const heading=document.createElement('span');heading.className='portal-nav-label';heading.textContent=label;$('#laboratory-nav').append(heading);
   for(const subject of modules){const button=document.createElement('button');button.className='nav-item subject-nav';button.textContent=subject.title;button.dataset.subjectNav=subject.subjectId;button.onclick=()=>openSubject(subject.subjectId);$('#laboratory-nav').append(button);}

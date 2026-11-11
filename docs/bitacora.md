@@ -303,3 +303,4 @@ Formato:
 - Qué: el inicio deja de mostrar el buscador y ofrece un botón «Ir a mis módulos». El buscador vive en la nueva sección general «Módulos» (filtro `modules` del catálogo), con todos los módulos y búsqueda de módulos y clases. El lateral añade «Módulos» bajo «Inicio», con icono de cuadrícula. El buscador del lateral y Ctrl+K llevan a esa sección.
 - Archivos: `src/template.ts`, `src/main.ts` y `src/essa-minimal.css`.
 - Validación: 119 pruebas y build correctos. Revisado en escritorio: el botón abre «Módulos», «ohm» encuentra la clase y Ctrl+K enfoca el buscador. Sin errores en consola.
+- Ajuste: el botón «Ir a mis módulos» pasa al panel azul (blanco, bajo el resumen) y el inicio ya no muestra «Tu capacitación» ni «Elige un módulo…»; el titular queda solo para lectores de pantalla. Todo el inicio cabe en una pantalla a 1440×900. Revisado en escritorio, sin errores en consola.

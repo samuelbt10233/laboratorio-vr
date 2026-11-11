@@ -8,7 +8,7 @@ const EVALUATIONS:Record<string,Question[]>={
   ],
   'ley-de-ohm':[
     {prompt:'Con 6 V y una resistencia de 100 Ω, ¿cuánta corriente circula?',options:['6 mA','60 mA','600 mA'],answer:1,why:'I = V / R = 6 / 100 = 0,06 A, es decir, 60 mA.'},
-    {prompt:'Si duplicas la resistencia y mantienes el voltaje, la corriente…',options:['se duplica','se reduce a la mitad','no cambia'],answer:1,why:'Con el mismo voltaje, el doble de resistencia deja pasar la mitad de corriente: de 60 a 30 mA.'},
+    {prompt:'Si se duplica la resistencia y se mantiene el voltaje, la corriente…',options:['se duplica','se reduce a la mitad','no cambia'],answer:1,why:'Con el mismo voltaje, el doble de resistencia deja pasar la mitad de corriente: de 60 a 30 mA.'},
     {prompt:'Dos resistencias de 100 Ω en serie con 6 V. ¿Qué corriente pasa por cada una?',options:['30 mA por ambas','60 mA por la primera y 0 por la segunda','30 mA por la primera y 15 mA por la segunda'],answer:0,why:'En serie la corriente no se divide ni se consume: 6 V / 200 Ω = 30 mA en las dos.'},
   ],
   'circuitos-en-paralelo':[
@@ -17,8 +17,8 @@ const EVALUATIONS:Record<string,Question[]>={
     {prompt:'Si R2 sube a 200 Ω, ¿qué pasa con la corriente por R1?',options:['Baja','Sigue en 60 mA','Sube'],answer:1,why:'R1 conserva sus 6 V y sus 100 Ω, así que sigue conduciendo 60 mA.'},
   ],
   'encuentra-el-fallo':[
-    {prompt:'La fuente indica 6 V y la corriente total es cero. ¿Qué compruebas primero?',options:['Que la fuente esté encendida','Que el camino de ida y vuelta esté cerrado','Cambiar todas las piezas a la vez'],answer:1,why:'La fuente puede tener voltaje sin corriente: lo primero es seguir el recorrido hasta el otro polo.'},
-    {prompt:'¿Cómo se repara una conexión eléctrica en la mesa?',options:['Moviendo la pieza a otro lugar','Cambiando los extremos que une el cable','Cruzando los cables en la imagen'],answer:1,why:'Lo que cuenta son los terminales que une cada cable, no la posición ni el cruce visual.'},
+    {prompt:'La fuente indica 6 V y la corriente total es cero. ¿Qué se verifica primero?',options:['Que la fuente esté encendida','Que el camino de ida y vuelta esté cerrado','Cambiar todas las piezas a la vez'],answer:1,why:'La fuente puede tener voltaje sin corriente: lo primero es seguir el recorrido hasta el otro polo.'},
+    {prompt:'¿Cómo se repara una conexión eléctrica en la mesa?',options:['Moviendo la pieza a otro lugar','Cambiando los extremos que une el cable','Cruzando los cables en la imagen'],answer:1,why:'Lo que determina la conexión son los terminales que une cada cable, no la posición ni el cruce visual.'},
     {prompt:'¿Qué orden de diagnóstico propone la clase?',options:['Cambiar varias cosas a la vez y ver qué pasa','Observar, proponer una causa, cambiar una cosa y comprobar','Reemplazar primero la fuente'],answer:1,why:'Cambiar una sola cosa cada vez permite saber qué resolvió el problema.'},
   ],
   'enciende-un-led':[

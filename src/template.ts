@@ -56,7 +56,7 @@ export const layout = `
     <section id="class-video" class="class-part"><h2 class="class-part-title"><span>1</span>Video del tema</h2><div id="class-video-slot"></div></section>
     <section id="class-reading" class="class-part"><h2 class="class-part-title"><span>2</span>Explicación</h2><nav id="study-outline" class="class-outline" aria-label="Contenido de la explicación"></nav><div id="study-sections"></div></section>
     <section id="study-practice" class="class-part"><h2 class="class-part-title"><span>3</span>Laboratorio</h2><div class="class-lab"><div><h3 id="study-lab-title"></h3><p id="study-practice-description"></p><small id="study-status"></small></div><button id="study-prepare" type="button"></button></div></section>
-    <section id="class-evaluation" class="class-part"><h2 class="class-part-title"><span>4</span>Evaluación</h2><p class="class-part-intro">Comprueba lo aprendido. Para aprobar, todas las respuestas deben ser correctas.</p><div id="class-evaluation-slot"></div></section>
+    <section id="class-evaluation" class="class-part"><h2 class="class-part-title"><span>4</span>Evaluación</h2><p class="class-part-intro">Verificación de conocimientos. Criterio de aprobación: todas las respuestas correctas.</p><div id="class-evaluation-slot"></div></section>
   </div>
 </main>
 <main id="external-lab" hidden><button id="external-back">← Volver al contenido</button><div id="external-lab-host"></div></main>

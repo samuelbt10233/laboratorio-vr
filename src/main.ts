@@ -394,7 +394,7 @@ function openReading(id:string){
   button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio':'Laboratorio en preparación';
   renderEvaluation($('#class-evaluation-slot'),content.id,content.subjectId==='distribucion'?'Preguntas didácticas de demostración. Deben validarse con el RETIE y los procedimientos de ESSA.':undefined);
   button.onclick=()=>{if(content.runtimeClassId)openLab('class',content.runtimeClassId);else if(content.labId)openExternalLab(content.labId,content.id);};
-  $('#study-practice-description').textContent=content.runtimeClassId?'Pon en práctica lo que leíste con ayuda del guía. Antes de empezar podrás preparar tu espacio.':content.labId?'Pon en práctica lo que leíste. Cada error te explica el riesgo.':'Esta materia muestra la estructura prevista. Su simulación todavía está en preparación.';
+  $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'Esta materia muestra la estructura prevista. Su simulación todavía está en preparación.';
   window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }
 $('#study-back').onclick=()=>{if(catalogueSubject)openSubject(catalogueSubject);else showMenu();};

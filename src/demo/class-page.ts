@@ -5,7 +5,7 @@ const PLAY='<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" 
 /** A placeholder that marks where the topic video will go; nothing plays. */
 export function renderVideo(host:HTMLElement,title:string){
   const frame=el('div','class-video-frame');frame.setAttribute('role','img');frame.setAttribute('aria-label',`Espacio reservado para el video de «${title}»`);
-  frame.innerHTML=PLAY;frame.append(el('strong','',title),el('span','','Video breve del tema · próximamente'));
+  frame.innerHTML=PLAY;frame.append(el('strong','',title),el('span','','Video del tema · en producción'));
   host.replaceChildren(frame);
 }
 const RESULT_KEY='umbral-demo-evaluaciones';
@@ -33,12 +33,12 @@ export function renderEvaluation(host:HTMLElement,classId:string,note?:string){
     event.preventDefault();
     if(form.classList.contains('is-checked')){form.reset();form.classList.remove('is-checked','is-passed');form.querySelectorAll('.class-question').forEach(q=>{q.classList.remove('is-right','is-wrong');q.querySelector('.class-feedback')!.textContent='';});score.textContent='';submit.textContent='Comprobar respuestas';form.querySelector<HTMLInputElement>('input')?.focus();return;}
     const answers=questions.map((_,i)=>{const picked=form.querySelector<HTMLInputElement>(`input[name="q${i}"]:checked`);return picked?Number(picked.value):null;});
-    if(answers.includes(null)){score.textContent='Responde todas las preguntas antes de comprobar.';return;}
+    if(answers.includes(null)){score.textContent='Faltan preguntas por responder.';return;}
     const result=grade(questions,answers);
     form.querySelectorAll('.class-question').forEach((set,i)=>{set.classList.add(result.results[i]?'is-right':'is-wrong');set.querySelector('.class-feedback')!.textContent=`${result.results[i]?'Correcto.':'Incorrecto.'} ${questions[i].why}`;});
     form.classList.add('is-checked');form.classList.toggle('is-passed',result.passed);
-    score.textContent=result.passed?`Aprobada: ${result.correct} de ${result.total} respuestas correctas.`:`${result.correct} de ${result.total} correctas. Para aprobar, todas deben ser correctas: revisa las explicaciones e inténtalo de nuevo.`;
-    submit.textContent='Intentar de nuevo';saveEvaluation(classId,result.correct,result.total);
+    score.textContent=result.passed?`Aprobada: ${result.correct} de ${result.total} respuestas correctas.`:`No aprobada: ${result.correct} de ${result.total} respuestas correctas. Revise las explicaciones y repita la evaluación.`;
+    submit.textContent='Repetir evaluación';saveEvaluation(classId,result.correct,result.total);
   };
   host.append(form);
 }

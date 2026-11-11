@@ -29,7 +29,7 @@ export const distribucion:readonly LearningContent[]=[
     ],
   },
   {
-    id:'distribucion-distancias',runtimeClassId:null,subjectId:'distribucion',
+    id:'distribucion-distancias',runtimeClassId:null,labId:'distancias',subjectId:'distribucion',
     title:'Distancias mínimas de seguridad',
     description:'Zonas de aproximación a partes energizadas y medidas para mantener la distancia durante todo el trabajo.',
     duration:'8 min',laboratoryTitle:'Control de distancias de seguridad en un poste',
@@ -38,7 +38,7 @@ export const distribucion:readonly LearningContent[]=[
       {title:'Zonas alrededor de una parte energizada',text:'Alrededor de cada conductor energizado se distinguen tres zonas. La zona de peligro solo admite trabajos con técnicas y equipos de trabajo en tensión. La zona de proximidad exige personal calificado y medidas de control. Fuera de ellas se trabaja sin restricciones eléctricas. El tamaño de cada zona crece con la tensión de la red.',example:'Resultado esperado: antes de subir, la cuadrilla identifica qué conductores siguen energizados y qué zona alcanza cada tarea.'},
       {title:'Herramientas, cargas y vehículos',text:'La distancia se mide desde el punto más cercano de cualquier objeto que se manipula, no solo desde el cuerpo. Escaleras, varillas, cables de izado y brazos de grúa o canasta pueden invadir la zona aunque la persona esté lejos.',example:'Error frecuente: controlar la posición del liniero y olvidar el extremo de la pértiga o el brazo de la canasta.'},
       {title:'Medidas de control',text:'Cuando no se puede garantizar la distancia, se desenergiza la red o se instalan barreras y cubiertas aislantes. Un observador dedicado vigila la aproximación durante las maniobras con equipos y detiene el trabajo si la distancia se reduce.',example:'En campo: cubiertas aislantes sobre la fase más próxima y un auxiliar en tierra que observa sin otras tareas.'},
-      {title:'Alcance de la clase',text:'Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA. Los valores de distancia para cada nivel de tensión se toman de la norma vigente y no se reproducen en esta demo.',example:'La práctica en 3D de esta clase está en preparación: el participante marcará las zonas alrededor de un poste y detectará invasiones.'},
+      {title:'Alcance de la clase',text:'Contenido didáctico de demostración. Debe validarse con el RETIE y los procedimientos de ESSA. Los valores de distancia para cada nivel de tensión se toman de la norma vigente y no se reproducen en esta demo.',example:'En la práctica: instalar una luminaria desde la canasta bajo una red energizada, con observador, posición segura y cubiertas aislantes. Las zonas se muestran a escala ilustrativa.'},
     ],
   },
   {

@@ -6,4 +6,5 @@ export const labModules:LabRegistry={
   'cinco-reglas':()=>import('./cinco-reglas').then(m=>m.lab),
   cortacircuitos:()=>import('./cortacircuitos').then(m=>m.lab),
   epp:()=>import('./epp').then(m=>m.lab),
+  distancias:()=>import('./distancias').then(m=>m.lab),
 };

@@ -48,12 +48,16 @@ export const layout = `
   </details>
   <footer><span>UMBRAL LABS <i></i> Un espacio para aprender experimentando.</span><span>Versión de demostración</span></footer>
 </main>
-<main id="study-view" class="study-page" hidden>
-  <ol class="course-route portal-wrap" aria-label="Etapas de la experiencia"><li aria-current="step"><span>01</span> Comprende la idea</li><li><span>02</span> Prepara tu espacio</li><li><span>03</span> Experimenta en 3D</li></ol>
-  <section class="study-hero"><div class="portal-wrap"><button id="study-back" class="atlas-text-button">← <span id="study-subject"></span></button><div class="study-intro"><div><span class="welcome-eyebrow">APRENDE ANTES DE EXPERIMENTAR</span><h1 id="study-title"></h1><p id="study-description"></p></div><aside class="study-facts"><span>EN ESTA CLASE</span><strong id="study-duration"></strong><p id="study-section-count">Contenido introductorio</p><p id="study-status"></p><a href="#study-practice">Ver la práctica ↓</a></aside></div></div></section>
-  <div class="reading-layout portal-wrap"><aside class="reading-index"><span class="welcome-eyebrow">TU RECORRIDO</span><nav id="study-outline" aria-label="Contenido de la clase"></nav><p>Lee a tu ritmo. Al final encontrarás el acceso a la práctica.</p></aside><div id="study-sections"></div></div>
-  <section id="study-practice" class="practice-band"><div class="portal-wrap"><div><span class="welcome-eyebrow">DEL CONCEPTO A LA EXPERIENCIA</span><h2 id="study-lab-title"></h2><p id="study-practice-description"></p></div><button id="study-prepare" class="atlas-primary"></button></div></section>
-  <footer class="portal-wrap"><span>UMBRAL LABS · Aprende experimentando.</span><span>Versión de demostración</span></footer>
+<main id="study-view" class="study-page class-page" hidden>
+  <div class="class-wrap">
+    <nav class="class-crumbs" aria-label="Ubicación"><button id="study-back" type="button"><span id="study-subject"></span></button><span aria-hidden="true">/</span><span>Clase</span></nav>
+    <div class="class-header"><h1 id="study-title"></h1><p id="study-description"></p><p class="class-meta"><span id="study-duration"></span><span id="study-section-count"></span></p></div>
+    <ol class="class-steps" aria-label="Partes de la clase"><li><a href="#class-video">Video</a></li><li><a href="#class-reading">Explicación</a></li><li><a href="#study-practice">Laboratorio</a></li><li><a href="#class-evaluation">Evaluación</a></li></ol>
+    <section id="class-video" class="class-part"><h2 class="class-part-title"><span>1</span>Video del tema</h2><div id="class-video-slot"></div></section>
+    <section id="class-reading" class="class-part"><h2 class="class-part-title"><span>2</span>Explicación</h2><nav id="study-outline" class="class-outline" aria-label="Contenido de la explicación"></nav><div id="study-sections"></div></section>
+    <section id="study-practice" class="class-part"><h2 class="class-part-title"><span>3</span>Laboratorio</h2><div class="class-lab"><div><h3 id="study-lab-title"></h3><p id="study-practice-description"></p><small id="study-status"></small></div><button id="study-prepare" type="button"></button></div></section>
+    <section id="class-evaluation" class="class-part"><h2 class="class-part-title"><span>4</span>Evaluación</h2><p class="class-part-intro">Comprueba lo aprendido. Para aprobar, todas las respuestas deben ser correctas.</p><div id="class-evaluation-slot"></div></section>
+  </div>
 </main>
 <main id="external-lab" hidden><button id="external-back">← Volver al contenido</button><div id="external-lab-host"></div></main>
 <main id="launch-view" class="menu-page launch-page" hidden>

@@ -38,6 +38,8 @@ import './essa-minimal.css';
 import { renderHome } from './demo/home';
 import { renderModules } from './demo/modules';
 import { renderModulePage } from './demo/module-page';
+import { renderEvaluation, renderVideo } from './demo/class-page';
+import { distributionFigure } from './demo/figuras-distribucion';
 import { myModules, openModules } from './demo/asignaciones';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
@@ -374,23 +376,25 @@ function openReading(id:string){
   $('#header-context').textContent=content.title;document.title=`${content.title} · Umbral Labs`;
   $('#study-subject').textContent=getSubject(content.subjectId).title;
   $('#study-title').textContent=content.title;$('#study-description').textContent=content.description;
-  $('#study-section-count').textContent=`${content.sections.length} ${content.sections.length===1?'idea para comprender':'ideas para comprender'}`;
+  $('#study-section-count').textContent=`${content.sections.length} ${content.sections.length===1?'apartado':'apartados'} de lectura`;
+  renderVideo($('#class-video-slot'),content.title);
   $('#study-duration').textContent=content.duration;$('#study-lab-title').textContent=content.laboratoryTitle;
-  $('#study-status').textContent=content.runtimeClassId||content.labId?'Contenido + práctica guiada':'Contenido propuesto · Laboratorio en preparación';
+  $('#study-status').textContent=content.runtimeClassId||content.labId?`Práctica guiada en 3D · ${content.duration}`:'Laboratorio en preparación';
   const sections=$('#study-sections'),outline=$('#study-outline');sections.replaceChildren();outline.replaceChildren();
   content.sections.forEach((section,index)=>{
-    const article=document.createElement('article');article.id=`reading-${index}`;article.className='reading-section';
+    const article=document.createElement('article');article.id=`reading-${index}`;article.className='reading-section class-reading-section';
     const number=document.createElement('span');number.className='reading-number';number.textContent=`0${index+1}`;
     const title=document.createElement('h2');title.textContent=section.title;
     const text=document.createElement('p');text.textContent=section.text;
     const example=document.createElement('aside');example.textContent=section.example;
-    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
+    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index)??distributionFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
     const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=section.title;outline.append(link);
   });
   const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId&&!content.labId;
-  button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio →':'Laboratorio en preparación';
+  button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio':'Laboratorio en preparación';
+  renderEvaluation($('#class-evaluation-slot'),content.id,content.subjectId==='distribucion'?'Preguntas didácticas de demostración. Deben validarse con el RETIE y los procedimientos de ESSA.':undefined);
   button.onclick=()=>{if(content.runtimeClassId)openLab('class',content.runtimeClassId);else if(content.labId)openExternalLab(content.labId,content.id);};
-  $('#study-practice-description').textContent=content.runtimeClassId?'Ya conoces la idea. Ahora compruébala con ayuda de tu guía. En el siguiente paso podrás preparar tu espacio antes de iniciar.':content.labId?'Ya conoces la idea. Ahora compruébala en el laboratorio.':'Esta materia muestra la estructura prevista. Su simulación todavía está en preparación.';
+  $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'Esta materia muestra la estructura prevista. Su simulación todavía está en preparación.';
   window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }
 $('#study-back').onclick=()=>{if(catalogueSubject)openSubject(catalogueSubject);else showMenu();};
@@ -409,7 +413,7 @@ for(const [label,modules] of [['Mis módulos',myModules()],['Módulos abiertos',
 document.querySelectorAll<HTMLButtonElement>('[data-nav-filter]').forEach(button=>button.onclick=()=>navigateCatalogue(button.dataset.navFilter as CatalogueFilter));
 window.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();focusSearch();}});
 
-function clearReadingAnchor(){if(/^#(?:reading-\d+|study-practice)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search);}
+function clearReadingAnchor(){if(/^#(?:reading-\d+|study-practice|class-video|class-reading|class-evaluation)$/.test(location.hash))history.replaceState(null,'',location.pathname+location.search);}
 function showMenu(){
   clearReadingAnchor();closeExternalLab();
   launchVersion++;launchBusy=false;$('#launch-view').hidden=true;$('#study-view').hidden=true;

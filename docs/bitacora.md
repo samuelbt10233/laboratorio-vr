@@ -261,3 +261,8 @@ Formato:
 - Archivos: `src/demo/home.ts` (nuevo), `src/essa-minimal.css`, `src/main.ts` (render del inicio y búsqueda), `src/template.ts` (contenedor `#home-dashboard`, menú).
 - Validación: 115 pruebas, build correcto; revisado en escritorio (1440) y móvil (375, sin desplazamiento horizontal). La tarjeta asignada abre la lectura, las filas abren la ruta e «Inicio» vuelve al panel.
 - Pendiente: D4 (panel de supervisora, puede reutilizar `.home-stat` y `.home-col`) y D5.
+
+## 2026-11-11 · Claude Code · Panel de cabecera del inicio
+- Qué: a petición del responsable, el inicio pierde la píldora «Preparado para ESSA» y gana un panel azul oscuro (#123a56) sin texto encima de «Tu capacitación». Es la base sobre la que se añadirán, poco a poco, elementos que den personalidad a la página. Solo se ve en el inicio; las páginas de ruta conservan su encabezado.
+- Archivos: `src/template.ts` (elemento `.home-banner`) y `src/essa-minimal.css`.
+- Validación: 115 pruebas, build correcto, revisado en escritorio y sin errores en consola.

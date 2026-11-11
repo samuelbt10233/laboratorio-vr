@@ -178,3 +178,9 @@ html body .home-stat small{font-size:13px;color:var(--m-muted)}
 @media (max-width:900px){html body .home-grid,html body .home-stats{grid-template-columns:1fr}html body #main-menu.menu-page{padding:8px 16px 48px}html body #main-menu.home-on #menu-title{font-size:30px}}
 html body #main-menu.home-on #menu-subtitle{max-width:none}
 html body .catalogue-search input::placeholder{color:#8a979d;opacity:1}
+/* Start page banner: an empty dark panel that will gain personality step by step. */
+html body .home-banner{display:none}
+html body #main-menu.home-on .home-banner{display:block;height:200px;margin:0 0 40px;border-radius:12px;background:#123a56}
+html body #main-menu.home-on .menu-hero{padding-top:24px}
+html body #main-menu.home-on .menu-kicker{display:none}
+@media (max-width:900px){html body #main-menu.home-on .home-banner{height:140px;margin-bottom:28px}}

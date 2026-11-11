@@ -271,3 +271,8 @@ Formato:
 - Qué: el panel azul del inicio muestra el perfil («Técnico liniero» o «Supervisora, jefa de cuadrilla»), el saludo («Hola, Andrés» o «Hola, Laura»), la ruta («Tu ruta asignada» o «Ruta de tu cuadrilla: Trabajo seguro en redes de distribución») y un botón blanco «Abrir ruta». Cambia al cambiar de perfil.
 - Archivos: `src/demo/home.ts` (`renderBanner`, `renderHome` recibe el rol), `src/main.ts` (pasa `app.dataset.demoRole`), `src/template.ts` y `src/essa-minimal.css`.
 - Validación: 115 pruebas y build correctos. Revisado en escritorio y móvil (sin desplazamiento horizontal), con los dos perfiles; el botón abre la ruta. Sin errores en consola.
+
+## 2026-11-11 · Claude Code · Ilustración del poste en el panel
+- Qué: a la derecha del saludo, un dibujo de líneas de un poste de distribución con cruceta, aisladores, cables, transformador y una señal de riesgo eléctrico en amarillo de seguridad. Tonos de azul claro sobre el panel; los cables se desvanecen hacia la izquierda. Es decorativo (`aria-hidden`) y se oculta en móvil. El botón «Abrir ruta» pasa debajo del texto.
+- Archivos: `src/demo/home.ts` (SVG en línea `POLE`) y `src/essa-minimal.css`.
+- Validación: 115 pruebas y build correctos; revisado en escritorio y móvil (sin desplazamiento horizontal) y sin errores en consola.

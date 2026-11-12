@@ -409,3 +409,10 @@ Formato:
 - Contrato: `src/demo/cliente.ts` define cada cliente (módulos visibles y asignados, perfiles, ilustración, nota de evaluaciones). `?cliente=icetex` abre «Preparado para ICETEX» con el perfil de Valentina Ríos; sin parámetro todo sigue igual que en ESSA. Fichas provisionales, evaluaciones y figuras separadas por agente, como en C0.
 - Validación: 161 pruebas y build correctos. En el navegador el acceso y el inicio de ESSA no cambian; con `?cliente=icetex` se ve el acceso y el inicio de Valentina, todavía sin módulos hasta que lleguen las clases.
 - Pendiente: merge del responsable; después, clases de cada agente y el simulador.
+
+## 2026-11-12 · Claude Code · I1 educación financiera y simulador de presupuesto
+- Qué: las 3 clases de «Educación financiera» para la demo de ICETEX (presupuesto y ahorro, crédito educativo responsable, prevención de fraudes), con 5 secciones, 2 esquemas y 3 preguntas cada una. Cifras ficticias y redondas; sin tasas ni condiciones reales; cierran con «No constituye asesoría financiera».
+- Simulador: «Un mes de Valentina» en `src/labs/presupuesto/`. Siete momentos del mes (ingreso, ahorro, plan de gastos, mensaje fraudulento, imprevisto, invitación, cierre) con tres opciones cada uno. Muestra el disponible, el fondo para imprevistos, el estado de la cuota y a dónde va el ingreso; cada error explica su consecuencia y no mueve dinero. Constancia al terminar y resultado guardado por clase. Es 2D, no 3D: la clase lo indica como «Simulador interactivo».
+- Portal: `LearningContent.simulator` cambia los textos de la práctica; en ICETEX, las clases sin práctica ocultan la sección de laboratorio.
+- Validación: 169 pruebas y build correctos. En el navegador con `?cliente=icetex`: inicio con el módulo y 3 actividades, clase con esquemas y nota de evaluación, simulador completo con 2 errores, constancia, y el inicio pasa a «1 de 3».
+- Pendiente: clases de formación complementaria (Codex); brochure de ventas.

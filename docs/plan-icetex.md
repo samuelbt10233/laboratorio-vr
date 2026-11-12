@@ -20,9 +20,9 @@ Reglas de contenido:
 
 | Módulo (`subjectId`) | Clase (`id`) | Título | Agente | Estado |
 | --- | --- | --- | --- | --- |
-| Educación financiera (`finanzas`) | `finanzas-presupuesto` ★ | Presupuesto y ahorro durante los estudios | Claude | pendiente |
-| | `finanzas-credito` | Crédito educativo responsable | Claude | pendiente |
-| | `finanzas-fraudes` | Prevención de fraudes y estafas | Claude | pendiente |
+| Educación financiera (`finanzas`) | `finanzas-presupuesto` ★ | Presupuesto y ahorro durante los estudios | Claude | completa con simulador (I1) |
+| | `finanzas-credito` | Crédito educativo responsable | Claude | lectura y evaluación (I1) |
+| | `finanzas-fraudes` | Prevención de fraudes y estafas | Claude | lectura y evaluación (I1) |
 | Formación complementaria (`complementaria`) | `complementaria-digital` | Habilidades digitales y seguridad en línea | Codex | pendiente |
 | | `complementaria-empleabilidad` | Hoja de vida y entrevista de trabajo | Codex | pendiente |
 | | `complementaria-emprendimiento` | Emprender una idea paso a paso | Codex | pendiente |

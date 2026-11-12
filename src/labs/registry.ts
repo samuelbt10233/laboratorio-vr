@@ -7,4 +7,5 @@ export const labModules:LabRegistry={
   cortacircuitos:()=>import('./cortacircuitos').then(m=>m.lab),
   epp:()=>import('./epp').then(m=>m.lab),
   distancias:()=>import('./distancias').then(m=>m.lab),
+  presupuesto:()=>import('./presupuesto').then(m=>m.lab),
 };

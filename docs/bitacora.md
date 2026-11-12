@@ -422,3 +422,11 @@ Formato:
 - Archivos: `src/demo/cliente.ts` (`clientUrl`), `src/demo/entry.ts`, `src/demo/entry.css`, `src/icetex-plan.test.ts`.
 - Validación: 170 pruebas y build correctos; en el navegador el cambio de ESSA a ICETEX abre el acceso y el portal de ICETEX.
 - Pendiente: nada para la reunión; el brochure queda en pausa hasta después de ICETEX.
+
+## 2026-11-12 · Claude Code · Paleta profesional del portal
+- Qué: el responsable pidió una estética más profesional para la parte web a partir de la paleta, sin tocar los laboratorios. `essa-minimal.css` define ahora todos los colores como tokens `--m-*` (neutros, acento, azul profundo, señal, éxito, error y sombras) y ya no lleva colores sueltos; `entry.css` y `supervisor.css` usan los mismos tokens, con lo que desaparecen los azules propios del panel de supervisor.
+- Cambios visibles: tarjetas con sombra muy suave y borde más marcado al pasar el ratón; el lugar actual del menú se tiñe con el acento; la fila «siguiente» usa un tinte azul con la barra amarilla en lugar del fondo amarillo; «Datos de demostración» pasa a una pastilla neutra con un punto amarillo; cifras con números tabulares; títulos de sección con línea fina. Los grises sin contraste suficiente (#8a979d, #7b878d) pasan al gris de texto secundario.
+- Limpieza: se borra `cloud-theme.css`, que no se importaba, y se quita de `style.css` la carga de DM Sans, DM Mono y Manrope, que no se usaban.
+- No se tocan `src/labs/`, las escenas 3D ni los archivos de Codex.
+- Validación: 170 pruebas y build correctos; revisados en el navegador el acceso, el inicio, un módulo, una clase con evaluación, «Mi cuadrilla» y el inicio de ICETEX.
+- Pendiente (Codex): sus esquemas usan #24465e y Arial; conviene alinearlos con la tinta #16232b, el acento #1d4f73 e IBM Plex Sans. En ICETEX el menú muestra el título «Módulos abiertos» sin módulos debajo.

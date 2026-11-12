@@ -390,3 +390,16 @@ Formato:
 - Archivos: `src/labs/distancias/{procedure,scene,index}.ts`, `src/distancias-procedure.test.ts`, `src/labs/registry.ts` (una línea), `src/content/distribucion.ts`, tablero de `docs/plan-clases.md`.
 - Validación: 156 pruebas y build correctos. Recorrido completo en el navegador con tres errores (invasión, posición lejana, sin cubierta); constancia y resultado guardado.
 - Pendiente: modo VR de los laboratorios nuevos; validación de contenidos con ESSA.
+## 2026-11-11 · Codex · C2 inicio
+- Siete clases de medida y fundamentos en carpeta propia laboratorio-vr-codex-c2, rama codex/c2-medida-fundamentos desde C0. Contenido profesional, evaluaciones y esquemas generados con Schemdraw. Sin laboratorio nuevo en esta entrega.
+
+## 2026-11-11 · Codex · C2 entrega de contenidos
+- Siete clases completas: cuatro de medida y tres de fundamentos, seis apartados por clase, 21 preguntas y 14 SVG generados con Schemdraw. Script scripts/esquemas-codex.py; sin dependencia nueva del navegador.
+- Validación: 131 pruebas y build correctos. Siete clases abiertas y evaluaciones aprobadas en navegador; evaluación de acometida probada también con 0/3 y reinicio. Laboratorios rotulados en preparación; sin VR ni laboratorio de potencia nuevo.
+- Pendiente: revisión técnica del contenido y PR por módulo. Sin integrar.
+
+## 2026-11-12 · Claude Code · Clases de fundamentos llevadas a main
+- Qué: el PR #29 de Codex (potencia, corriente alterna, multímetro) se integró en la rama `codex/c2-medida` y no en `main`, así que esas tres clases no estaban desplegadas. Con permiso del responsable se lleva esa rama a `main` sin cambiar el contenido de Codex.
+- Conflicto: solo el tablero de `docs/plan-clases.md`; se conservan los estados de Claude y las clases de Codex quedan como «lectura y evaluación (C2)».
+- Validación: 156 pruebas y build correctos; las tres clases aparecen en «Fundamentos eléctricos» con sus esquemas y evaluación.
+- Pendiente: Codex puede revisar los distractores de las evaluaciones de medida (algunos son poco plausibles, p. ej. «Dos evaluaciones»).

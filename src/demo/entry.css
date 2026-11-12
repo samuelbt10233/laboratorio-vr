@@ -31,3 +31,13 @@ html body .demo-profile{border:1px solid var(--m-line);border-radius:6px;backgro
   html body .demo-entry-body{padding:28px 20px 22px}
   html body .demo-entry-body h1{font-size:28px}
 }
+/* Administrator switch between the demo clients; reloads the portal for the chosen one. */
+html body .demo-entry-admin{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 36px;border-top:1px solid var(--m-line);background:var(--m-page);font-size:13px;color:var(--m-ink)}
+html body .demo-entry-admin>span{font-weight:600}
+html body .demo-entry-admin small{display:block;font-weight:400;color:var(--m-muted)}
+html body .demo-entry-clients{display:flex;padding:3px;border:1px solid var(--m-line);border-radius:8px;background:var(--m-surface)}
+html body .demo-entry-clients button{padding:6px 14px;border:0;border-radius:6px;background:transparent;color:var(--m-muted);font:600 13px/1 var(--m-font);cursor:pointer}
+html body .demo-entry-clients button[aria-pressed="true"]{background:#123a56;color:#fff;cursor:default}
+html body .demo-entry-clients button:hover:not([aria-pressed="true"]){color:var(--m-ink);background:var(--m-accent-soft)}
+html body .demo-entry-clients button:focus-visible{outline:2px solid var(--m-accent);outline-offset:2px}
+@media (max-width:520px){html body .demo-entry-admin{padding:12px 20px}}

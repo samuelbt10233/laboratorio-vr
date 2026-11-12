@@ -1,11 +1,11 @@
 import './entry.css';
-import { currentClient } from './cliente';
+import { clients, clientUrl, currentClient, type ClientId } from './cliente';
 /** Role selection is a presentation aid, never authentication. */
 export function mountDemoEntry(app:HTMLElement,onEnter:()=>void){
   const entry=document.createElement('section');entry.className='demo-entry';entry.setAttribute('aria-label','Acceso de demostración');
   const client=currentClient();
   const profiles=client.profiles.map(p=>`<button data-role="${p.role}"><span class="demo-avatar">${p.initials}</span><span><strong>${p.name}</strong><small>${p.title}</small></span><svg class="demo-entry-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg></button>`).join('');
-  entry.innerHTML=`<div class="demo-entry-card"><div class="demo-entry-head"><span class="demo-entry-brand">umbral<span>labs</span></span><span class="demo-entry-client">Preparado para<strong>${client.name}</strong></span><div class="demo-entry-art" aria-hidden="true">${client.art}</div></div><div class="demo-entry-body"><h1>Iniciar sesión</h1><p>Selecciona tu perfil de acceso.</p>${profiles}<span class="demo-entry-badge">Datos de demostración</span></div></div>`;
+  entry.innerHTML=`<div class="demo-entry-card"><div class="demo-entry-head"><span class="demo-entry-brand">umbral<span>labs</span></span><span class="demo-entry-client">Preparado para<strong>${client.name}</strong></span><div class="demo-entry-art" aria-hidden="true">${client.art}</div></div><div class="demo-entry-body"><h1>Iniciar sesión</h1><p>Selecciona tu perfil de acceso.</p>${profiles}<span class="demo-entry-badge">Datos de demostración</span></div><div class="demo-entry-admin" role="group" aria-label="Administrador: cliente de la demo"><span>Administrador<small>Cliente de la demo</small></span><div class="demo-entry-clients">${Object.values(clients).map(c=>`<button type="button" data-client="${c.id}" aria-pressed="${c.id===client.id}">${c.name}</button>`).join('')}</div></div></div>`;
   document.body.append(entry);
   const switcher=document.createElement('button');switcher.className='demo-profile';switcher.type='button';
   document.querySelector('.header-right')?.prepend(switcher);
@@ -14,6 +14,9 @@ export function mountDemoEntry(app:HTMLElement,onEnter:()=>void){
   entry.querySelectorAll<HTMLButtonElement>('[data-role]').forEach(button=>button.onclick=()=>{
     switcher.textContent=client.profiles.find(p=>p.role===button.dataset.role)!.name;switcher.title='Cambiar perfil';switcher.setAttribute('aria-label',`${switcher.textContent}: cambiar perfil`);
     app.dataset.demoRole=button.dataset.role;app.inert=false;entry.hidden=true;onEnter();switcher.focus();
+  });
+  entry.querySelectorAll<HTMLButtonElement>('[data-client]').forEach(button=>button.onclick=()=>{
+    if(button.dataset.client!==client.id)location.assign(clientUrl(button.dataset.client as ClientId,location.href));
   });
   show();
 }

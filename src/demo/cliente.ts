@@ -46,3 +46,7 @@ export function clientId(search=typeof location==='undefined'?'':location.search
   return new URLSearchParams(search).get('cliente')==='icetex'?'icetex':'essa';
 }
 export const currentClient=()=>clients[clientId()];
+/** The same address opened for another client: ESSA is the plain address, the others carry `?cliente=`. */
+export function clientUrl(id:ClientId,href:string){
+  const url=new URL(href);if(id==='essa')url.searchParams.delete('cliente');else url.searchParams.set('cliente',id);url.hash='';return url.toString();
+}

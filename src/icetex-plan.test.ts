@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { subjects, subjectEntries } from './subjects';
 import { getLearningContent } from './learning-content';
-import { clientId, clients } from './demo/cliente';
+import { clientId, clients, clientUrl } from './demo/cliente';
 import { isMyModule } from './demo/asignaciones';
 
 // The shared contract of docs/plan-icetex.md (section 3): both agents build against these ids.
@@ -46,4 +46,9 @@ test('every client has a profile and a note for its evaluations',()=>{
     assert.ok(client.assigned.every(id=>client.subjects.includes(id)),client.id);
     assert.ok(client.evaluationNote.text.length>0,client.id);
   }
+});
+test('the administrator switch keeps the address and only changes the client',()=>{
+  assert.equal(clientUrl('icetex','https://demo.test/?x=1#inicio'),'https://demo.test/?x=1&cliente=icetex');
+  assert.equal(clientUrl('essa','https://demo.test/?cliente=icetex'),'https://demo.test/');
+  assert.equal(clientId(new URL(clientUrl('icetex','https://demo.test/')).search),'icetex');
 });

@@ -416,3 +416,9 @@ Formato:
 - Portal: `LearningContent.simulator` cambia los textos de la práctica; en ICETEX, las clases sin práctica ocultan la sección de laboratorio.
 - Validación: 169 pruebas y build correctos. En el navegador con `?cliente=icetex`: inicio con el módulo y 3 actividades, clase con esquemas y nota de evaluación, simulador completo con 2 errores, constancia, y el inicio pasa a «1 de 3».
 - Pendiente: clases de formación complementaria (Codex); brochure de ventas.
+
+## 2026-11-12 · Claude Code · Selector de cliente para administrador
+- Qué: el responsable pidió cambiar entre ESSA e ICETEX sin editar la dirección. La tarjeta de acceso tiene abajo un bloque «Administrador · Cliente de la demo» con dos botones (ESSA, ICETEX); al elegir otro cliente se recarga el portal con `?cliente=` y aparecen sus perfiles. Desde el portal se llega con el botón del perfil en la cabecera, que vuelve a abrir el acceso.
+- Archivos: `src/demo/cliente.ts` (`clientUrl`), `src/demo/entry.ts`, `src/demo/entry.css`, `src/icetex-plan.test.ts`.
+- Validación: 170 pruebas y build correctos; en el navegador el cambio de ESSA a ICETEX abre el acceso y el portal de ICETEX.
+- Pendiente: nada para la reunión; el brochure queda en pausa hasta después de ICETEX.

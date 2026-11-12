@@ -1,6 +1,6 @@
 import { subjectEntries } from '../subjects';
 import { isMyModule, moduleProgress } from './asignaciones';
-/** One module of the ESSA demo: its progress and its classes in order, with what is done and when each is reviewed. */
+/** One module of the demo: its progress and its classes in order, with what is done and when each is reviewed. */
 export interface ModulePageActions {openReading(classId:string):void;openFree():void}
 const chevron='<svg class="class-row-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>';
 const check='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7"/></svg>';

@@ -2,8 +2,8 @@ import { resultFor } from '../labs/cinco-reglas/result';
 import { getLearningContent } from '../learning-content';
 import { subjectEntries } from '../subjects';
 import { evaluationPassed } from './evaluaciones';
-/** Demo assignments for the ESSA profiles: which modules are theirs, what is done and when each class is reviewed. Shown as «Datos de demostración». */
-const MY_MODULES=['distribucion','operacion','electronics'];
+import { currentClient } from './cliente';
+/** Demo assignments for each client's trainee (`cliente.ts`): which modules are theirs, what is done and when each class is reviewed. Shown as «Datos de demostración». */
 /** Days from today until each assigned class is reviewed; `done` marks demo classes already completed. */
 const PLAN:Record<string,{days:number;done?:boolean}>={
   'distribucion-cinco-reglas':{days:2},
@@ -22,11 +22,17 @@ const PLAN:Record<string,{days:number;done?:boolean}>={
   'fundamentos-potencia':{days:8},
   'fundamentos-alterna':{days:12},
   'fundamentos-multimetro':{days:15},
+  'finanzas-presupuesto':{days:2},
+  'finanzas-credito':{days:6},
+  'finanzas-fraudes':{days:9},
+  'complementaria-digital':{days:4},
+  'complementaria-empleabilidad':{days:8},
+  'complementaria-emprendimiento':{days:12},
 };
 /** A class is completed when its lab saved a passed result or, without a lab, when its evaluation was passed. */
 export function classCompleted(classId:string){return getLearningContent(classId).labId?!!resultFor(classId)?.aprobado:evaluationPassed(classId);}
 export interface AssignedClass {classId:string;subjectId:string;title:string;moduleTitle:string;done:boolean;review:Date}
-export const isMyModule=(subjectId:string)=>MY_MODULES.includes(subjectId);
+export const isMyModule=(subjectId:string)=>currentClient().assigned.includes(subjectId);
 export const myModules=()=>subjectEntries(null).filter(s=>isMyModule(s.subjectId));
 export const openModules=()=>subjectEntries(null).filter(s=>!isMyModule(s.subjectId));
 function assignedClasses(subjectId:string,today:Date,completed:(classId:string)=>boolean):AssignedClass[]{
@@ -41,5 +47,5 @@ export function moduleProgress(subjectId:string,today:Date,completed=classComple
   return {done:classes.filter(c=>c.done).length,total:classes.length,classes};
 }
 export function pendingActivities(today:Date,completed=classCompleted){
-  return MY_MODULES.flatMap(id=>assignedClasses(id,today,completed)).filter(c=>!c.done).sort((a,b)=>a.review.getTime()-b.review.getTime());
+  return currentClient().assigned.flatMap(id=>assignedClasses(id,today,completed)).filter(c=>!c.done).sort((a,b)=>a.review.getTime()-b.review.getTime());
 }

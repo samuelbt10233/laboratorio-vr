@@ -1,6 +1,7 @@
 import { catalogueEntries, laboratories } from './laboratories';
 import { getLearningContent, type LearningContent } from './learning-content';
 import { evaluationFor } from './demo/evaluaciones';
+import { currentClient } from './demo/cliente';
 export interface Subject {id:string;title:string;description:string;status:'available'|'planned';laboratoryIds:string[];previewContentIds:string[]}
 export const subjects:readonly Subject[]=[
   {
@@ -69,6 +70,30 @@ export const subjects:readonly Subject[]=[
     ]
   },
   {
+    "id": "finanzas",
+    "title": "Educación financiera",
+    "description": "Organiza tu dinero durante los estudios, usa el crédito con responsabilidad y evita fraudes.",
+    "status": "available",
+    "laboratoryIds": [],
+    "previewContentIds": [
+      "finanzas-presupuesto",
+      "finanzas-credito",
+      "finanzas-fraudes"
+    ]
+  },
+  {
+    "id": "complementaria",
+    "title": "Formación complementaria",
+    "description": "Habilidades digitales, empleabilidad y emprendimiento para la transición al mundo laboral.",
+    "status": "available",
+    "laboratoryIds": [],
+    "previewContentIds": [
+      "complementaria-digital",
+      "complementaria-empleabilidad",
+      "complementaria-emprendimiento"
+    ]
+  },
+  {
     "id": "fluids",
     "title": "Mecánica de fluidos",
     "description": "Explora cómo se comportan los fluidos y qué significa la presión.",
@@ -100,7 +125,7 @@ export function readingEntry(subjectId:string,c:LearningContent):SubjectEntry{
 }
 function classCount(s:Subject){return s.laboratoryIds.flatMap(l=>catalogueEntries(l)).filter(c=>c.kind==='class').length+s.previewContentIds.filter(id=>!readingEntry(s.id,getLearningContent(id)).planned).length;}
 export function subjectEntries(id:string|null):SubjectEntry[]{
-  if(id===null)return subjects.filter(s=>s.id!=='fluids'&&s.id!=='mechanics'&&(s.status==='planned'||classCount(s)>0)).map(s=>({id:`subject:${s.id}`,kind:'subject',subjectId:s.id,laboratoryId:null,title:s.title,description:s.description,meta:[s.status==='planned'?'Contenido propuesto':`${classCount(s)} ${classCount(s)===1?'clase':'clases'}`,s.status==='planned'?'Materia en preparación':'Contenido de la demo'],planned:s.status==='planned'}));
+  if(id===null)return currentClient().subjects.map(getSubject).filter(s=>s.status==='planned'||classCount(s)>0).map(s=>({id:`subject:${s.id}`,kind:'subject',subjectId:s.id,laboratoryId:null,title:s.title,description:s.description,meta:[s.status==='planned'?'Contenido propuesto':`${classCount(s)} ${classCount(s)===1?'clase':'clases'}`,s.status==='planned'?'Materia en preparación':'Contenido de la demo'],planned:s.status==='planned'}));
   const s=getSubject(id);
   const readings=s.previewContentIds.map(id=>readingEntry(s.id,getLearningContent(id)));
   return [...s.laboratoryIds.flatMap(lab=>catalogueEntries(lab).filter(e=>e.kind==='class'||e.kind==='free').map(e=>({id:e.id,kind:e.kind as 'class'|'free',subjectId:s.id,laboratoryId:lab,classId:e.classId,title:e.title,description:e.description,meta:e.meta,planned:false}))),...readings];

@@ -33,5 +33,5 @@ with schemdraw.Drawing(show=False) as d:
   d+=e.SourceSin().at((i*4,0)).up().label(label+' · '+phase)
  save(d,'alterna-fases')
 with schemdraw.Drawing(show=False) as d:
- d+=e.Line().at((0,0)).to((6,0));d+=e.Resistor().at((0,-3)).to((6,-3)).label('Carga');d+=e.Line().at((0,0)).to((0,-3));d+=e.Line().at((6,0)).to((6,-3));d+=e.MeterV().at((3,0)).down().to((3,-3)).label('Tensión entre dos puntos');save(d,'multimetro-tension')
+ d+=e.Resistor().at((0,0)).to((6,0)).label('Carga');d+=e.Dot().at((0,0)).label('A',loc='left');d+=e.Dot().at((6,0)).label('B',loc='right');d+=e.Line().at((0,0)).to((0,-3));d+=e.MeterV().at((0,-3)).right().to((6,-3)).label('Tensión entre A y B',loc='bot');d+=e.Line().at((6,-3)).to((6,0));save(d,'multimetro-tension')
 chain('multimetro-pinza',['Conductor individual','Pinza','Lectura A'])

@@ -28,13 +28,13 @@ Reglas de contenido, iguales para los dos agentes:
 | | `operacion-transformador` | Transformador de distribución | Claude | lectura y evaluación (C1) |
 | | `operacion-puesta-tierra` | Puesta a tierra y medición de su resistencia | Claude | lectura y evaluación (C1) |
 | | `operacion-inspeccion` | Inspección de redes y reporte de anomalías | Claude | lectura y evaluación (C1) |
-| Atención al usuario y medida (`medida`) | `medida-acometida` | Instalación y revisión de una acometida | Codex | pendiente |
-| | `medida-medidores` | Medidores de energía: tipos, lectura y sellado | Codex | pendiente |
-| | `medida-irregulares` | Detección de conexiones irregulares | Codex | pendiente |
-| | `medida-suspension` | Suspensión y reconexión del servicio | Codex | pendiente |
-| Fundamentos eléctricos (`electronics`) | `fundamentos-potencia` ★ | Potencia y energía eléctrica | Codex | pendiente |
-| | `fundamentos-alterna` | Corriente alterna y sistema trifásico | Codex | pendiente |
-| | `fundamentos-multimetro` | Uso seguro del multímetro y la pinza amperimétrica | Codex | pendiente |
+| Atención al usuario y medida (`medida`) | `medida-acometida` | Instalación y revisión de una acometida | Codex | lectura y evaluación (C2) |
+| | `medida-medidores` | Medidores de energía: tipos, lectura y sellado | Codex | lectura y evaluación (C2) |
+| | `medida-irregulares` | Detección de conexiones irregulares | Codex | lectura y evaluación (C2) |
+| | `medida-suspension` | Suspensión y reconexión del servicio | Codex | lectura y evaluación (C2) |
+| Fundamentos eléctricos (`electronics`) | `fundamentos-potencia` ★ | Potencia y energía eléctrica | Codex | lectura y evaluación (C2) |
+| | `fundamentos-alterna` | Corriente alterna y sistema trifásico | Codex | lectura y evaluación (C2) |
+| | `fundamentos-multimetro` | Uso seguro del multímetro y la pinza amperimétrica | Codex | lectura y evaluación (C2) |
 
 Las cuatro clases de electrónica existentes y bloqueo y etiquetado no cambian.
 

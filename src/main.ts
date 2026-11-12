@@ -388,7 +388,9 @@ function openReading(id:string){
   $('#study-section-count').textContent=`${content.sections.length} ${content.sections.length===1?'apartado':'apartados'} de lectura`;
   renderVideo($('#class-video-slot'),content.title);
   $('#study-duration').textContent=content.duration;$('#study-lab-title').textContent=content.laboratoryTitle;
-  $('#study-status').textContent=content.runtimeClassId||content.labId?`Práctica guiada en 3D · ${content.duration}`:'Laboratorio en preparación';
+  const practice=!!(content.runtimeClassId||content.labId),readingOnly=!practice&&currentClient().id==='icetex';
+  $('#study-practice').hidden=readingOnly;$<HTMLElement>('.class-steps a[href="#study-practice"]').parentElement!.hidden=readingOnly;
+  $('#study-status').textContent=content.simulator?`Simulador interactivo · ${content.duration}`:practice?`Práctica guiada en 3D · ${content.duration}`:'Laboratorio en preparación';
   const sections=$('#study-sections'),outline=$('#study-outline');sections.replaceChildren();outline.replaceChildren();
   content.sections.forEach((section,index)=>{
     const article=document.createElement('article');article.id=`reading-${index}`;article.className='reading-section class-reading-section';
@@ -400,10 +402,10 @@ function openReading(id:string){
     const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=section.title;outline.append(link);
   });
   const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId&&!content.labId;
-  button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio':'Laboratorio en preparación';
+  button.textContent=content.simulator?'Abrir el simulador':practice?'Ir al laboratorio':'Laboratorio en preparación';
   renderEvaluation($('#class-evaluation-slot'),content.id,currentClient().evaluationNote.subjects.includes(content.subjectId)?currentClient().evaluationNote.text:undefined);
   button.onclick=()=>{if(content.runtimeClassId)openLab('class',content.runtimeClassId);else if(content.labId)openExternalLab(content.labId,content.id);};
-  $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'La práctica en 3D de esta clase está en preparación.';
+  $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.simulator?'Simulador de decisiones. Cada error explica su consecuencia.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'La práctica en 3D de esta clase está en preparación.';
   window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});
 }
 $('#study-back').onclick=()=>{if(catalogueSubject)openSubject(catalogueSubject);else showMenu();};

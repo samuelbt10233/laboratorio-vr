@@ -279,8 +279,62 @@ CLASES = (epp_equipo, epp_inspeccion, distancias_zonas, distancias_controles, at
           transformador_placa, tierra_componentes, tierra_medicion, inspeccion_metodo, inspeccion_reporte)
 
 
+# --- Educación financiera (docs/plan-icetex.md); cifras ficticias ---
+
+def presupuesto_reparto():
+    with schemdraw.Drawing(show=False) as d:
+        d += flow.Box(w=11, h=1).at((0, 0)).anchor('W').label('Ingresos del mes', fontsize=12).color(INK)
+        partes = (('Fijos y cuota', 6, INK), ('Ahorro', 1.5, BLUE), ('Variables', 3.5, MUTED))
+        x = 0
+        for texto, ancho, color in partes:
+            d += flow.Box(w=ancho, h=1).at((x, -1.6)).anchor('W').label(texto, fontsize=11).color(color)
+            x += ancho
+        d += elm.Label().at((5.5, -2.8)).label('1.º fijos y cuota, 2.º ahorro, 3.º lo variable', color=MUTED)
+        guardar(d, 'presupuesto-1-reparto')
+
+
+def presupuesto_imprevisto():
+    with schemdraw.Drawing(show=False) as d:
+        cajas = cadena(d, ['Gasto no\nplaneado'], ancho=2.6)
+        decision(d, cajas[-1], 'Fondo para\nimprevistos', 'Esperar y\nplanearlo', '¿Se puede\naplazar?')
+        guardar(d, 'presupuesto-2-imprevisto')
+
+
+def credito_componentes():
+    with schemdraw.Drawing(show=False) as d:
+        cadena(d, ['Capital\nprestado', 'Interés\ncosto del dinero', 'Plazo\nnúmero de cuotas', 'Cuota\npago periódico'], ancho=3, alto=1.5)
+        d += elm.Label().at((7.4, -1.4)).label('Más plazo: cuota menor, total pagado mayor', color=MUTED)
+        guardar(d, 'credito-1-componentes')
+
+
+def credito_dificultad():
+    with schemdraw.Drawing(show=False) as d:
+        cajas = cadena(d, ['Revisar el\nplan de pagos'], ancho=2.6)
+        decision(d, cajas[-1], 'Pagar a tiempo\npor canal oficial', 'Contactar a\nla entidad', '¿Alcanza\npara la\ncuota?')
+        guardar(d, 'credito-2-dificultad')
+
+
+def fraudes_senales():
+    with schemdraw.Drawing(show=False) as d:
+        ficha = d.add(flow.Box(w=7.4, h=3.2).label('Rentabilidad alta y garantizada\nPresión para decidir ya\nPago anticipado para liberar dinero\nPide claves o códigos', fontsize=12))
+        d += elm.Label().at((ficha.N.x, ficha.N.y + .5)).label('Señales de alerta', color='#a33a2b')
+        d += elm.Label().at((ficha.S.x, ficha.S.y - .6)).label('Mucho, rápido y sin riesgo: desconfiar', color=MUTED)
+        guardar(d, 'fraudes-1-senales')
+
+
+def fraudes_verificar():
+    with schemdraw.Drawing(show=False) as d:
+        cajas = cadena(d, ['Oferta o\nmensaje', 'Ir al canal\noficial'], ancho=2.6)
+        decision(d, cajas[-1], 'Continuar', 'No pagar\ny reportar', '¿Entidad\nvigilada y\ncoincide?')
+        guardar(d, 'fraudes-2-verificar')
+
+
+FINANZAS = (presupuesto_reparto, presupuesto_imprevisto, credito_componentes, credito_dificultad,
+            fraudes_senales, fraudes_verificar)
+
+
 if __name__ == '__main__':
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in (cortar_bloquear, verificar, poner_tierra, senalizar, *CLASES):
+    for f in (cortar_bloquear, verificar, poner_tierra, senalizar, *CLASES, *FINANZAS):
         f()
     print('\n'.join(sorted(p.name for p in OUT.glob('*.svg'))))

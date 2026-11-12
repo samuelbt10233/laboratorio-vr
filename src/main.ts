@@ -44,6 +44,9 @@ import { distributionFigure } from './demo/figuras-distribucion';
 import { operationFigure } from './demo/figuras-operacion';
 import { meteringFigure } from './demo/figuras-medida';
 import { fundamentalsFigure } from './demo/figuras-fundamentos';
+import { financeFigure } from './demo/figuras-finanzas';
+import { complementaryFigure } from './demo/figuras-complementaria';
+import { currentClient } from './demo/cliente';
 import { myModules, openModules } from './demo/asignaciones';
 
 const app=document.querySelector<HTMLDivElement>('#app')!;
@@ -347,11 +350,11 @@ function renderCatalogue(){
   document.querySelectorAll<HTMLButtonElement>('[data-subject-nav]').forEach(button=>{const active=button.dataset.subjectNav===catalogueSubject;button.classList.toggle('active',active);if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');});
   $('#menu-title-lead').textContent=subject?subject.title:catalogueFilter==='recent'?'Retoma tus descubrimientos.':catalogueFilter==='modules'?'Módulos':'Tu capacitación';
   $('#menu-title-accent').textContent=subject||catalogueFilter==='recent'?'':'';
-  $('#menu-kicker').textContent=subject?'Módulo de capacitación':'Preparado para ESSA';
+  $('#menu-kicker').textContent=subject?'Módulo de capacitación':`Preparado para ${currentClient().name}`;
   $('#browse-labs').firstChild!.textContent=subject?'Ver las clases ':'Ver los módulos ';
   $('#catalogue-art').hidden=!!subject||catalogueFilter==='recent';
   $('#hero-welcome').hidden=!!subject;
-  $('#menu-subtitle').textContent=subject?subject.description:catalogueFilter==='modules'?'Revisa tu avance y los módulos disponibles.':'Elige un módulo. Cada clase empieza con una lectura breve y termina con una práctica en 3D.';
+  $('#menu-subtitle').textContent=subject?subject.description:catalogueFilter==='modules'?'Revisa tu avance y los módulos disponibles.':currentClient().subtitle;
   $('#catalogue-title').textContent=subject?'Clases':query?'Resultados':'Módulos de capacitación';
   $('#catalogue-description').textContent=subject?'Empieza por la lectura; la práctica está al final.':'';
   $('#catalogue-path').hidden=!subject;$('#catalogue-lab-name').textContent=subject?.title??'';
@@ -393,12 +396,12 @@ function openReading(id:string){
     const title=document.createElement('h2');title.textContent=section.title;
     const text=document.createElement('p');text.textContent=section.text;
     const example=document.createElement('aside');example.textContent=section.example;
-    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index)??distributionFigure(content.id,index)??operationFigure(content.id,index)??meteringFigure(content.id,index)??fundamentalsFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
+    article.append(number,title,text);const drawing=electronicsDrawing(content.id,index)??conceptFigure(content.id,index)??distributionFigure(content.id,index)??operationFigure(content.id,index)??meteringFigure(content.id,index)??fundamentalsFigure(content.id,index)??financeFigure(content.id,index)??complementaryFigure(content.id,index);if(drawing)article.append(drawing);article.append(example);sections.append(article);
     const link=document.createElement('a');link.href=`#reading-${index}`;link.textContent=section.title;outline.append(link);
   });
   const button=$<HTMLButtonElement>('#study-prepare');button.disabled=!content.runtimeClassId&&!content.labId;
   button.textContent=content.runtimeClassId||content.labId?'Ir al laboratorio':'Laboratorio en preparación';
-  renderEvaluation($('#class-evaluation-slot'),content.id,['distribucion','operacion','medida'].includes(content.subjectId)?'Preguntas didácticas de demostración. Deben validarse con el RETIE y los procedimientos de ESSA.':undefined);
+  renderEvaluation($('#class-evaluation-slot'),content.id,currentClient().evaluationNote.subjects.includes(content.subjectId)?currentClient().evaluationNote.text:undefined);
   button.onclick=()=>{if(content.runtimeClassId)openLab('class',content.runtimeClassId);else if(content.labId)openExternalLab(content.labId,content.id);};
   $('#study-practice-description').textContent=content.runtimeClassId?'Práctica guiada en 3D con acompañamiento del guía. Incluye la preparación del espacio antes de iniciar.':content.labId?'Práctica del procedimiento en 3D. Cada error registra el riesgo asociado.':'La práctica en 3D de esta clase está en preparación.';
   window.scrollTo({top:0,behavior:'auto'});const heading=$('#study-title');heading.tabIndex=-1;heading.focus({preventScroll:true});

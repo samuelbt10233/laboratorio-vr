@@ -403,3 +403,9 @@ Formato:
 - Conflicto: solo el tablero de `docs/plan-clases.md`; se conservan los estados de Claude y las clases de Codex quedan como «lectura y evaluación (C2)».
 - Validación: 156 pruebas y build correctos; las tres clases aparecen en «Fundamentos eléctricos» con sus esquemas y evaluación.
 - Pendiente: Codex puede revisar los distractores de las evaluaciones de medida (algunos son poco plausibles, p. ej. «Dos evaluaciones»).
+
+## 2026-11-12 · Claude Code · I0 contrato para la demo de ICETEX
+- Qué: la demo de ESSA se presentó con éxito y el responsable tiene reunión con ICETEX el 13 de noviembre. Plan y reparto en `docs/plan-icetex.md`: perfil propio y dos módulos (educación financiera, de Claude, con un simulador de presupuesto; formación complementaria, de Codex).
+- Contrato: `src/demo/cliente.ts` define cada cliente (módulos visibles y asignados, perfiles, ilustración, nota de evaluaciones). `?cliente=icetex` abre «Preparado para ICETEX» con el perfil de Valentina Ríos; sin parámetro todo sigue igual que en ESSA. Fichas provisionales, evaluaciones y figuras separadas por agente, como en C0.
+- Validación: 161 pruebas y build correctos. En el navegador el acceso y el inicio de ESSA no cambian; con `?cliente=icetex` se ve el acceso y el inicio de Valentina, todavía sin módulos hasta que lleguen las clases.
+- Pendiente: merge del responsable; después, clases de cada agente y el simulador.

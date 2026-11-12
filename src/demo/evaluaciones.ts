@@ -2,10 +2,12 @@ import { evaluacionesDistribucion } from './evaluaciones-distribucion';
 import { evaluacionesFundamentos } from './evaluaciones-fundamentos';
 import { evaluacionesMedida } from './evaluaciones-medida';
 import { evaluacionesOperacion } from './evaluaciones-operacion';
+import { evaluacionesFinanzas } from './evaluaciones-finanzas';
+import { evaluacionesComplementaria } from './evaluaciones-complementaria';
 /** Demo knowledge checks, one per class shown to ESSA. Questions come from each class's own reading; distribution content still needs validation against the RETIE and ESSA's procedures. */
 export interface Question {prompt:string;options:string[];answer:number;why:string}
 const EVALUATIONS:Record<string,Question[]>={
-  ...evaluacionesDistribucion,...evaluacionesOperacion,...evaluacionesMedida,...evaluacionesFundamentos,
+  ...evaluacionesDistribucion,...evaluacionesOperacion,...evaluacionesMedida,...evaluacionesFundamentos,...evaluacionesFinanzas,...evaluacionesComplementaria,
   'ley-de-ohm':[
     {prompt:'Con 6 V y una resistencia de 100 Ω, ¿cuánta corriente circula?',options:['6 mA','60 mA','600 mA'],answer:1,why:'I = V / R = 6 / 100 = 0,06 A, es decir, 60 mA.'},
     {prompt:'Si se duplica la resistencia y se mantiene el voltaje, la corriente…',options:['se duplica','se reduce a la mitad','no cambia'],answer:1,why:'Con el mismo voltaje, el doble de resistencia deja pasar la mitad de corriente: de 60 a 30 mA.'},

@@ -1,6 +1,6 @@
 import { subjectEntries } from '../subjects';
 import { moduleProgress, myModules, openModules } from './asignaciones';
-/** General modules page of the ESSA demo: the trainee's modules with progress, then the open ones. */
+/** General modules page of the demo: the trainee's modules with progress, then the open ones. */
 const chevron='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5"/></svg>';
 const el=<K extends keyof HTMLElementTagNameMap>(tag:K,cls?:string,text?:string)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;};
 const shortDate=(d:Date)=>d.toLocaleDateString('es-CO',{day:'numeric',month:'short'}).replace('.','');
